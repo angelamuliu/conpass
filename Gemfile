@@ -24,6 +24,10 @@ gem 'spring',        group: :development
 # ADDED
 
 gem 'gon', '~> 6.0.1' # Allows passing variables from controllers into JS as JSON
+gem 'simple_form'
+
+gem 'byebug', '~> 6.0.2' # Breakpoint debugging in rails
+# GEN USE: type 'byebug' to start debugging. s > step, n > next, c > stop debugging
 
 # --------------------------------------------------
 

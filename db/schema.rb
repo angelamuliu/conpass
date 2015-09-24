@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150923222349) do
+ActiveRecord::Schema.define(version: 20150924033646) do
 
   create_table "booths", force: true do |t|
     t.datetime "start_time"
@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(version: 20150923222349) do
     t.integer  "height"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "map_id"
   end
 
   create_table "conventions", force: true do |t|
@@ -40,6 +41,8 @@ ActiveRecord::Schema.define(version: 20150923222349) do
     t.datetime "end_date"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "width",         default: 500
+    t.integer  "height",        default: 500
   end
 
   create_table "tags", force: true do |t|

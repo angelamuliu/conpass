@@ -1,33 +1,26 @@
-<%= form_for(@map) do |f| %>
-  <% if @map.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@map.errors.count, "error") %> prohibited this map from being saved:</h2>
 
-      <ul>
-      <% @map.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
+
+<%= simple_form_for @map do |f| %>
+    <% if @map.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@map.errors.count, "error") %> prohibited this map from being saved:</h2>
+
+          <ul>
+          <% @map.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+          </ul>
+        </div>
       <% end %>
-      </ul>
-    </div>
-  <% end %>
 
-  <div class="field">
-    <%= f.label :convention_id %><br>
-    <%= f.number_field :convention_id %>
-  </div>
-  <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
-  </div>
-  <div class="field">
-    <%= f.label :start_date %><br>
-    <%= f.datetime_select :start_date %>
-  </div>
-  <div class="field">
-    <%= f.label :end_date %><br>
-    <%= f.datetime_select :end_date %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+    <%= f.input :convention_id, collection: Convention.all %>
+    <%= f.input :name %>
+    <%= f.input :start_date %>
+    <%= f.input :end_date %>
+    <%= f.input :width %>
+    <%= f.input :height %>
+
+    <div class="actions">
+        <%= f.submit "Confirm" %>
+    </div>
 <% end %>

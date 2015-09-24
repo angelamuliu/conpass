@@ -29,6 +29,7 @@ GEM
       tzinfo (~> 1.1)
     arel (5.0.1.20140414130214)
     builder (3.2.2)
+    byebug (6.0.2)
     coffee-rails (4.0.1)
       coffee-script (>= 2.2.0)
       railties (>= 4.0.0, < 5.0)
@@ -87,6 +88,9 @@ GEM
     sdoc (0.4.1)
       json (~> 1.7, >= 1.7.7)
       rdoc (~> 4.0)
+    simple_form (3.1.1)
+      actionpack (~> 4.0)
+      activemodel (~> 4.0)
     spring (1.4.0)
     sprockets (2.12.4)
       hike (~> 1.2)
@@ -113,6 +117,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  byebug (~> 6.0.2)
   coffee-rails (~> 4.0.0)
   gon (~> 6.0.1)
   jbuilder (~> 2.0)
@@ -120,6 +125,7 @@ DEPENDENCIES
   rails (= 4.1.9)
   sass-rails (~> 4.0.3)
   sdoc (~> 0.4.0)
+  simple_form
   spring
   sqlite3
   turbolinks
