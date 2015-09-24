@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Convention:</strong>
+  <%= @map.convention_id %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @map.name %>
+</p>
+
+<p>
+  <strong>Start date:</strong>
+  <%= @map.start_date %>
+</p>
+
+<p>
+  <strong>End date:</strong>
+  <%= @map.end_date %>
+</p>
+
+<%= link_to 'Edit', edit_map_path(@map) %> |
+<%= link_to 'Back', maps_path %>

@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  start_time: 2015-09-23 18:21:31
+  end_time: 2015-09-23 18:21:31
+  vendor_id: 1
+  x_pos: 1
+  y_pos: 1
+  width: 1
+  height: 1
+
+two:
+  start_time: 2015-09-23 18:21:31
+  end_time: 2015-09-23 18:21:31
+  vendor_id: 1
+  x_pos: 1
+  y_pos: 1
+  width: 1
+  height: 1

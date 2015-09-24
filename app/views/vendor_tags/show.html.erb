@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Vendor:</strong>
+  <%= @vendor_tag.vendor_id %>
+</p>
+
+<p>
+  <strong>Tag:</strong>
+  <%= @vendor_tag.tag_id %>
+</p>
+
+<%= link_to 'Edit', edit_vendor_tag_path(@vendor_tag) %> |
+<%= link_to 'Back', vendor_tags_path %>

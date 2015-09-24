@@ -1,0 +1,29 @@
+<h1>Listing conventions</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Start date</th>
+      <th>End date</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @conventions.each do |convention| %>
+      <tr>
+        <td><%= convention.name %></td>
+        <td><%= convention.start_date %></td>
+        <td><%= convention.end_date %></td>
+        <td><%= link_to 'Show', convention %></td>
+        <td><%= link_to 'Edit', edit_convention_path(convention) %></td>
+        <td><%= link_to 'Destroy', convention, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Convention', new_convention_path %>

@@ -1,0 +1,27 @@
+<h1>Listing vendor_tags</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Vendor</th>
+      <th>Tag</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @vendor_tags.each do |vendor_tag| %>
+      <tr>
+        <td><%= vendor_tag.vendor_id %></td>
+        <td><%= vendor_tag.tag_id %></td>
+        <td><%= link_to 'Show', vendor_tag %></td>
+        <td><%= link_to 'Edit', edit_vendor_tag_path(vendor_tag) %></td>
+        <td><%= link_to 'Destroy', vendor_tag, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Vendor tag', new_vendor_tag_path %>
