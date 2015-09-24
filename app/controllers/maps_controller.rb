@@ -61,6 +61,26 @@ class MapsController < ApplicationController
     end
   end
 
+  # -----------------------------------------------------------
+  # Main drag and drop screen for map creation
+
+  def craft
+    @map = Map.find(params[:id])
+    @tags = @map.convention.tags
+    @booths = @map.booths
+
+    # Pass these variables into the JS as well
+    gon.map = @map
+    gon.tags = @tags
+    gon.booths = @booths
+  end
+
+  # Saving map after making changes
+  def save
+  end
+
+  # -----------------------------------------------------------
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_map
