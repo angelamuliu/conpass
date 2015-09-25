@@ -1,0 +1,2 @@
+module VendorBoothsHelper
+end

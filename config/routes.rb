@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  resources :vendor_booths
+
   # Static pages
   get 'home' => 'home#index', :as => :home
   get 'about' => 'home#about', :as => :about

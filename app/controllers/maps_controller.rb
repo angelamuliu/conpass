@@ -79,7 +79,7 @@ class MapsController < ApplicationController
   def save
     puts params[:actionHistory]
     @map = Map.find(params[:id])
-    @map.saveFromHistory()
+    @map.saveFromHistory(params[:actionHistory])
     redirect_to craft_map_path(@map)
   end
 

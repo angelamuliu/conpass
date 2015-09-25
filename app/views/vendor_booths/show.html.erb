@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Vendor:</strong>
+  <%= @vendor_booth.vendor_id %>
+</p>
+
+<p>
+  <strong>Booth:</strong>
+  <%= @vendor_booth.booth_id %>
+</p>
+
+<p>
+  <strong>Start time:</strong>
+  <%= @vendor_booth.start_time %>
+</p>
+
+<p>
+  <strong>End time:</strong>
+  <%= @vendor_booth.end_time %>
+</p>
+
+<%= link_to 'Edit', edit_vendor_booth_path(@vendor_booth) %> |
+<%= link_to 'Back', vendor_booths_path %>

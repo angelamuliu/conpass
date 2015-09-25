@@ -1,0 +1,31 @@
+<h1>Listing vendor_booths</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Vendor</th>
+      <th>Booth</th>
+      <th>Start time</th>
+      <th>End time</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @vendor_booths.each do |vendor_booth| %>
+      <tr>
+        <td><%= vendor_booth.vendor_id %></td>
+        <td><%= vendor_booth.booth_id %></td>
+        <td><%= vendor_booth.start_time %></td>
+        <td><%= vendor_booth.end_time %></td>
+        <td><%= link_to 'Show', vendor_booth %></td>
+        <td><%= link_to 'Edit', edit_vendor_booth_path(vendor_booth) %></td>
+        <td><%= link_to 'Destroy', vendor_booth, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Vendor booth', new_vendor_booth_path %>

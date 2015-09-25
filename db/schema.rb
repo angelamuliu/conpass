@@ -11,12 +11,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150924033646) do
+ActiveRecord::Schema.define(version: 20150925155236) do
 
   create_table "booths", force: true do |t|
-    t.datetime "start_time"
-    t.datetime "end_time"
-    t.integer  "vendor_id"
     t.integer  "x_pos"
     t.integer  "y_pos"
     t.integer  "width"
@@ -48,6 +45,15 @@ ActiveRecord::Schema.define(version: 20150924033646) do
   create_table "tags", force: true do |t|
     t.integer  "convention_id"
     t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "vendor_booths", force: true do |t|
+    t.integer  "vendor_id"
+    t.integer  "booth_id"
+    t.datetime "start_time"
+    t.datetime "end_time"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
