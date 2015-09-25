@@ -77,10 +77,9 @@ class MapsController < ApplicationController
 
   # Saving map after making changes
   def save
-    # byebug
     puts params[:actionHistory]
-    puts "GOT CALLED!!!"
     @map = Map.find(params[:id])
+    @map.saveFromHistory()
     redirect_to craft_map_path(@map)
   end
 
