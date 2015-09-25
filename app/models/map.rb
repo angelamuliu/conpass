@@ -18,7 +18,6 @@ class Map < ActiveRecord::Base
 
     # Takes an array of hashes (originally JSON) and saves to map instance and related objects
     def saveFromHistory(jsonActionHistory)
-        puts self
         orderedHistory = JSON.parse(jsonActionHistory) # Array of hashes
         categorizedHistory = organizeHistory(orderedHistory)
 
@@ -27,8 +26,6 @@ class Map < ActiveRecord::Base
         saveForModel("tag", categorizedHistory)
         saveForModel("vendor_tag", categorizedHistory)
         saveForModel("booth", categorizedHistory)
-
-        byebug
     end
 
     # Takes array of hashes and organizes in types of actions so that we can save properly
@@ -63,7 +60,7 @@ class Map < ActiveRecord::Base
     end
 
     def createModels(modelName, actionHistory)
-        createActions = actionHistory["create"]
+        createActions = if actionHistory["create"].nil? then [] else actionHistory["create"] end
         for createAction in createActions
             case modelName
             when "map"
@@ -71,24 +68,14 @@ class Map < ActiveRecord::Base
             when "tag"
             when "vendor_tag"
             when "booth"
-                Booth.create({})
+                Booth.create({x_pos: createAction["x"].to_i, y_pos: createAction["y"].to_i, 
+                    width: createAction["width"].to_i, height: createAction["height"].to_i, map_id: self.id})
             end
         end
     end
-# foo = Convention.create({name: "TEST"})
-#     t.datetime "start_time"
-#     t.datetime "end_time"
-#     t.integer  "vendor_id"
-#     t.integer  "x_pos"
-#     t.integer  "y_pos"
-#     t.integer  "width"
-#     t.integer  "height"
-#     t.datetime "created_at"
-#     t.datetime "updated_at"
-#     t.integer  "map_id"
 
     def updateModels(modelName, actionHistory)
-        updateActions = actionHistory["update"]
+        updateActions = if actionHistory["update"].nil? then [] else actionHistory["update"] end
         for updateAction in updateActions
             case modelName
             when "map"
@@ -101,7 +88,7 @@ class Map < ActiveRecord::Base
     end
 
     def deleteModels(modelName, actionHistory)
-        deleteActions = actionHistory["delete"]
+        deleteActions = if actionHistory["delete"].nil? then [] else actionHistory["delete"] end
         for deleteAction in deleteActions
             case modelName
             when "map"

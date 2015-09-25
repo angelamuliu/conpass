@@ -3,9 +3,6 @@
 <table>
   <thead>
     <tr>
-      <th>Start time</th>
-      <th>End time</th>
-      <th>Vendor</th>
       <th>X pos</th>
       <th>Y pos</th>
       <th>Width</th>
@@ -17,9 +14,6 @@
   <tbody>
     <% @booths.each do |booth| %>
       <tr>
-        <td><%= booth.start_time %></td>
-        <td><%= booth.end_time %></td>
-        <td><%= booth.vendor_id %></td>
         <td><%= booth.x_pos %></td>
         <td><%= booth.y_pos %></td>
         <td><%= booth.width %></td>
