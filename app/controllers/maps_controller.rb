@@ -77,6 +77,11 @@ class MapsController < ApplicationController
 
   # Saving map after making changes
   def save
+    # byebug
+    puts params[:actionHistory]
+    puts "GOT CALLED!!!"
+    @map = Map.find(params[:id])
+    redirect_to craft_map_path(@map)
   end
 
   # -----------------------------------------------------------
@@ -89,6 +94,6 @@ class MapsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def map_params
-      params.require(:map).permit(:convention_id, :name, :start_date, :end_date)
+      params.require(:map).permit(:convention_id, :name, :start_date, :end_date, :actionHistory)
     end
 end

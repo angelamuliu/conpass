@@ -3,4 +3,6 @@ class Map < ActiveRecord::Base
     belongs_to :convention
     has_many :booths
     
+    # Methods
+
 end
