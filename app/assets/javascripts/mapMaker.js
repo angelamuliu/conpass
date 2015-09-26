@@ -109,7 +109,7 @@ function mapMaker(workArea, toolBar) {
     $(".booth").click(function(e) {
         switch(selectedTool) {
             case TOOLS.ERASER:
-                deleteBoothToHistory(this, false);
+                deleteBoothToHistory($(this), false);
                 this.remove();
                 break;
             default:
@@ -198,10 +198,6 @@ function mapMaker(workArea, toolBar) {
         var top = parseInt(boothEl.css("top"));
         var width = parseInt(boothEl.css("width"));
         var height = parseInt(boothEl.css("height"));
-
-        // var topLeft = findTopLeft(toolContext.downX, toolContext.downY, toolContext.moveX, toolContext.moveY);
-        // var width = findWidth(toolContext.downX, toolContext.moveX);
-        // var height = findHeight(toolContext.downY, toolContext.moveY);
         var boothHistory = {
             "action" : ACTIONS.CREATE,
             "type" : TYPES.BOOTH,

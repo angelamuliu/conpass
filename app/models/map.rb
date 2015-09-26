@@ -23,7 +23,6 @@ class Map < ActiveRecord::Base
     def saveFromHistory(jsonActionHistory, jsonDeleteHistory)
         tempDeleteHistory = organizeHistory(JSON.parse(jsonDeleteHistory), true)
         categorizedHistory = organizeHistory(JSON.parse(jsonActionHistory))
-        byebug
 
         saveForModel("map", categorizedHistory, tempDeleteHistory)
         saveForModel("vendor", categorizedHistory, tempDeleteHistory)
@@ -110,6 +109,7 @@ class Map < ActiveRecord::Base
             when "tag"
             when "vendor_tag"
             when "booth"
+                Booth.find(deleteAction["id"]).destroy
             end
         end
     end
