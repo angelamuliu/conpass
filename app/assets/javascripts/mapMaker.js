@@ -13,14 +13,15 @@ $(document).ready(function() {
     $("#workArea").css("width", gon.map.width);
     $("#workArea").css("height", gon.map.height);
 
-    mapMaker($("#workArea"), "");
+    mapMaker($("#workArea"), $("#toolBar"));
 
     $("#save").click(function() {
         $.ajax({
           type: "POST",
           url: "/maps/"+gon.map.id+"/save",
           data: {
-            actionHistory: JSON.stringify(actionHistory)
+            actionHistory: JSON.stringify(actionHistory),
+            tempDeleteHistory: JSON.stringify(tempDeleteHistory)
           }
         });
     })
@@ -29,11 +30,13 @@ $(document).ready(function() {
 })
 
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-// CONSTANTS
+// CONSTANTS + GLOBALS
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 var TOOLS = {
-    RECTANGLE : "rectangle"
+    RECTANGLE : "rectangle",
+    ERASER : "eraser",
+    SELECT: "select"
 }
 
 var ACTIONS = { // Used to store action for history
@@ -47,10 +50,19 @@ var TYPES = { // Used to store what object we'll want to use
     TAG : "tag",
     VENDOR : "vendor",
     BOOTH : "booth",
-    VENDOR_TAG : "vendor_tag"
+    VENDOR_TAG : "vendor_tag",
+    VENDOR_BOOTH : "vendor_booth"
 }
 
-var actionHistory = []; // Store objs in here in order of occurance
+var actionHistory = []; // Store create, update action objs in here in order of occurance
+var tempDeleteHistory = []; // Store IDs of temp objects that got deleted
+
+// TODO: USE CASE -> Temp booth created. Other stuff happens. Temp booth modified. Other stuff. Finally, temp booth deleted...
+// We won't know the ID of the temp booth since it, currently, gets created as per history
+// To FIX: We can get the ID of the last booth saved on the map via gon. Then, as we insert new booths, we assign a temporary
+// data-id attribute which is the last ID incremented. Then when CRUD happens, what we'll do instead is save any temp deletes
+// in its own array and clean the action history of anything related to the temp obj that got deleted (b/c if it was never saved)
+// and got deleted, no need to create/update/etc in first place...
 
 
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -62,11 +74,18 @@ function mapMaker(workArea, toolBar) {
     // VARIABLES
     // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-    var selectedTool = TOOLS.RECTANGLE; // Which tool is the user currently using, default to rectangle
+    var selectedTool; // Which tool is the user currently using
     var toolContext = {}; // Store information about interactions as needed
 
     var workArea = workArea;
     var toolBar = toolBar;
+
+    // Vendors/tags/booths/vendor_tags that haven't been saved to the system are given a temp ID
+    // that allows us to not waste effort creating/updating objs that are deleted anyway
+    var lastVendorId = gon.vendors.length > 0 ? gon.vendors[gon.vendors.length - 1].id : 0;
+    // var lastTagId;
+    // var lastVendorTagId;
+    var lastBoothId = gon.booths.length > 0 ? gon.booths[gon.booths.length - 1].id : 0;
 
 
     // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -78,7 +97,20 @@ function mapMaker(workArea, toolBar) {
     workArea.click(function(e) {
         switch(selectedTool) {
             case TOOLS.RECTANGLE:
-                // code
+                break;
+            default:
+        }
+    })
+
+    $(".tool").click(function(e) { // Swap tool when tool button pressed
+        selectedTool = this.dataset.type;
+    })
+
+    $(".booth").click(function(e) {
+        switch(selectedTool) {
+            case TOOLS.ERASER:
+                deleteBoothToHistory(this, false);
+                this.remove();
                 break;
             default:
         }
@@ -117,9 +149,11 @@ function mapMaker(workArea, toolBar) {
         var offset = workArea.offset();
         toolContext.downX = e.pageX - offset.left;
         toolContext.downY = e.pageY - offset.top;
+        lastBoothId++;
 
-        var newBooth = $("<div class=\"booth\" style=\"left:"+toolContext.downX+"px;top:"+toolContext.downY+"px\"></div>");
-        $("#workArea").append(newBooth);
+        toolContext.newBooth = $("<div class=\"booth\" style=\"left:"+toolContext.downX+"px;top:"+toolContext.downY+"px\""+
+                                 "data-id=\""+lastBoothId+"\"></div>");
+        $("#workArea").append(toolContext.newBooth);
 
         workArea.mousemove(function(e) {
             toolContext.moveX = e.pageX - offset.left;
@@ -129,34 +163,69 @@ function mapMaker(workArea, toolBar) {
             var width = findWidth(toolContext.downX, toolContext.moveX);
             var height = findHeight(toolContext.downY, toolContext.moveY);
 
-            newBooth.css("left", topLeft[0]);
-            newBooth.css("top", topLeft[1]);
-            newBooth.css("width", width);
-            newBooth.css("height", height);
+            toolContext.newBooth.css("left", topLeft[0]);
+            toolContext.newBooth.css("top", topLeft[1]);
+            toolContext.newBooth.css("width", width);
+            toolContext.newBooth.css("height", height);
         });
 
     }
 
+    // Attaches all required event listeners to a booth
+    function addBoothListeners(boothEl) {
+        boothEl.mousedown(function(e) {
+            switch(selectedTool) {
+                case TOOLS.ERASER:
+                    deleteBoothToHistory(boothEl, true);
+                    boothEl.remove()
+                    break;
+                case TOOLS.SELECT:
+                    // TODO: Move the booth
+                    break;
+            }
+        })
+    }
+
     function finishBooth(e) {
-        // Stop listening for mouse move
-        addBoothToHistory();
-        workArea.off("mousemove");
+        workArea.off("mousemove"); // Stop listening for mouse move
+        addBoothToHistory(toolContext.newBooth);
+        addBoothListeners(toolContext.newBooth);
     }
 
     // Log creating a booth into our history array
-    function addBoothToHistory() {
-        var topLeft = findTopLeft(toolContext.downX, toolContext.downY, toolContext.moveX, toolContext.moveY);
-        var width = findWidth(toolContext.downX, toolContext.moveX);
-        var height = findHeight(toolContext.downY, toolContext.moveY);
+    function addBoothToHistory(boothEl) {
+        var left = parseInt(boothEl.css("left"));
+        var top = parseInt(boothEl.css("top"));
+        var width = parseInt(boothEl.css("width"));
+        var height = parseInt(boothEl.css("height"));
+
+        // var topLeft = findTopLeft(toolContext.downX, toolContext.downY, toolContext.moveX, toolContext.moveY);
+        // var width = findWidth(toolContext.downX, toolContext.moveX);
+        // var height = findHeight(toolContext.downY, toolContext.moveY);
         var boothHistory = {
             "action" : ACTIONS.CREATE,
             "type" : TYPES.BOOTH,
-            "x" : topLeft[0],
-            "y" : topLeft[1],
+            "id" : boothEl.data("id"),
+            "x" : left,
+            "y" : top,
             "width" : width,
             "height" : height
         }
         actionHistory.push(boothHistory);
+    }
+
+    // Log deleting a booth into our history array. If isTemp, instead logged to tempDeleteHistory
+    function deleteBoothToHistory(boothEl, isTemp) {
+        var boothHistory = {
+            "action" : ACTIONS.DELETE,
+            "type" : TYPES.BOOTH,
+            "id" : boothEl.data("id")
+        }
+        if (isTemp) {
+            tempDeleteHistory.push(boothHistory);
+        } else {
+            actionHistory.push(boothHistory)
+        }
     }
 
     // ------------------------------

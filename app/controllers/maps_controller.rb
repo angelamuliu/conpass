@@ -66,20 +66,23 @@ class MapsController < ApplicationController
 
   def craft
     @map = Map.find(params[:id])
+    @vendors = @map.convention.vendors
     @tags = @map.convention.tags
+    # @vendorTags
     @booths = @map.booths
 
     # Pass these variables into the JS as well
     gon.map = @map
+    gon.vendors = @vendors
     gon.tags = @tags
+    # gon,vendorTags = @vendorTags
     gon.booths = @booths
   end
 
   # Saving map after making changes
   def save
-    puts params[:actionHistory]
     @map = Map.find(params[:id])
-    @map.saveFromHistory(params[:actionHistory])
+    @map.saveFromHistory(params[:actionHistory], params[:tempDeleteHistory])
     redirect_to craft_map_path(@map)
   end
 
@@ -93,6 +96,6 @@ class MapsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def map_params
-      params.require(:map).permit(:convention_id, :name, :start_date, :end_date, :actionHistory)
+      params.require(:map).permit(:convention_id, :name, :start_date, :end_date, :actionHistory, :tempDeleteHistory)
     end
 end
