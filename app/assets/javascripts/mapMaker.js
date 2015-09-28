@@ -20,8 +20,7 @@ $(document).ready(function() {
           type: "POST",
           url: "/maps/"+gon.map.id+"/save",
           data: {
-            actionHistory: JSON.stringify(actionHistory),
-            tempDeleteHistory: JSON.stringify(tempDeleteHistory)
+            actionHistory: JSON.stringify(actionHistory)
           }
         });
     })
@@ -55,14 +54,15 @@ var TYPES = { // Used to store what object we'll want to use
 }
 
 var actionHistory = []; // Store create, update action objs in here in order of occurance
-var tempDeleteHistory = []; // Store IDs of temp objects that got deleted
 
 // TODO: USE CASE -> Temp booth created. Other stuff happens. Temp booth modified. Other stuff. Finally, temp booth deleted...
 // We won't know the ID of the temp booth since it, currently, gets created as per history
 // To FIX: We can get the ID of the last booth saved on the map via gon. Then, as we insert new booths, we assign a temporary
-// data-id attribute which is the last ID incremented. Then when CRUD happens, what we'll do instead is save any temp deletes
-// in its own array and clean the action history of anything related to the temp obj that got deleted (b/c if it was never saved)
-// and got deleted, no need to create/update/etc in first place...
+// data-id attribute which is the last ID incremented. 
+
+// Then we save deletes as well, and don't create in first place if the temp obj gets deleted later.
+// We also do the same for updates for temp objs -> if temp obj updated, in backend, we just change the create statement to the 
+// new state
 
 
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -205,23 +205,23 @@ function mapMaker(workArea, toolBar) {
             "x" : left,
             "y" : top,
             "width" : width,
-            "height" : height
+            "height" : height,
+            "isTemp" : true
         }
         actionHistory.push(boothHistory);
     }
 
-    // Log deleting a booth into our history array. If isTemp, instead logged to tempDeleteHistory
+    // Log deleting a booth into our history array.
     function deleteBoothToHistory(boothEl, isTemp) {
         var boothHistory = {
             "action" : ACTIONS.DELETE,
             "type" : TYPES.BOOTH,
             "id" : boothEl.data("id")
         }
-        if (isTemp) {
-            tempDeleteHistory.push(boothHistory);
-        } else {
-            actionHistory.push(boothHistory)
+        if (isTemp) { // Deleted temp obj that was never saved. Keep track of this
+            boothHistory["isTemp"] = true;
         }
+        actionHistory.push(boothHistory);
     }
 
     // ------------------------------
