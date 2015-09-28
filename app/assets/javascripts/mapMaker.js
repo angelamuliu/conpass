@@ -174,7 +174,7 @@ function mapMaker(workArea, toolBar) {
             }
         })
         boothEl.mouseup(function(e) {
-            switch(seletectedTool) {
+            switch(selectedTool) {
                 case TOOLS.SELECT:
                     endMoveBooth(boothEl, e, true);
                     break;

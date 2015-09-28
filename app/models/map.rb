@@ -108,14 +108,17 @@ class Map < ActiveRecord::Base
 
     # All updates working off of SAVED objs
     def updateModels(modelName, actionHistory)
-        updateActions = if actionHistory["update"].nil? then [] else actionHistory["update"] end
-        for updateAction in updateActions
+        updateActions = if actionHistory["update"].nil? then {} else actionHistory["update"] end
+        for idKey in updateActions.keys
+            updateAction = updateActions[idKey]
             case modelName
             when "map"
             when "vendor"
             when "tag"
             when "vendor_tag"
             when "booth"
+                Booth.update(updateAction["id"], x_pos: updateAction["x"].to_i, y_pos: updateAction["y"].to_i,
+                    width: updateAction["width"].to_i, height: updateAction["height"].to_i)
             end
         end
     end
