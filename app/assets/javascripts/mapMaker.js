@@ -106,11 +106,23 @@ function mapMaker(workArea, toolBar) {
         selectedTool = this.dataset.type;
     })
 
-    $(".booth").click(function(e) {
+    $(".booth").mousedown(function(e) {
         switch(selectedTool) {
             case TOOLS.ERASER:
                 deleteBoothToHistory($(this), false);
                 this.remove();
+                break;
+            case TOOLS.SELECT:
+                startMoveBooth($(this), e);
+                break;
+            default:
+        }
+    })
+
+    $(".booth").mouseup(function(e) {
+        switch(selectedTool) {
+            case TOOLS.SELECT:
+                endMoveBooth($(this), e, false);
                 break;
             default:
         }
@@ -126,6 +138,8 @@ function mapMaker(workArea, toolBar) {
             default:
         }
     })
+
+
 
     // ------------------------------
     // MOUSEUP
@@ -145,6 +159,29 @@ function mapMaker(workArea, toolBar) {
 
     // ------------------------------
     // BOOTH
+
+    // Attaches all required event listeners to a booth element
+    function addBoothListeners(boothEl) {
+        boothEl.mousedown(function(e) {
+            switch(selectedTool) {
+                case TOOLS.ERASER:
+                    deleteBoothToHistory(boothEl, true);
+                    boothEl.remove()
+                    break;
+                case TOOLS.SELECT:
+                    startMoveBooth(boothEl, e);
+                    break;
+            }
+        })
+        boothEl.mouseup(function(e) {
+            switch(seletectedTool) {
+                case TOOLS.SELECT:
+                    endMoveBooth(boothEl, e, true);
+                    break;
+            }
+        })
+    }
+
     function startBooth(e) {
         var offset = workArea.offset();
         toolContext.downX = e.pageX - offset.left;
@@ -168,28 +205,35 @@ function mapMaker(workArea, toolBar) {
             toolContext.newBooth.css("width", width);
             toolContext.newBooth.css("height", height);
         });
-
-    }
-
-    // Attaches all required event listeners to a booth
-    function addBoothListeners(boothEl) {
-        boothEl.mousedown(function(e) {
-            switch(selectedTool) {
-                case TOOLS.ERASER:
-                    deleteBoothToHistory(boothEl, true);
-                    boothEl.remove()
-                    break;
-                case TOOLS.SELECT:
-                    // TODO: Move the booth
-                    break;
-            }
-        })
     }
 
     function finishBooth(e) {
         workArea.off("mousemove"); // Stop listening for mouse move
         addBoothToHistory(toolContext.newBooth);
         addBoothListeners(toolContext.newBooth);
+    }
+
+    function startMoveBooth(boothEl, e) {
+        var offset = workArea.offset();
+
+        toolContext.startX = parseInt(boothEl.css("left"));
+        toolContext.startY = parseInt(boothEl.css("top"));
+
+        toolContext.downX = e.pageX - offset.left;
+        toolContext.downY = e.pageY - offset.top;
+
+        workArea.mousemove(function(e) {
+            toolContext.shiftX = (e.pageX - offset.left) - toolContext.downX;
+            toolContext.shiftY = (e.pageY - offset.top) - toolContext.downY;
+
+            boothEl.css("left", toolContext.startX + toolContext.shiftX);
+            boothEl.css("top", toolContext.startY + toolContext.shiftY);
+        });
+    }
+
+    function endMoveBooth(boothEl, e, isTemp) {
+        workArea.off("mousemove"); // Stop listening for mouse move
+        updateBoothToHistory(boothEl, isTemp);
     }
 
     // Log creating a booth into our history array
@@ -207,6 +251,26 @@ function mapMaker(workArea, toolBar) {
             "width" : width,
             "height" : height,
             "isTemp" : true
+        }
+        actionHistory.push(boothHistory);
+    }
+
+    function updateBoothToHistory(boothEl, isTemp) {
+        var left = parseInt(boothEl.css("left"));
+        var top = parseInt(boothEl.css("top"));
+        var width = parseInt(boothEl.css("width"));
+        var height = parseInt(boothEl.css("height"));
+        var boothHistory = {
+            "action" : ACTIONS.UPDATE,
+            "type" : TYPES.BOOTH,
+            "id" : boothEl.data("id"),
+            "x" : left,
+            "y" : top,
+            "width" : width,
+            "height" : height
+        }
+        if (isTemp) { // Deleted temp obj that was never saved. Keep track of this
+            boothHistory["isTemp"] = true;
         }
         actionHistory.push(boothHistory);
     }

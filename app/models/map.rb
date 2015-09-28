@@ -57,17 +57,18 @@ class Map < ActiveRecord::Base
             when "create"
                 categorizedHistory[historyItem["type"]][historyItem["action"]][historyItem["id"]] = historyItem
             when "update"
-                if historyItem.has_key?("isTemp")
+                if historyItem.has_key?("isTemp") and historyItem["isTemp"] == true
                     # Instead of creating then updating, just update the create action for the temp obj
-                    # TODO!
+                    categorizedHistory[historyItem["type"]]["create"][historyItem["id"]] = historyItem
                 else
                     # Updating a previously SAVED obj
-                    # TODO!
+                    categorizedHistory[historyItem["type"]][historyItem["action"]][historyItem["id"]] = historyItem
                 end
             when "delete"
-                if historyItem.has_key?("isTemp")
+                if historyItem.has_key?("isTemp") and historyItem["isTemp"] == true
+                    byebug
                     # Instead of creating then deleting, just remove the create action for the temp obj
-                    categorizedHistory[historyItem["type"]]["create"].delete([historyItem["id"]])
+                    categorizedHistory[historyItem["type"]]["create"].delete(historyItem["id"])
                 else
                     # Deleting a previously SAVED obj
                     categorizedHistory[historyItem["type"]][historyItem["action"]][historyItem["id"]] = historyItem
@@ -91,7 +92,6 @@ class Map < ActiveRecord::Base
     # All creates are working off TEMP objs
     def createModels(modelName, actionHistory)
         createActions = if actionHistory["create"].nil? then {} else actionHistory["create"] end
-            byebug
         for idKey in createActions.keys
             createAction = createActions[idKey]
             case modelName
@@ -104,21 +104,6 @@ class Map < ActiveRecord::Base
                     width: createAction["width"].to_i, height: createAction["height"].to_i, map_id: self.id})
             end
         end
-
-        # for createAction in createActions
-        #     # Check that this temp obj isn't deleted later. If so, then no need creating in first place
-        #     unless tempDeleteHistory.has_key?(modelName) and tempDeleteHistory[modelName]["delete"].include?(createAction["id"])
-        #         case modelName
-        #         when "map"
-        #         when "vendor"
-        #         when "tag"
-        #         when "vendor_tag"
-        #         when "booth"
-        #             Booth.create({x_pos: createAction["x"].to_i, y_pos: createAction["y"].to_i, 
-        #                 width: createAction["width"].to_i, height: createAction["height"].to_i, map_id: self.id})
-        #         end
-        #     end
-        # end
     end
 
     # All updates working off of SAVED objs
@@ -137,8 +122,9 @@ class Map < ActiveRecord::Base
 
     # All deletes are working off of SAVED objs
     def deleteModels(modelName, actionHistory)
-        deleteActions = if actionHistory["delete"].nil? then [] else actionHistory["delete"] end
-        for deleteAction in deleteActions
+        deleteActions = if actionHistory["delete"].nil? then {} else actionHistory["delete"] end
+        for idKey in deleteActions.keys
+            deleteAction = deleteActions[idKey]
             case modelName
             when "map"
             when "vendor"
