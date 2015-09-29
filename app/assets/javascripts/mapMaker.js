@@ -106,10 +106,14 @@ function mapMaker(workArea, toolBar) {
 
     $(".overlay").click(function() {
         $(this).hide();
+        resetForm($(this).children("form"));
     })
 
     $(".close_overlay").click(function(e) {
         $(this).closest("div.overlay").hide();
+        resetForm($(this).closest("form"));
+        e.preventDefault();
+        return false;
     })
 
     $(".overlay form").click(function(e) {
@@ -123,7 +127,7 @@ function mapMaker(workArea, toolBar) {
                 addVendorToHistory(newVendorEl); // Add vendor to DOM and log history
 
                 $(this).closest("div.overlay").hide();
-                $(this).parent().children("div.error").hide();
+                resetForm($(this).parent());
             } else if (toolContext.vendorAction = ACTIONS.UPDATE) {
 
             }
@@ -407,22 +411,18 @@ function mapMaker(workArea, toolBar) {
         return Math.abs(y1 - y2);
     }
 
+    // Clears all inputs and hides all error divs
+    function resetForm(formEl) {
+        formEl.children("div.error").hide();
+        var inputs = formEl.find("input, textarea");
+        for (var i = 0; i < inputs.length; i++) {
+            $(inputs[i]).val("");
+        }
+    }
+
 
 
 }
-
-
-// PLAN
-
-// Store action HISTORY as JS and on save press, we pass a JSON object in with information needed to save
-// state of the map
-
-// We will save objects in a history array and as we undo, we pop. Redo, push something back on.
-// Certain actions in our DB need to happen in order.  Vendors and tags made first, then vendor tags. Finally, booths.
-
-// In addition, we need to store the current 'tool' as this influences what action happens when the work area is clicked.
-
-
 
 
 

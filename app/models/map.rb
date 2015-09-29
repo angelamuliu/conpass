@@ -92,11 +92,14 @@ class Map < ActiveRecord::Base
     # All creates are working off TEMP objs
     def createModels(modelName, actionHistory)
         createActions = if actionHistory["create"].nil? then {} else actionHistory["create"] end
+            byebug
         for idKey in createActions.keys
             createAction = createActions[idKey]
             case modelName
             when "map"
             when "vendor"
+                Vendor.create({name: createAction["name"], convention_id: self.convention_id, 
+                    description: createAction["description"], website_url: createAction["website_url"]})
             when "tag"
             when "vendor_tag"
             when "booth"
