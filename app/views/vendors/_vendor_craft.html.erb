@@ -7,11 +7,17 @@
     </div>
 
     <%# Listing existing vendors %>
-    <div>
-        <ul>
+    <div id="vendor_list">
+        <ul class="unordered">
             <% vendors.each do |vendor| %>
-                <li>
-                    <%= vendor.name %>
+                <li data-id="<%= vendor.id %>">
+                    <div class="vendorshow">
+                        <%= vendor.name %>
+                    </div>
+                    <div class="vendorshow_extra">
+                        <strong>URL: </strong> <%= vendor.website_url %> <br />
+                        <strong>Description: </strong> <%= vendor.description %>
+                    </div>
                 </li>
             <% end %>
         </ul>
@@ -19,7 +25,12 @@
 
     <div class="overlay">
         <form id="vendor_form">
-            <a href="#" class="vendor_form_close">
+
+            <div class="error">
+                Please enter a name for the vendor
+            </div>
+
+            <a href="#" class="close_overlay">
                 <i class="fa fa-times"></i>
             </a>
 
@@ -40,8 +51,8 @@
                 </li>
             </ul>
 
-            <button>Submit</button>
-            <button class="vendor_form_close">Cancel</button>
+            <button id="vendor_form_submit">Submit</button>
+            <button class="close_overlay">Cancel</button>
         </form>
     </div>
 

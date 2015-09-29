@@ -104,38 +104,41 @@ function mapMaker(workArea, toolBar) {
         selectedTool = this.dataset.type;
     })
 
-    $(".booth").mousedown(function(e) {
-        switch(selectedTool) {
-            case TOOLS.ERASER:
-                deleteBoothToHistory($(this), false);
-                this.remove();
-                break;
-            case TOOLS.SELECT:
-                startMoveBooth($(this), e);
-                break;
-            default:
-        }
-    })
-
-    $(".booth").mouseup(function(e) {
-        switch(selectedTool) {
-            case TOOLS.SELECT:
-                endMoveBooth($(this), e, false);
-                break;
-            default:
-        }
-    })
-
     $(".overlay").click(function() {
         $(this).hide();
+    })
+
+    $(".close_overlay").click(function(e) {
+        $(this).closest("div.overlay").hide();
     })
 
     $(".overlay form").click(function(e) {
         e.stopPropagation();
     })
 
+    $("#vendor_form_submit").click(function(e) {
+        if (validateVendorFields($(this).parent())) {
+            if (toolContext.vendorAction = ACTIONS.CREATE) {
+                var newVendorEl = addVendorToDOM($(this).parent());
+                addVendorToHistory(newVendorEl); // Add vendor to DOM and log history
+
+                $(this).closest("div.overlay").hide();
+                $(this).parent().children("div.error").hide();
+            } else if (toolContext.vendorAction = ACTIONS.UPDATE) {
+
+            }
+        } else { 
+            // TODO!!!
+            // Don't prepend. Just show an 'error' div thats hidden at first for a few seconds
+            $(this).parent().children("div.error").slideDown(300);
+
+        }
+        return false;
+    })
+
     $("#add_vendor").click(function() {
         $("#vendor_form").parent().toggle();
+        toolContext.vendorAction = ACTIONS.CREATE;
     })
 
     // ------------------------------
@@ -149,6 +152,18 @@ function mapMaker(workArea, toolBar) {
         }
     })
 
+    $(".booth").mousedown(function(e) {
+        switch(selectedTool) {
+            case TOOLS.ERASER:
+                deleteBoothToHistory($(this), false);
+                this.remove();
+                break;
+            case TOOLS.SELECT:
+                startMoveBooth($(this), e);
+                break;
+            default:
+        }
+    })
 
 
     // ------------------------------
@@ -157,6 +172,15 @@ function mapMaker(workArea, toolBar) {
         switch(selectedTool) {
             case TOOLS.RECTANGLE:
                 finishBooth(e);
+                break;
+            default:
+        }
+    })
+
+    $(".booth").mouseup(function(e) {
+        switch(selectedTool) {
+            case TOOLS.SELECT:
+                endMoveBooth($(this), e, false);
                 break;
             default:
         }
@@ -265,6 +289,7 @@ function mapMaker(workArea, toolBar) {
         actionHistory.push(boothHistory);
     }
 
+    // Log updating a booth into our history array
     function updateBoothToHistory(boothEl, isTemp) {
         var left = parseInt(boothEl.css("left"));
         var top = parseInt(boothEl.css("top"));
@@ -296,6 +321,70 @@ function mapMaker(workArea, toolBar) {
             boothHistory["isTemp"] = true;
         }
         actionHistory.push(boothHistory);
+    }
+
+    // ------------------------------
+    // VENDOR
+
+    // Attaches all required event listeners a vendor element
+    function addVendorListeners(vendorEl) {
+
+    }
+
+    function validateVendorFields(formEl) {
+        var inputs = formEl.find("input, textarea");
+        // For now, we just validate that there is a name
+        if (inputs.first().val().length < 1) {
+            return false;
+        }
+        return true;
+    }
+
+    function addVendorToDOM(formEl) {
+        // TODO -> Make the new vendor EL updated to reflect final style AND interactions!!
+        lastVendorId++;
+        var name = $("input[name='vendor_name']").val();
+        var url = $("input[name='vendor_url']").val();
+        var desc = $("textarea[name='vendor_desc']").val();
+
+        var newVendorEl = $("<li data-id=\""+ lastVendorId + "\">" +
+                            "<div class=\"vendorshow\">"+ name + "</div>" + 
+                            "<div class=\"vendorshow_extra\">" + 
+                                "<strong>URL: </strong>" + url + "<br />" + 
+                                "<strong>Description: </strong>" + desc + 
+                            "</div></li>");
+        $("#vendor_list ul").append(newVendorEl);
+        return newVendorEl;
+    }
+
+    // Log creating a vendor into our history array
+    function addVendorToHistory(formEl) {
+        var name = $("input[name='vendor_name']").val();
+        var url = $("input[name='vendor_url']").val();
+        var desc = $("textarea[name='vendor_desc']").val();
+
+        var vendorHistory = {
+            "action" : toolContext.vendorAction,
+            "type" : TYPES.VENDOR,
+            "id" : lastVendorId,
+            "name" : name,
+            "website_url" : url,
+            "description" : desc,
+            "isTemp" : true
+        }
+        actionHistory.push(vendorHistory);
+    }
+
+    function updateVendorToHistory() {
+
+    }
+
+    function deleteVendorToHistory() {
+
+    }
+
+    function removeVendorFromDom() {
+
     }
 
     // ------------------------------
