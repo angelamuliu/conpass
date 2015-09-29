@@ -1,9 +1,10 @@
 <div id="vendor_craft">
     <div>
         <button>Vendors</button>
+        <button id="add_vendor">
+            <i class="fa fa-plus"></i>
+        </button>
     </div>
-
-    <%# Create vendor form %>
 
     <%# Listing existing vendors %>
     <div>
@@ -15,4 +16,33 @@
             <% end %>
         </ul>
     </div>
+
+    <div class="overlay">
+        <form id="vendor_form">
+            <a href="#" class="vendor_form_close">
+                <i class="fa fa-times"></i>
+            </a>
+
+            <ul class="unordered">
+                <li>
+                    <label for="vendor_name">Name</label>
+                    <input type="text" name="vendor_name">
+                </li>
+
+                <li>
+                    <label for="vendor_url">URL</label>
+                    <input type="text" name="vendor_url">
+                </li>
+
+                <li>
+                    <label for="vendor_desc">Description</label>
+                    ​<textarea id="txtArea" rows="10" name="vendor_desc"></textarea>
+                </li>
+            </ul>
+
+            <button>Submit</button>
+            <button class="vendor_form_close">Cancel</button>
+        </form>
+    </div>
+
 </div>

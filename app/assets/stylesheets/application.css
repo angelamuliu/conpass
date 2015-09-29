@@ -14,3 +14,13 @@
  *= require_self
  *= require font-awesome
  */
+
+body {
+    margin: 0;
+}
+
+ul.unordered {
+    list-style: none;
+    margin: 0;
+    padding:0;
+}

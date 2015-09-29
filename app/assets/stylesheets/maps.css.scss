@@ -2,14 +2,13 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-// DELETE LATER
-.block {
-    width: 100px;
-    height: 100px;
+#workArea_container {
+    padding: 5px;
+    background-color: #e5e5e5;
 }
 
 #workArea {
-    background-color: gainsboro;
+    background-color: white;
     position: relative;
 }
 
@@ -22,4 +21,47 @@
     border: 2px solid black;
     background-color: white;
     position: absolute;
+}
+
+
+
+.overlay {
+    display: none;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 50;
+    background-color: rgba(0,0,0,0.3);
+}
+
+
+
+// ----------------------------------------
+
+#vendor_craft form {
+    position: absolute;
+    z-index: 100;
+    background-color: red;
+    margin: auto;
+    top: 0; right: 0; left: 0; bottom: 0;
+    max-width: 50%;
+    padding: 10px;
+}
+
+#vendor_craft form label {
+    display: block;
+}
+#vendor_craft form input {
+    width: 100%;
+}
+#vendor_craft form textarea {
+    width: 100%;
+    resize:vertical 
+}
+#vendor_craft form a.vendor_form_close{
+    position: absolute;
+    top: 0;
+    right: 0;
 }

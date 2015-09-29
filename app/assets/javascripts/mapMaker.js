@@ -4,9 +4,7 @@
 
 
 // We can grab controller vars before dom is loaded FYI
-
-
-console.log(gon.map);
+// console.log(gon.map);
 
 $(document).ready(function() {
 
@@ -126,6 +124,18 @@ function mapMaker(workArea, toolBar) {
                 break;
             default:
         }
+    })
+
+    $(".overlay").click(function() {
+        $(this).hide();
+    })
+
+    $(".overlay form").click(function(e) {
+        e.stopPropagation();
+    })
+
+    $("#add_vendor").click(function() {
+        $("#vendor_form").parent().toggle();
     })
 
     // ------------------------------
