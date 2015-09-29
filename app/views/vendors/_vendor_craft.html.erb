@@ -1,0 +1,18 @@
+<div id="vendor_craft">
+    <div>
+        <button>Vendors</button>
+    </div>
+
+    <%# Create vendor form %>
+
+    <%# Listing existing vendors %>
+    <div>
+        <ul>
+            <% vendors.each do |vendor| %>
+                <li>
+                    <%= vendor.name %>
+                </li>
+            <% end %>
+        </ul>
+    </div>
+</div>

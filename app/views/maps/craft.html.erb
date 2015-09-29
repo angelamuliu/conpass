@@ -6,6 +6,8 @@
     <button class="tool" data-type="rectangle">Rectangle</button>
     <button class="tool" data-type="eraser">Eraser</button>
     <button class="tool" data-type="select">Select</button>
+
+    <%= render partial: 'vendors/vendor_craft', locals: {vendors: @vendors} %>
 </div>
 
 <div id="workArea">

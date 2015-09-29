@@ -23,6 +23,8 @@ gem 'spring',        group: :development
 # --------------------------------------------------
 # ADDED
 
+gem 'font-awesome-rails'
+
 gem 'gon', '~> 6.0.1' # Allows passing variables from controllers into JS as JSON
 gem 'simple_form'
 gem 'json' # To parse JSON to ruby HASH, vice versa

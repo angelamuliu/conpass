@@ -9,11 +9,17 @@
 }
 
 #workArea {
-    background-color: red;
+    background-color: gainsboro;
     position: relative;
 }
 
+// .booth {
+//     background-color: blue;
+//     position: absolute;
+// }
+
 .booth {
-    background-color: blue;
+    border: 2px solid black;
+    background-color: white;
     position: absolute;
 }
