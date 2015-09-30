@@ -162,6 +162,12 @@ function mapMaker(workArea, toolBar) {
         toolContext.vendorId = toolContext.vendorEl.data("id");
     })
 
+    $(".destroy_vendor").click(function() {
+        var vendorEl = $(this).closest("li");
+        deleteVendorToHistory(vendorEl, false);
+        deleteVendorInDom(vendorEl);
+    })
+
 
     // ------------------------------------------------------------
 ////// MOUSEDOWN
@@ -371,6 +377,11 @@ function mapMaker(workArea, toolBar) {
             toolContext.isTemp = true;
             toolContext.vendorId = toolContext.vendorEl.data("id");
         })
+
+        vendorEl.find(".destroy_vendor").click(function() {
+            deleteVendorToHistory(vendorEl, true);
+            deleteVendorInDom(vendorEl);
+        })
     }
 
     function validateVendorFields(formEl) {
@@ -411,7 +422,7 @@ function mapMaker(workArea, toolBar) {
         var url = $("input[name='vendor_url']").val();
         var desc = $("textarea[name='vendor_desc']").val();
         var vendorHistory = {
-            "action" : toolContext.vendorAction,
+            "action" : ACTIONS.CREATE,
             "type" : TYPES.VENDOR,
             "id" : lastVendorId,
             "name" : name,
@@ -438,7 +449,7 @@ function mapMaker(workArea, toolBar) {
         var url = $("input[name='vendor_url']").val();
         var desc = $("textarea[name='vendor_desc']").val();
         var vendorHistory = {
-            "action" : toolContext.vendorAction,
+            "action" : ACTIONS.UPDATE,
             "type" : TYPES.VENDOR,
             "id" : toolContext.vendorId,
             "name" : name,
@@ -451,12 +462,20 @@ function mapMaker(workArea, toolBar) {
         actionHistory.push(vendorHistory);
     }
 
-    function deleteVendorToHistory() {
-
+    function deleteVendorInDom(vendorEl) {
+        vendorEl.remove();
     }
 
-    function removeVendorFromDom() {
-
+    function deleteVendorToHistory(vendorEl, isTemp) {
+        var vendorHistory = {
+            "action" : ACTIONS.DELETE,
+            "type" : TYPES.VENDOR,
+            "id" : vendorEl.data("id")
+        }
+        if (isTemp) { // Deleted temp obj that was never saved. Keep track of this
+            vendorHistory["isTemp"] = true;
+        }
+        actionHistory.push(vendorHistory);
     }
 
 

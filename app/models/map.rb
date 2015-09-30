@@ -91,7 +91,6 @@ class Map < ActiveRecord::Base
     # All creates are working off TEMP objs
     def createModels(modelName, actionHistory)
         createActions = if actionHistory["create"].nil? then {} else actionHistory["create"] end
-            byebug
         for idKey in createActions.keys
             createAction = createActions[idKey]
             case modelName
@@ -135,6 +134,7 @@ class Map < ActiveRecord::Base
             case modelName
             when "map"
             when "vendor"
+                Vendor.find(deleteAction["id"]).destroy
             when "tag"
             when "vendor_tag"
             when "booth"
