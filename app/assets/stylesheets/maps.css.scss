@@ -38,12 +38,20 @@
 
 // ----------------------------------------
 
+#vendor_craft {
+    display: inline-block;
+}
+
 #vendor_list {
     display: none;
 }
 
 .vendorshow_extra {
     display: none;
+}
+
+.vendorshow_extra span {
+    display: block;
 }
 
 #vendor_craft form {

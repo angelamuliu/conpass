@@ -26,6 +26,8 @@ $(document).ready(function() {
 
 })
 
+
+
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // CONSTANTS + GLOBALS
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -53,20 +55,15 @@ var TYPES = { // Used to store what object we'll want to use
 
 var actionHistory = []; // Store create, update action objs in here in order of occurance
 
-// TODO: USE CASE -> Temp booth created. Other stuff happens. Temp booth modified. Other stuff. Finally, temp booth deleted...
-// We won't know the ID of the temp booth since it, currently, gets created as per history
-// To FIX: We can get the ID of the last booth saved on the map via gon. Then, as we insert new booths, we assign a temporary
-// data-id attribute which is the last ID incremented. 
-
-// Then we save deletes as well, and don't create in first place if the temp obj gets deleted later.
-// We also do the same for updates for temp objs -> if temp obj updated, in backend, we just change the create statement to the 
-// new state
 
 
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 
+
 function mapMaker(workArea, toolBar) {
+
+
 
     // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     // VARIABLES
@@ -86,12 +83,16 @@ function mapMaker(workArea, toolBar) {
     var lastBoothId = gon.booths.length > 0 ? gon.booths[gon.booths.length - 1].id : 0;
 
 
+
     // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    // EVENT LISTENERS
+////// EVENT LISTENERS
     // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-    // ------------------------------
-    // CLICK
+
+    // ------------------------------------------------------------
+////// CLICK
+    // ------------------------------------------------------------
+
     workArea.click(function(e) {
         switch(selectedTool) {
             case TOOLS.RECTANGLE:
@@ -121,21 +122,20 @@ function mapMaker(workArea, toolBar) {
     })
 
     $("#vendor_form_submit").click(function(e) {
-        if (validateVendorFields($(this).parent())) {
-            if (toolContext.vendorAction = ACTIONS.CREATE) {
-                var newVendorEl = addVendorToDOM($(this).parent());
-                addVendorToHistory(newVendorEl); // Add vendor to DOM and log history
-
-                $(this).closest("div.overlay").hide();
-                resetForm($(this).parent());
-            } else if (toolContext.vendorAction = ACTIONS.UPDATE) {
-
+        var formEl = $(this).parent();
+        if (validateVendorFields(formEl)) {
+            if (toolContext.vendorAction === ACTIONS.CREATE) { // Add vendor to DOM + log history
+                var newVendorEl = addVendorToDOM();
+                addVendorToHistory(newVendorEl);
+                addVendorListeners(newVendorEl);
+            } else if (toolContext.vendorAction === ACTIONS.UPDATE) { // Update vendor
+                updateVendorToHistory(formEl);
+                updateVendorInDom(toolContext.vendorEl);
             }
+            $(this).closest("div.overlay").hide();
+            resetForm(formEl);
         } else { 
-            // TODO!!!
-            // Don't prepend. Just show an 'error' div thats hidden at first for a few seconds
-            $(this).parent().children("div.error").slideDown(300);
-
+            formEl.children("div.error").slideDown(300);
         }
         return false;
     })
@@ -144,17 +144,29 @@ function mapMaker(workArea, toolBar) {
         $("#vendor_list").toggle();
     })
 
-    $(".vendorshow a").click(function() { // Clicking vendor name toggles its vendorshow_extra info
-        $(this).parent().siblings().first().toggle();
-    })
-
     $("#add_vendor").click(function() {
         $("#vendor_form").parent().toggle();
         toolContext.vendorAction = ACTIONS.CREATE;
     })
 
-    // ------------------------------
-    // MOUSEDOWN
+    $(".vendorshow a").click(function() { // Clicking vendor name toggles its vendorshow_extra info
+        $(this).parent().siblings().first().toggle();
+    })
+
+    $(".update_vendor").click(function() {
+        toolContext.vendorEl = $(this).closest("li");
+        prepVendorForm(toolContext.vendorEl, $("#vendor_form"));
+        $("#vendor_form").parent().toggle();
+        toolContext.vendorAction = ACTIONS.UPDATE;
+        toolContext.isTemp = false;
+        toolContext.vendorId = toolContext.vendorEl.data("id");
+    })
+
+
+    // ------------------------------------------------------------
+////// MOUSEDOWN
+    // ------------------------------------------------------------
+
     workArea.mousedown(function(e) {
         switch(selectedTool) {
             case TOOLS.RECTANGLE:
@@ -178,8 +190,10 @@ function mapMaker(workArea, toolBar) {
     })
 
 
-    // ------------------------------
-    // MOUSEUP
+    // ------------------------------------------------------------
+////// MOUSEUP
+    // ------------------------------------------------------------
+
     workArea.mouseup(function(e) {
         switch(selectedTool) {
             case TOOLS.RECTANGLE:
@@ -199,12 +213,15 @@ function mapMaker(workArea, toolBar) {
     })
 
 
+
     // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    // FUNCTIONS
+////// FUNCTIONS
     // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-    // ------------------------------
-    // BOOTH
+
+    // ------------------------------------------------------------
+////// BOOTH
+    // ------------------------------------------------------------
 
     // Attaches all required event listeners to a booth element
     function addBoothListeners(boothEl) {
@@ -335,12 +352,25 @@ function mapMaker(workArea, toolBar) {
         actionHistory.push(boothHistory);
     }
 
-    // ------------------------------
-    // VENDOR
+
+    // ------------------------------------------------------------
+////// VENDOR
+    // ------------------------------------------------------------
 
     // Attaches all required event listeners a vendor element
     function addVendorListeners(vendorEl) {
+        vendorEl.find(".vendorshow a").click(function() { // Clicking vendor name toggles its vendorshow_extra info
+            vendorEl.children(".vendorshow_extra").toggle();
+        })
 
+        vendorEl.find(".update_vendor").click(function() {
+            toolContext.vendorEl = vendorEl;
+            prepVendorForm(toolContext.vendorEl, $("#vendor_form"));
+            $("#vendor_form").parent().toggle();
+            toolContext.vendorAction = ACTIONS.UPDATE;
+            toolContext.isTemp = true;
+            toolContext.vendorId = toolContext.vendorEl.data("id");
+        })
     }
 
     function validateVendorFields(formEl) {
@@ -352,18 +382,24 @@ function mapMaker(workArea, toolBar) {
         return true;
     }
 
-    function addVendorToDOM(formEl) {
-        // TODO -> Make the new vendor EL updated to reflect final style AND interactions!!
+    function addVendorToDOM() {
         lastVendorId++;
         var name = $("input[name='vendor_name']").val();
         var url = $("input[name='vendor_url']").val();
         var desc = $("textarea[name='vendor_desc']").val();
 
         var newVendorEl = $("<li data-id=\""+ lastVendorId + "\">" +
-                            "<div class=\"vendorshow\">"+ name + "</div>" + 
+                            "<div class=\"vendorshow\">" + 
+                                "<i class=\"fa fa-circle-o drag_assign\"></i>" +
+                                "<a href=\"#\" class=\"vendor_name\">"+ name + "</a>" +
+                                "<i class=\"fa fa-eye vendorview_off\"></i>" +
+                            "</div>" +
                             "<div class=\"vendorshow_extra\">" + 
-                                "<strong>URL: </strong>" + url + "<br />" + 
-                                "<strong>Description: </strong>" + desc + 
+                                "<strong>URL: </strong><span class=\"vendor_url\">" + url + "</span>" + 
+                                "<strong>Description: </strong><span class=\"vendor_desc\">" + desc + "</span>" + 
+                                "<div class=\"vendor_tags\"></div>" + 
+                                "<button class=\"update_vendor\">Update</button>" +
+                                "<button class=\"destroy_vendor\">Destroy</button>" +
                             "</div></li>");
         $("#vendor_list ul").append(newVendorEl);
         return newVendorEl;
@@ -374,7 +410,6 @@ function mapMaker(workArea, toolBar) {
         var name = $("input[name='vendor_name']").val();
         var url = $("input[name='vendor_url']").val();
         var desc = $("textarea[name='vendor_desc']").val();
-
         var vendorHistory = {
             "action" : toolContext.vendorAction,
             "type" : TYPES.VENDOR,
@@ -387,8 +422,33 @@ function mapMaker(workArea, toolBar) {
         actionHistory.push(vendorHistory);
     }
 
-    function updateVendorToHistory() {
+    function updateVendorInDom(vendorEl) {
+        var name = $("input[name='vendor_name']").val();
+        var url = $("input[name='vendor_url']").val();
+        var desc = $("textarea[name='vendor_desc']").val();
 
+        vendorEl.find(".vendor_name").text(name);
+        vendorEl.find(".vendor_url").text(url);
+        vendorEl.find(".vendor_desc").text(desc);
+    }
+
+    // Log updating a booth into our history array
+    function updateVendorToHistory(formEl) {
+        var name = $("input[name='vendor_name']").val();
+        var url = $("input[name='vendor_url']").val();
+        var desc = $("textarea[name='vendor_desc']").val();
+        var vendorHistory = {
+            "action" : toolContext.vendorAction,
+            "type" : TYPES.VENDOR,
+            "id" : toolContext.vendorId,
+            "name" : name,
+            "website_url" : url,
+            "description" : desc
+        }
+        if (toolContext.isTemp) { // Updated temp obj that was never saved. Keep track of this
+            vendorHistory["isTemp"] = true;
+        }
+        actionHistory.push(vendorHistory);
     }
 
     function deleteVendorToHistory() {
@@ -399,8 +459,11 @@ function mapMaker(workArea, toolBar) {
 
     }
 
-    // ------------------------------
-    // HELPERS
+
+
+    // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+////// HELPERS
+    // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     
     // Given two sets of x, y that define the zone of a rectangle, returns topleft coords as [x,y] 
     function findTopLeft(x1, y1, x2, y2) {
@@ -426,6 +489,17 @@ function mapMaker(workArea, toolBar) {
         for (var i = 0; i < inputs.length; i++) {
             $(inputs[i]).val("");
         }
+    }
+
+    // Preps the vendor form with data from the vendor el
+    function prepVendorForm(vendorEl, formEl) {
+        var name = vendorEl.find(".vendor_name").text();
+        var url = vendorEl.find(".vendor_url").text();
+        var desc = vendorEl.find(".vendor_desc").text();
+
+        formEl.find(".vendor_name").val(name);
+        formEl.find(".vendor_url").val(url);
+        formEl.find(".vendor_desc").val(desc);
     }
 
 
