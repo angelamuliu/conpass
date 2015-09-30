@@ -140,6 +140,14 @@ function mapMaker(workArea, toolBar) {
         return false;
     })
 
+    $("#toggle_vendors").click(function() {
+        $("#vendor_list").toggle();
+    })
+
+    $(".vendorshow a").click(function() { // Clicking vendor name toggles its vendorshow_extra info
+        $(this).parent().siblings().first().toggle();
+    })
+
     $("#add_vendor").click(function() {
         $("#vendor_form").parent().toggle();
         toolContext.vendorAction = ACTIONS.CREATE;

@@ -38,6 +38,14 @@
 
 // ----------------------------------------
 
+#vendor_list {
+    display: none;
+}
+
+.vendorshow_extra {
+    display: none;
+}
+
 #vendor_craft form {
     position: absolute;
     z-index: 100;

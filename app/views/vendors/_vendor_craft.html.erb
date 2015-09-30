@@ -1,6 +1,6 @@
 <div id="vendor_craft">
     <div>
-        <button>Vendors</button>
+        <button id="toggle_vendors">Vendors</button>
         <button id="add_vendor">
             <i class="fa fa-plus"></i>
         </button>
@@ -12,7 +12,9 @@
             <% vendors.each do |vendor| %>
                 <li data-id="<%= vendor.id %>">
                     <div class="vendorshow">
-                        <%= vendor.name %>
+                        <i class="fa fa-circle-o drag_assign"></i>
+                        <a href="#"><%= vendor.name %></a>
+                        <i class="fa fa-eye vendorview_off"></i>
                     </div>
                     <div class="vendorshow_extra">
                         <strong>URL: </strong> <%= vendor.website_url %> <br />
@@ -23,34 +25,29 @@
         </ul>
     </div>
 
+    <%# Vendor overlay form %>
     <div class="overlay">
         <form id="vendor_form">
-
             <div class="error">
                 Please enter a name for the vendor
             </div>
-
             <a href="#" class="close_overlay">
                 <i class="fa fa-times"></i>
             </a>
-
             <ul class="unordered">
                 <li>
                     <label for="vendor_name">Name</label>
                     <input type="text" name="vendor_name">
                 </li>
-
                 <li>
                     <label for="vendor_url">URL</label>
                     <input type="text" name="vendor_url">
                 </li>
-
                 <li>
                     <label for="vendor_desc">Description</label>
                     ​<textarea id="txtArea" rows="10" name="vendor_desc"></textarea>
                 </li>
             </ul>
-
             <button id="vendor_form_submit">Submit</button>
             <button class="close_overlay">Cancel</button>
         </form>
