@@ -66,7 +66,6 @@ class Map < ActiveRecord::Base
                 end
             when "delete"
                 if historyItem.has_key?("isTemp") and historyItem["isTemp"] == true
-                    byebug
                     # Instead of creating then deleting, just remove the create action for the temp obj
                     categorizedHistory[historyItem["type"]]["create"].delete(historyItem["id"])
                 else
@@ -117,6 +116,8 @@ class Map < ActiveRecord::Base
             case modelName
             when "map"
             when "vendor"
+                Vendor.update(updateAction["id"], name: updateAction["name"], description: updateAction["description"],
+                    website_url: updateAction["website_url"])
             when "tag"
             when "vendor_tag"
             when "booth"
