@@ -64,7 +64,6 @@ var actionHistory = []; // Store create, update action objs in here in order of 
 function mapMaker(workArea, toolBar) {
 
 
-
     // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     // VARIABLES
     // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -218,7 +217,39 @@ function mapMaker(workArea, toolBar) {
         }
     })
 
+    // ------------------------------------------------------------
+////// DRAG EVENTS
+    // ------------------------------------------------------------
 
+    $(".drag_assign").on("dragstart", function(e) {
+        var vendorId = $(this).closest("li").data("id");
+        toolContext.vendorId = vendorId;
+    })
+
+    $(".booth").on("dragenter", function(e) {
+        console.log("ENTEr");
+        e.preventDefault();  
+        e.stopPropagation();
+    })
+
+    $(".booth").on("dragleave", function(e) {
+        console.log("LEAVE");
+        e.preventDefault();  
+        e.stopPropagation();
+    })
+
+    $(".booth").on("dragover", function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+    })
+
+    $(".booth").on("drop", function(e, ui) {
+        toolContext.boothId = $(this).data("id");
+        e.preventDefault();  
+        e.stopPropagation();
+        makeVendorBoothForm(ui);
+    })
 
     // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 ////// FUNCTIONS
@@ -479,11 +510,37 @@ function mapMaker(workArea, toolBar) {
     }
 
 
+    // ------------------------------------------------------------
+////// VENDOR BOOTH
+    // ------------------------------------------------------------
+
+
+// PLAN: All booths if they get assigned get an additional class added to them that has vendor ID
+// If a booth has a vendor booth, then ... 
+
+    function addVendorBoothToDom() {
+
+    }
+
+    function addVendorBoothToHistory() {
+        var vendorId;
+        var boothId;
+        var startTime;
+        var endTime;
+        var vendorBoothHistory = {
+
+        }
+        actionHistory.push(vendorBoothHistory);
+    }
+
+
+
+
 
     // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 ////// HELPERS
     // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    
+
     // Given two sets of x, y that define the zone of a rectangle, returns topleft coords as [x,y] 
     function findTopLeft(x1, y1, x2, y2) {
         var x = x1 < x2 ? x1 : x2;
@@ -522,6 +579,12 @@ function mapMaker(workArea, toolBar) {
     }
 
 
+    // Given an event, gets a top left corner and edits the vendorBooth form DOM object
+    function prepVendorBoothForm(uiPosition) {
+        var x = event.pageX;
+        var y = event.pageY;
+
+    }
 
 }
 

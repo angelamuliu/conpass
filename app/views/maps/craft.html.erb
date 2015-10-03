@@ -7,6 +7,8 @@
     <%= render partial: 'vendors/vendor_craft', locals: {vendors: @vendors} %>
 </div>
 
+<%= render partial: 'vendor_booths/jsForm' %>
+
 <div id="workArea_container">
     <div id="workArea">
         <% @booths.each do |booth| %>
