@@ -617,7 +617,6 @@ function mapMaker(workArea, toolBar) {
                             "</div>" + 
                             "<span class=\"dateRange\">" + range + "</span>" +
                             "</li>");
-
         // Update the booth too for highlighting
         toolContext.boothEl.addClass("v"+toolContext.vendorId);
         // If the vendor is currently being highlighted, we need to add highlights

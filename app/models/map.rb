@@ -29,8 +29,9 @@ class Map < ActiveRecord::Base
         saveForModel("map", categorizedHistory)
         saveForModel("vendor", categorizedHistory)
         saveForModel("tag", categorizedHistory)
-        saveForModel("vendor_tag", categorizedHistory)
         saveForModel("booth", categorizedHistory)
+        saveForModel("vendor_tag", categorizedHistory)
+        saveForModel("vendor_booth", categorizedHistory)
     end
 
     # Takes array of hashes and organizes in types of actions so that we can save efficiently & properly
@@ -100,10 +101,13 @@ class Map < ActiveRecord::Base
                 Vendor.create({name: createAction["name"], convention_id: self.convention_id, 
                     description: createAction["description"], website_url: createAction["website_url"]})
             when "tag"
-            when "vendor_tag"
             when "booth"
                 Booth.create({x_pos: createAction["x"].to_i, y_pos: createAction["y"].to_i, 
                     width: createAction["width"].to_i, height: createAction["height"].to_i, map_id: self.id})
+            when "vendor_tag"
+            when "vendor_booth"
+                VendorBooth.create({vendor_id: createAction["vendor_id"], booth_id: createAction["booth_id"],
+                    start_time: DateTime.parse(createAction["start_time"]), end_time: DateTime.parse(createAction["end_time"])})
             end
         end
     end
@@ -119,10 +123,11 @@ class Map < ActiveRecord::Base
                 Vendor.update(updateAction["id"], name: updateAction["name"], description: updateAction["description"],
                     website_url: updateAction["website_url"])
             when "tag"
-            when "vendor_tag"
             when "booth"
                 Booth.update(updateAction["id"], x_pos: updateAction["x"].to_i, y_pos: updateAction["y"].to_i,
                     width: updateAction["width"].to_i, height: updateAction["height"].to_i)
+            when "vendor_tag"
+            when "vendor_booth"
             end
         end
     end
@@ -137,9 +142,10 @@ class Map < ActiveRecord::Base
             when "vendor"
                 Vendor.find(deleteAction["id"]).destroy
             when "tag"
-            when "vendor_tag"
             when "booth"
                 Booth.find(deleteAction["id"]).destroy
+            when "vendor_tag"
+            when "vendor_booth"
             end
         end
     end
