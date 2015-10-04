@@ -588,9 +588,20 @@ function mapMaker(workArea, toolBar) {
 
     function addVendorBoothToDom() {
         lastVendorBoothId++;
+        var startDate = new Date($("input[name='vendorbooth_starttime']").val());
+        var endDate = new Date($("input[name='vendorbooth_endtime']").val());
+        var range = "(" + formatDate(startDate) + " - " + formatDate(endDate) + ")";
+        var vendorName = $("#vendor_list").find("li[data-id="+toolContext.vendorId+"]").children(".vendorshow").children(".vendor_name").text()
         var vendorBoothEl= toolContext.boothEl.children(".vendorBooth");
         vendorBoothEl.children(".no_vendorBooths").hide();
-        vendorBoothEl.append("<li class=\"v"+toolContext.vendorId+"\">"+ "ASDF" +"</li>");
+        vendorBoothEl.append("<li class=\"vendorBooth v"+toolContext.vendorId+"\">"+
+                             vendorName +
+                            "<div class=\"options\">" +
+                                "<button class=\"update_vendorBooth\"><i class=\"fa fa-pencil\"></i></button>" + 
+                                "<button class=\"destroy_vendorBooth\"><i class=\"fa fa-trash\"></i></button>" +
+                            "</div>" + 
+                            "<span class=\"dateRange\">" + range + "</span>" +
+                            "</li>");
     }
 
     function addVendorBoothToHistory() {
@@ -669,6 +680,39 @@ function mapMaker(workArea, toolBar) {
 
     function showVendorBoothForm(vendorbooth_formEl) {
         vendorbooth_formEl.parent().show();
+    }
+
+    function numToDayOfWeek(num) { // Given a number between 0 - 6, converts to string that is day of week
+        switch(num) {
+            case 0:
+                return "Sun";
+            case 1:
+                return "Mon";
+            case 2:
+                return "Tue";
+            case 3:
+                return "Wed";
+            case 4:
+                return "Thu";
+            case 5:
+                return "Fri";
+            case 6:
+                return "Sat";
+            default:
+                return "N/A";
+        }
+    }
+
+    // Given a JS date object, formats into shortened form
+    function formatDate(date) {
+        var month = date.getMonth() + 1; // JS date starts at 0 so add 1
+        var dateDay = date.getDate();
+        var day = numToDayOfWeek(date.getDay()); // e.g. "Mon"
+        var hour = date.getHours() % 13;
+        var period = date.getHours() > 11 ? "pm" : "am";
+        var min = date.getMinutes();
+        min = min < 10 ? "0" + min : min;
+        return month + "/" + dateDay + " " + day + " " + hour + ":" + min + " " + period;
     }
 
 }

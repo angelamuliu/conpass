@@ -9,7 +9,7 @@ class VendorBooth < ActiveRecord::Base
 
     # Methods
     def timeRange()
-        return start_time.strftime("%a %l:%M%P") + " - " + end_time.strftime("%a %l:%M%P")
+        return start_time.strftime("%m/%-d %a %l:%M%P") + " - " + end_time.strftime("%m/%-d %a %l:%M%P")
     end
 
 end

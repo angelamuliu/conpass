@@ -19,11 +19,12 @@
                 <% if booth.vendor_booths.size > 0 %>
                     <% booth.vendor_booths.each do |vendor_booth| %>
                         <li class="vendorBooth v<%= vendor_booth.vendor.id %>">
-                            <%= vendor_booth.vendor.name %> (<%= vendor_booth.timeRange %>)
+                            <%= vendor_booth.vendor.name %>
                             <div class="options">
                                 <button class="update_vendorBooth"><i class="fa fa-pencil"></i></button>
                                 <button class="destroy_vendorBooth"><i class="fa fa-trash"></i></button>
                             </div>
+                            <span class="dateRange">(<%= vendor_booth.timeRange %>)</span>
                         </li>
                     <% end %>
                 <% else %>

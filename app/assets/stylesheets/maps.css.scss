@@ -114,6 +114,11 @@ ul.vendorBooth li:first-child {
     padding: 2px;
 }
 
+ul.vendorBooth span.dateRange {
+    display: block;
+    font-style: italic;
+}
+
 .close_vendorBooth {
     float: right;
 }
