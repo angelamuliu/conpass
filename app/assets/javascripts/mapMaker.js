@@ -181,6 +181,11 @@ function mapMaker(workArea, toolBar) {
         deleteVendorInDom(vendorEl);
     })
 
+    // Toggle highlighting of booths with a vendor
+    $(".vendorview_toggle").click(function() {
+        toggleVendorFilter($(this));
+    })
+
 
     // TODO!!!
     $("#vendorbooth_form_submit").click(function() {
@@ -502,7 +507,7 @@ function mapMaker(workArea, toolBar) {
                             "<div class=\"vendorshow\">" + 
                                 "<i class=\"fa fa-circle-o drag_assign\"></i>" +
                                 "<a href=\"#\" class=\"vendor_name\">"+ name + "</a>" +
-                                "<i class=\"fa fa-eye vendorview_off\"></i>" +
+                                "<i class=\"fa fa-eye vendorview_toggle\"></i>" +
                             "</div>" +
                             "<div class=\"vendorshow_extra\">" + 
                                 "<strong>URL: </strong><span class=\"vendor_url\">" + url + "</span>" + 
@@ -561,6 +566,7 @@ function mapMaker(workArea, toolBar) {
         actionHistory.push(vendorHistory);
     }
 
+    // TODO: Also hide any LI element with the id v + vendor ID
     function deleteVendorInDom(vendorEl) {
         vendorEl.remove();
     }
@@ -575,6 +581,18 @@ function mapMaker(workArea, toolBar) {
             vendorHistory["isTemp"] = true;
         }
         actionHistory.push(vendorHistory);
+    }
+
+    // TODO - Function
+    function toggleVendorFilter(toggleEl) {
+        var vendorClass = "v" + toggleEl.closest("li").data("id");
+        if (toggleEl.hasClass("vendorview_on")) { // ON to OFF
+            toggleEl.removeClass("vendorview_on");
+            $(".booth."+vendorClass).removeClass("highlight");
+        } else { // OFF to ON
+            toggleEl.addClass("vendorview_on");
+            $(".booth."+vendorClass).addClass("highlight");
+        }
     }
 
 
@@ -602,6 +620,8 @@ function mapMaker(workArea, toolBar) {
                             "</div>" + 
                             "<span class=\"dateRange\">" + range + "</span>" +
                             "</li>");
+        // Update the booth too for later highlighting
+        toolContext.boothEl.addClass("v"+toolContext.vendorId);
     }
 
     function addVendorBoothToHistory() {
@@ -620,6 +640,7 @@ function mapMaker(workArea, toolBar) {
         actionHistory.push(vendorBoothHistory);
     }
 
+    // TODO!!
     function validateVendorBoothFields(formEl) {
         return true;
         // return false;

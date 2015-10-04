@@ -34,6 +34,10 @@
     background-color: red;
 }
 
+.highlight {
+    background-color: yellow;
+}
+
 
 
 // ----------------------------------------
@@ -45,6 +49,13 @@
 
 #vendor_list {
     display: none;
+}
+
+.vendorview_toggle {
+    color: gainsboro;
+}
+.vendorshow .vendorview_on {
+    color: green;
 }
 
 .vendorshow_extra {

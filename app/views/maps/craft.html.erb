@@ -13,7 +13,7 @@
 <div id="workArea_container">
     <div id="workArea">
         <% @booths.each do |booth| %>
-            <%= content_tag :div, "", class: "booth", style: "left:#{booth.x_pos}px; top:#{booth.y_pos}px; width:#{booth.width}px; height:#{booth.height}px", "data-id": "#{booth.id}" do %>
+            <%= content_tag :div, "", class: "booth #{booth.cssVendorClasses}", style: "left:#{booth.x_pos}px; top:#{booth.y_pos}px; width:#{booth.width}px; height:#{booth.height}px", "data-id": "#{booth.id}" do %>
             <ul class="unordered vendorBooth">
                 <li>Vendors assigned to this booth<a href="#" class="close_vendorBooth"><i class="fa fa-times"></i></a></li>
                 <% if booth.vendor_booths.size > 0 %>
