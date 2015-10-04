@@ -560,7 +560,7 @@ function mapMaker(workArea, toolBar) {
             "website_url" : url,
             "description" : desc
         }
-        if (toolContext.isTemp) { // Updated temp obj that was never saved. Keep track of this
+        if (toolContext.isTemp) { // Updated temp obj never saved. 
             vendorHistory["isTemp"] = true;
         }
         actionHistory.push(vendorHistory);
@@ -577,13 +577,12 @@ function mapMaker(workArea, toolBar) {
             "type" : TYPES.VENDOR,
             "id" : vendorEl.data("id")
         }
-        if (isTemp) { // Deleted temp obj that was never saved. Keep track of this
+        if (isTemp) { // Deleted temp obj never saved. Keep track of this
             vendorHistory["isTemp"] = true;
         }
         actionHistory.push(vendorHistory);
     }
 
-    // TODO - Function
     function toggleVendorFilter(toggleEl) {
         var vendorClass = "v" + toggleEl.closest("li").data("id");
         if (toggleEl.hasClass("vendorview_on")) { // ON to OFF
@@ -596,13 +595,11 @@ function mapMaker(workArea, toolBar) {
     }
 
 
+
     // ------------------------------------------------------------
 ////// VENDOR BOOTH
     // ------------------------------------------------------------
 
-
-// PLAN: All booths if they get assigned get an additional class added to them that has vendor ID
-// If a booth has a vendor booth, then ... 
 
     function addVendorBoothToDom() {
         lastVendorBoothId++;
@@ -620,8 +617,13 @@ function mapMaker(workArea, toolBar) {
                             "</div>" + 
                             "<span class=\"dateRange\">" + range + "</span>" +
                             "</li>");
-        // Update the booth too for later highlighting
+
+        // Update the booth too for highlighting
         toolContext.boothEl.addClass("v"+toolContext.vendorId);
+        // If the vendor is currently being highlighted, we need to add highlights
+        if ($("li[data-id=\""+toolContext.vendorId + "\"").find(".vendorview_on").length > 0) {
+            toolContext.boothEl.addClass("highlight");
+        }
     }
 
     function addVendorBoothToHistory() {
@@ -654,7 +656,8 @@ function mapMaker(workArea, toolBar) {
 ////// HELPERS
     // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-    // Given two sets of x, y that define the zone of a rectangle, returns topleft coords as [x,y] 
+    // Given two sets of x, y that define the zone of a rectangle
+    // returns topleft coords as [x,y] 
     function findTopLeft(x1, y1, x2, y2) {
         var x = x1 < x2 ? x1 : x2;
         var y = y1 < y2 ? y1 : y2;
