@@ -6,6 +6,8 @@
 // We can grab controller vars before dom is loaded FYI
 // console.log(gon.map);
 
+//= require jquery.datetimepicker
+
 $(document).ready(function() {
 
     $("#workArea").css("width", gon.map.width);
@@ -19,6 +21,9 @@ $(document).ready(function() {
           url: "/maps/"+gon.map.id+"/save",
           data: {
             actionHistory: JSON.stringify(actionHistory)
+          },
+          success: function() {
+            actionHistory = []; // Clear history on save for now
           }
         });
     })
@@ -35,7 +40,8 @@ $(document).ready(function() {
 var TOOLS = {
     RECTANGLE : "rectangle",
     ERASER : "eraser",
-    SELECT: "select"
+    SELECT: "select",
+    INFOSELECT: "infoselect"
 }
 
 var ACTIONS = { // Used to store action for history
@@ -78,8 +84,16 @@ function mapMaker(workArea, toolBar) {
     // that allows us to not waste effort creating/updating objs that are deleted anyway
     var lastVendorId = gon.vendors.length > 0 ? gon.vendors[gon.vendors.length - 1].id : 0;
     // var lastTagId;
-    // var lastVendorTagId;
     var lastBoothId = gon.booths.length > 0 ? gon.booths[gon.booths.length - 1].id : 0;
+    var lastVendorBoothId = gon.vendorBooths.length > 0 ? gon.vendorBooths[gon.vendorBooths.length - 1].id : 0;
+    // var lastVendorTagId;
+
+
+    // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+////// INITIALIZERS
+    // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+    $('.datetimepicker').datetimepicker();
 
 
 
@@ -133,7 +147,7 @@ function mapMaker(workArea, toolBar) {
             }
             $(this).closest("div.overlay").hide();
             resetForm(formEl);
-        } else { 
+        } else { // Error
             formEl.children("div.error").slideDown(300);
         }
         return false;
@@ -168,6 +182,43 @@ function mapMaker(workArea, toolBar) {
     })
 
 
+    // TODO!!!
+    $("#vendorbooth_form_submit").click(function() {
+        var formEl = $(this).parent();
+        if (validateVendorBoothFields(formEl)) {
+            if (toolContext.vendorBoothAction === ACTIONS.CREATE) {
+                addVendorBoothToDom();
+                addVendorBoothToHistory();
+            } else if (toolContext.vendorBoothAction === ACTIONS.UPDATE) {
+
+            }
+            $(this).closest("div.overlay").hide();
+            resetForm(formEl);
+        } else { // Error
+            formEl.children("div.error").slideDown(300);
+        }
+        return false;
+    })
+
+    $(".update_vendorBooth").click(function() {
+        var vendorBooth_formEl = $("#vendorbooth_form");
+        prepVendorBoothForm(vendorBooth_formEl);
+        showVendorBoothForm(vendorBooth_formEl);
+        toolContext.vendorBoothAction = ACTIONS.UPDATE;
+        toolContext.boothEl = $(this).closest(".booth");
+        toolContext.boothId = boothEl.data("id");
+        toolContext.isTemp = false;
+    })
+
+    $(".destroy_vendorBooth").click(function() {
+
+    })
+
+    $(".close_vendorBooth").click(function() {
+        toolContext.vendorBooth.hide();
+    })
+
+
     // ------------------------------------------------------------
 ////// MOUSEDOWN
     // ------------------------------------------------------------
@@ -189,6 +240,11 @@ function mapMaker(workArea, toolBar) {
                 break;
             case TOOLS.SELECT:
                 startMoveBooth($(this), e);
+                break;
+            case TOOLS.INFOSELECT: // Only want one vendorbooth info show at a time
+                if (toolContext.vendorBooth) { toolContext.vendorBooth.hide(); }
+                toolContext.vendorBooth = $(this).children(".vendorBooth");
+                toolContext.vendorBooth.show();
                 break;
             default:
         }
@@ -245,10 +301,14 @@ function mapMaker(workArea, toolBar) {
     })
 
     $(".booth").on("drop", function(e, ui) {
-        toolContext.boothId = $(this).data("id");
         e.preventDefault();  
         e.stopPropagation();
-        makeVendorBoothForm(ui);
+        var vendorBooth_formEl = $("#vendorbooth_form");
+        prepVendorBoothForm(vendorBooth_formEl);
+        showVendorBoothForm(vendorBooth_formEl);
+        toolContext.vendorBoothAction = ACTIONS.CREATE;
+        toolContext.boothId = $(this).data("id");
+        toolContext.boothEl = $(this);
     })
 
     // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -271,6 +331,11 @@ function mapMaker(workArea, toolBar) {
                 case TOOLS.SELECT:
                     startMoveBooth(boothEl, e);
                     break;
+                case TOOLS.INFOSELECT:
+                    if (toolContext.vendorBooth) { toolContext.vendorBooth.hide(); }
+                    toolContext.vendorBooth = boothEl.children(".vendorBooth");
+                    toolContext.vendorBooth.show();
+                    break;
             }
         })
         boothEl.mouseup(function(e) {
@@ -289,7 +354,10 @@ function mapMaker(workArea, toolBar) {
         lastBoothId++;
 
         toolContext.newBooth = $("<div class=\"booth\" style=\"left:"+toolContext.downX+"px;top:"+toolContext.downY+"px\""+
-                                 "data-id=\""+lastBoothId+"\"></div>");
+                                 "data-id=\""+lastBoothId+"\">" + 
+                                 "<ul class=\"unordered vendorBooth\">" + 
+                                 "<li class=\"no_vendorBooths\">No vendors assigned</li></ul>" +
+                                 "</div>");
         $("#workArea").append(toolContext.newBooth);
 
         workArea.mousemove(function(e) {
@@ -448,7 +516,7 @@ function mapMaker(workArea, toolBar) {
     }
 
     // Log creating a vendor into our history array
-    function addVendorToHistory(formEl) {
+    function addVendorToHistory() {
         var name = $("input[name='vendor_name']").val();
         var url = $("input[name='vendor_url']").val();
         var desc = $("textarea[name='vendor_desc']").val();
@@ -474,8 +542,8 @@ function mapMaker(workArea, toolBar) {
         vendorEl.find(".vendor_desc").text(desc);
     }
 
-    // Log updating a booth into our history array
-    function updateVendorToHistory(formEl) {
+    // Log updating a vendor into our history array
+    function updateVendorToHistory() {
         var name = $("input[name='vendor_name']").val();
         var url = $("input[name='vendor_url']").val();
         var desc = $("textarea[name='vendor_desc']").val();
@@ -519,18 +587,31 @@ function mapMaker(workArea, toolBar) {
 // If a booth has a vendor booth, then ... 
 
     function addVendorBoothToDom() {
-
+        lastVendorBoothId++;
+        var vendorBoothEl= toolContext.boothEl.children(".vendorBooth");
+        vendorBoothEl.children(".no_vendorBooths").hide();
+        vendorBoothEl.append("<li class=\"v"+toolContext.vendorId+"\">"+ "ASDF" +"</li>");
     }
 
     function addVendorBoothToHistory() {
-        var vendorId;
-        var boothId;
-        var startTime;
-        var endTime;
+        var start = $("input[name='vendorbooth_starttime']").val();
+        var end = $("input[name='vendorbooth_endtime']").val();
         var vendorBoothHistory = {
-
+            "action" : ACTIONS.CREATE,
+            "type" : TYPES.VENDOR_BOOTH,
+            "vendor_id" : toolContext.vendorId,
+            "booth_id" : toolContext.boothId,
+            "start_time" : start,
+            "end_time": end,
+            "id" : lastVendorBoothId,
+            "isTemp" : true
         }
         actionHistory.push(vendorBoothHistory);
+    }
+
+    function validateVendorBoothFields(formEl) {
+        return true;
+        // return false;
     }
 
 
@@ -578,12 +659,16 @@ function mapMaker(workArea, toolBar) {
         formEl.find(".vendor_desc").val(desc);
     }
 
-
-    // Given an event, gets a top left corner and edits the vendorBooth form DOM object
-    function prepVendorBoothForm(uiPosition) {
+    // Given the vendorbooth form element, gets a top left corner and edits the vendorBooth form DOM object
+    function prepVendorBoothForm(vendorbooth_formEl) {
         var x = event.pageX;
         var y = event.pageY;
+        vendorbooth_formEl.css("top", y);
+        vendorbooth_formEl.css("left", x);
+    }
 
+    function showVendorBoothForm(vendorbooth_formEl) {
+        vendorbooth_formEl.parent().show();
     }
 
 }

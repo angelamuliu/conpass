@@ -4,6 +4,7 @@ class Map < ActiveRecord::Base
     # Relationships
     belongs_to :convention
     has_many :booths
+    has_many :vendor_booths, :through => :booths
 
     # Validations
 

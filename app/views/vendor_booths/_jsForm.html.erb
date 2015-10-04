@@ -1,14 +1,23 @@
 
 <%# A form that is ultimately manipulated by the map crafting page %>
+<div class="overlay">
+    <form id="vendorbooth_form">
+        <div class="error">There is something wrong with your fields</div>
 
-<form id="vendorbooth_form">
-    <label for="vendorbooth_starttime">Start:</label>
-    <input type="text" name="vendorbooth_starttime" class="vendor_name">
+        <ul class="unordered">
+            <li>
+                <label for="vendorbooth_starttime">Start:</label>
+                <input type="text" name="vendorbooth_starttime" class="datetimepicker">
+            </li>
 
-    <label for="vendorbooth_endtime">End:</label>
-    <input type="text" name="vendorbooth_endtime">
+            <li>
+                <label for="vendorbooth_endtime">End:</label>
+                <input type="text" name="vendorbooth_endtime" class="datetimepicker">
+            </li>
+        </ul>
 
-    <button></button>
-    <button></button>
+        <button id="vendorbooth_form_submit"><i class="fa fa-check"></i></button>
+        <button class="close_overlay"><i class="fa fa-times"></i></button>
 
-</form>
+    </form>
+</div>

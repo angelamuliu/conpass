@@ -68,8 +68,9 @@ class MapsController < ApplicationController
     @map = Map.find(params[:id])
     @vendors = @map.convention.vendors
     @tags = @map.convention.tags
-    # @vendorTags
     @booths = @map.booths
+    # @vendorTags =
+    @vendorBooths = @map.vendor_booths
 
     # Pass these variables into the JS as well
     gon.map = @map
@@ -77,6 +78,7 @@ class MapsController < ApplicationController
     gon.tags = @tags
     # gon,vendorTags = @vendorTags
     gon.booths = @booths
+    gon.vendorBooths = @vendorBooths
   end
 
   # Saving map after making changes

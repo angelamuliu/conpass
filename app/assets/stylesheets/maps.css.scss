@@ -91,7 +91,47 @@
 // ----------------------------------------
 // Vendorbooth CSS
 
+ul.vendorBooth {
+    display: none;
+    position: absolute;
+    background-color: blue;
+    z-index: 40;
+    min-width: 400px;
+}
+
+.vendorBooth .options {
+    display: inline-block;
+    float: right;
+}
+
+ul.vendorBooth li {
+    margin: 2px;
+}
+
+ul.vendorBooth li:first-child {
+    background-color: red;
+    margin: 0;
+    padding: 2px;
+}
+
+.close_vendorBooth {
+    float: right;
+}
+
 #vendorbooth_form {
-    // display: none;
+    position: absolute;
+    display: inline-block;
+    padding: 20px;
+    background-color: red;
+    z-index: 200;
+}
+
+#vendorbooth_form label {
+    display: inline-block;
+    min-width: 50px;
+}
+
+#vendorbooth_form li {
+    margin-bottom: 2px;
 }
 
