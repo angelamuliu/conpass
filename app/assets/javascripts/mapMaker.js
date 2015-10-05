@@ -195,7 +195,8 @@ function mapMaker(workArea, toolBar) {
                 addVendorBoothToDom();
                 addVendorBoothToHistory();
             } else if (toolContext.vendorBoothAction === ACTIONS.UPDATE) {
-
+                updateVendorBoothInDom();
+                updateVendorBoothToHistory();
             }
             $(this).closest("div.overlay").hide();
             resetForm(formEl);
@@ -210,8 +211,7 @@ function mapMaker(workArea, toolBar) {
         prepVendorBoothForm(vendorBooth_formEl);
         showVendorBoothForm(vendorBooth_formEl);
         toolContext.vendorBoothAction = ACTIONS.UPDATE;
-        toolContext.boothEl = $(this).closest(".booth");
-        toolContext.boothId = boothEl.data("id");
+        toolContext.vendorBoothEl = $(this).closest(".vendorBooth");
         toolContext.isTemp = false;
     })
 
@@ -600,6 +600,19 @@ function mapMaker(workArea, toolBar) {
 ////// VENDOR BOOTH
     // ------------------------------------------------------------
 
+    function addVendorBoothListeners(vendorBoothEl) {
+        vendorBoothEl.find(".update_vendorBooth").click(function() {
+            var vendorBooth_formEl = $("#vendorbooth_form");
+            prepVendorBoothForm(vendorBooth_formEl);
+            showVendorBoothForm(vendorBooth_formEl);
+            toolContext.vendorBoothAction = ACTIONS.UPDATE;
+            toolContext.vendorBoothEl = vendorBoothEl;
+            toolContext.isTemp = true;
+        })
+        vendorBoothEl.find(".destroy_vendorBooth").click(function() {
+            // TODO !!!
+        })
+    }
 
     function addVendorBoothToDom() {
         lastVendorBoothId++;
@@ -609,14 +622,17 @@ function mapMaker(workArea, toolBar) {
         var vendorName = $("#vendor_list").find("li[data-id="+toolContext.vendorId+"]").children(".vendorshow").children(".vendor_name").text()
         var vendorBoothEl= toolContext.boothEl.children(".vendorBooth");
         vendorBoothEl.children(".no_vendorBooths").hide();
-        vendorBoothEl.append("<li class=\"vendorBooth v"+toolContext.vendorId+"\">"+
+        var newVendorBoothEl = "<li class=\"vendorBooth v"+toolContext.vendorId+"\" data-id=\""+lastVendorBoothId+"\">" +
                              vendorName +
                             "<div class=\"options\">" +
                                 "<button class=\"update_vendorBooth\"><i class=\"fa fa-pencil\"></i></button>" + 
                                 "<button class=\"destroy_vendorBooth\"><i class=\"fa fa-trash\"></i></button>" +
                             "</div>" + 
                             "<span class=\"dateRange\">" + range + "</span>" +
-                            "</li>");
+                            "</li>";
+        vendorBoothEl.append(newVendorBoothEl);
+        addVendorBoothListeners(newVendorBoothEl);
+
         // Update the booth too for highlighting
         toolContext.boothEl.addClass("v"+toolContext.vendorId);
         // If the vendor is currently being highlighted, we need to add highlights
@@ -637,6 +653,29 @@ function mapMaker(workArea, toolBar) {
             "end_time": end,
             "id" : lastVendorBoothId,
             "isTemp" : true
+        }
+        actionHistory.push(vendorBoothHistory);
+    }
+
+    function updateVendorBoothInDom() {
+        
+
+    }
+
+    function updateVendorBoothToHistory() { // toolContext.vendorBoothEl
+        var start = $("input[name='vendorbooth_starttime']").val();
+        var end = $("input[name='vendorbooth_endtime']").val();
+        var vendorBoothHistory = {
+            "action" : ACTIONS.UPDATE,
+            "type" : TYPES.VENDOR_BOOTH,
+            "vendor_id" : extractVendorId(toolContext.vendorBoothEl[0]),
+            "booth_id" : toolContext.vendorBoothEl.closest(".booth").data("id"),
+            "start_time" : start,
+            "end_time": end,
+            "id" : toolContext.vendorBoothEl.data("id")
+        }
+        if (toolContext.isTemp) { // Updated temp obj never saved
+            vendorBoothHistory["isTemp"] = true;
         }
         actionHistory.push(vendorBoothHistory);
     }
@@ -736,6 +775,17 @@ function mapMaker(workArea, toolBar) {
         var min = date.getMinutes();
         min = min < 10 ? "0" + min : min;
         return month + "/" + dateDay + " " + day + " " + hour + ":" + min + " " + period;
+    }
+
+    // Given a DOM element, extracts the vendor ID through the class ("v19" -> vendor ID = 19)
+    function extractVendorId(domEl) {
+        var re = /^v\d+$/; // REGEX for v11111+
+        var classes = domEl.classList;
+        for (var i = 0; i < classes.length; i++) {
+            if (re.test(classes[i])) { // Matches vendor class with ID pattern
+                return parseInt(classes[i].substring(1)) // Return just ID number
+            }
+        }
     }
 
 }

@@ -18,7 +18,7 @@
                 <li>Vendors assigned to this booth<a href="#" class="close_vendorBooth"><i class="fa fa-times"></i></a></li>
                 <% if booth.vendor_booths.size > 0 %>
                     <% booth.vendor_booths.each do |vendor_booth| %>
-                        <li class="vendorBooth v<%= vendor_booth.vendor.id %>">
+                        <li class="vendorBooth v<%= vendor_booth.vendor.id %>" data-id="<%= vendor_booth.id %>">
                             <%= vendor_booth.vendor.name %>
                             <div class="options">
                                 <button class="update_vendorBooth"><i class="fa fa-pencil"></i></button>
