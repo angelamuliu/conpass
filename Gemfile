@@ -32,6 +32,7 @@ gem 'json' # To parse JSON to ruby HASH, vice versa
 gem 'byebug', '~> 6.0.2' # Breakpoint debugging in rails
 # GEN USE: type 'byebug' to start debugging. s > step, n > next, c > stop debugging
 
+gem 'bootstrap-sass', '~> 3.3.5'
 # --------------------------------------------------
 
 # Use ActiveModel has_secure_password
