@@ -1,7 +1,7 @@
 class Booth < ActiveRecord::Base
     # Relationships
     belongs_to :map
-    has_many :vendor_booths
+    has_many :vendor_booths, :dependent => :destroy
     has_many :vendors,  :through => :vendor_booths
 
     # Validations
