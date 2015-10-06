@@ -31,7 +31,8 @@ $(document).ready(function() {
 
 })
 
-
+// TODO : Something that clears objs with the ".deleted" class b/c otherwise there
+// might be millions if someone works in a like 1 hour session lol
 
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // CONSTANTS + GLOBALS
@@ -243,7 +244,7 @@ function mapMaker(workArea, toolBar) {
         switch(selectedTool) {
             case TOOLS.ERASER:
                 deleteBoothToHistory($(this), false);
-                this.remove();
+                $(this).addClass("deleted");
                 break;
             case TOOLS.SELECT:
                 startMoveBooth($(this), e);
@@ -333,7 +334,7 @@ function mapMaker(workArea, toolBar) {
             switch(selectedTool) {
                 case TOOLS.ERASER:
                     deleteBoothToHistory(boothEl, true);
-                    boothEl.remove()
+                    boothEl.addClass("deleted");
                     break;
                 case TOOLS.SELECT:
                     startMoveBooth(boothEl, e);
@@ -568,9 +569,14 @@ function mapMaker(workArea, toolBar) {
         actionHistory.push(vendorHistory);
     }
 
-    // TODO: Also hide any LI element with the id v + vendor ID
     function deleteVendorInDom(vendorEl) {
-        vendorEl.remove();
+        var toggleEl = vendorEl.find(".vendorview_toggle");
+        if (toggleEl.hasClass("vendorview_on")) { // If highlighting currently, turn off
+            toggleVendorFilter(toggleEl);
+        }
+        var vendorId = vendorEl.data("id");
+        vendorEl.addClass("deleted");
+        $(".vendorBooth .v"+vendorId).addClass("deleted");
     }
 
     function deleteVendorToHistory(vendorEl, isTemp) {
@@ -585,6 +591,8 @@ function mapMaker(workArea, toolBar) {
         actionHistory.push(vendorHistory);
     }
 
+    // TODO !!! Bug -> If one booth has multiple vendors, then toggling one might turn
+    // off highlighting for something that should have it on
     function toggleVendorFilter(toggleEl) {
         var vendorClass = "v" + toggleEl.closest("li").data("id");
         if (toggleEl.hasClass("vendorview_on")) { // ON to OFF
