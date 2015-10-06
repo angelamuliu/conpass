@@ -216,7 +216,9 @@ function mapMaker(workArea, toolBar) {
     })
 
     $(".destroy_vendorBooth").click(function() {
-
+        var vendorBoothEl = $(this).closest(".vendorBooth");
+        deleteVendorBoothToHistory(vendorBoothEl, false);
+        deleteVendorBoothInDom(vendorBoothEl);
     })
 
     $(".close_vendorBooth").click(function() {
@@ -610,7 +612,8 @@ function mapMaker(workArea, toolBar) {
             toolContext.isTemp = true;
         })
         vendorBoothEl.find(".destroy_vendorBooth").click(function() {
-            // TODO !!!
+            deleteVendorBoothToHistory(vendorBoothEl, true);
+            deleteVendorBoothInDom(vendorBoothEl);
         })
     }
 
@@ -682,10 +685,26 @@ function mapMaker(workArea, toolBar) {
         actionHistory.push(vendorBoothHistory);
     }
 
+    function deleteVendorBoothInDom(vendorBoothEl) {
+        vendorBoothEl.addClass("deleted");
+
+    }
+
+    function deleteVendorBoothToHistory(vendorBoothEl, isTemp) {
+        var vendorBoothHistory = {
+            "action" : ACTIONS.DELETE,
+            "type" : TYPES.VENDOR_BOOTH,
+            "id" : vendorBoothEl.data("id")
+        }
+        if (isTemp) {
+            vendorBoothHistory["isTemp"] = true;
+        }
+        actionHistory.push(vendorBoothHistory);
+    }
+
     // TODO!!
     function validateVendorBoothFields(formEl) {
         return true;
-        // return false;
     }
 
 

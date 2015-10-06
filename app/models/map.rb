@@ -14,6 +14,10 @@ class Map < ActiveRecord::Base
 
 
 
+    # TODO !!!
+    # When saveFromHistory is called, we need to validate that the
+    # user actually OWNS the objects they are editing! Otherwise they could mess
+    # with other ppls maps LOL
 
     # -------------------------
     # Mapcrafter methods (mapMaker.js related)
@@ -148,6 +152,7 @@ class Map < ActiveRecord::Base
                 Booth.find(deleteAction["id"]).destroy
             when "vendor_tag"
             when "vendor_booth"
+                VendorBooth.find(deleteAction["id"]).destroy
             end
         end
     end
