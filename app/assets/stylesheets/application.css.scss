@@ -30,3 +30,7 @@ ul.unordered {
     margin: 0;
     padding:0;
 }
+
+body { // Don't want bootstrap nav bar obscuring top 50px of content lol
+    padding-top: 50px;
+}
