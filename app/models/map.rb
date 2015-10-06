@@ -128,6 +128,8 @@ class Map < ActiveRecord::Base
                     width: updateAction["width"].to_i, height: updateAction["height"].to_i)
             when "vendor_tag"
             when "vendor_booth"
+                VendorBooth.update(updateAction["id"], vendor_id: updateAction["vendor_id"], booth_id: updateAction["booth_id"],
+                    start_time: DateTime.parse(updateAction["start_time"]), end_time: DateTime.parse(updateAction["end_time"]))
             end
         end
     end

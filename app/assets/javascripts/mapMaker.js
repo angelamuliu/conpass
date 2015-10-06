@@ -622,14 +622,14 @@ function mapMaker(workArea, toolBar) {
         var vendorName = $("#vendor_list").find("li[data-id="+toolContext.vendorId+"]").children(".vendorshow").children(".vendor_name").text()
         var vendorBoothEl= toolContext.boothEl.children(".vendorBooth");
         vendorBoothEl.children(".no_vendorBooths").hide();
-        var newVendorBoothEl = "<li class=\"vendorBooth v"+toolContext.vendorId+"\" data-id=\""+lastVendorBoothId+"\">" +
+        var newVendorBoothEl = $("<li class=\"vendorBooth v"+toolContext.vendorId+"\" data-id=\""+lastVendorBoothId+"\">" +
                              vendorName +
                             "<div class=\"options\">" +
                                 "<button class=\"update_vendorBooth\"><i class=\"fa fa-pencil\"></i></button>" + 
                                 "<button class=\"destroy_vendorBooth\"><i class=\"fa fa-trash\"></i></button>" +
                             "</div>" + 
                             "<span class=\"dateRange\">" + range + "</span>" +
-                            "</li>";
+                            "</li>");
         vendorBoothEl.append(newVendorBoothEl);
         addVendorBoothListeners(newVendorBoothEl);
 
@@ -657,9 +657,11 @@ function mapMaker(workArea, toolBar) {
         actionHistory.push(vendorBoothHistory);
     }
 
-    function updateVendorBoothInDom() {
-        
-
+    function updateVendorBoothInDom() { // toolContext.vendorBoothEl
+        var startDate = new Date($("input[name='vendorbooth_starttime']").val());
+        var endDate = new Date($("input[name='vendorbooth_endtime']").val());
+        var range = "(" + formatDate(startDate) + " - " + formatDate(endDate) + ")";
+        toolContext.vendorBoothEl.children(".dateRange").text(range);
     }
 
     function updateVendorBoothToHistory() { // toolContext.vendorBoothEl
