@@ -76,7 +76,7 @@ class MapsController < ApplicationController
     gon.map = @map
     gon.vendors = @vendors
     gon.tags = @tags
-    # gon,vendorTags = @vendorTags
+    # gon.vendorTags = @vendorTags
     gon.booths = @booths
     gon.vendorBooths = @vendorBooths
   end

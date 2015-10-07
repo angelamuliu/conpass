@@ -6,6 +6,8 @@
     <button class="tool" data-type="infoselect">Infoselect</button>
 
     <%= render partial: 'vendors/vendor_craft', locals: {vendors: @vendors} %>
+
+    <%= render partial: 'tags/tag_craft', locals: {tags: @tags} %>
 </div>
 
 <%= render partial: 'vendor_booths/jsForm' %>
