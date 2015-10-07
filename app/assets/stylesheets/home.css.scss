@@ -1,7 +1,7 @@
-html,body {
+html, body {
   width: 100%;
   height: 100%;
-  background-color: #051E2C !important;
+  background-color: #051E2C;
 }
 
 .text-vcenter {
@@ -16,7 +16,8 @@ nav {
 }
 
 #home {
-  background: url('DJOkawariBlur.jpg') no-repeat center center fixed; 
+    background:#041B28;
+  // background: url('DJOkawariBlur.jpg') no-repeat center center fixed; 
   display: table;
   position: relative;
   width: 100%;
@@ -73,3 +74,46 @@ footer p {
   opacity: 0.6 !important;
 }
 
+    // ------------------------------------------------------------
+////// SAM'S HOME STYLES
+    // ------------------------------------------------------------
+
+.top-button {
+    position:absolute;
+    width: 50%;
+    left:25%;
+    background:#0069D3;
+    color:white;
+    border:1px none;
+    border-radius:2px;
+    height:25px;
+    font-size:11px
+}
+.description-header {
+    margin-left: 10%; 
+    width: 80%; 
+    line-height: 2.3; 
+    border-bottom: 1px solid rgb(219, 0, 26); 
+    color: rgb(219, 0, 26); 
+    font-weight: 500;
+}
+.description {
+    margin-bottom: 20px;
+    margin-left:10%;
+    width: 80%;
+    line-height:1;
+    color: #232F3E
+}
+
+div#about div {
+    min-height:200px;
+}
+
+#attendee_about {
+    background:#F8F5F2;
+}
+
+#organizer_about {
+    background: #F0ece7;
+
+}

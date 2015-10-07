@@ -21,10 +21,6 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
-body {
-    margin: 0;
-}
-
 ul.unordered {
     list-style: none;
     margin: 0;
@@ -32,5 +28,55 @@ ul.unordered {
 }
 
 body { // Don't want bootstrap nav bar obscuring top 50px of content lol
+    margin:0;
     padding-top: 50px;
+    background-color: lightgray;
+    overflow-x:hidden;
 }
+
+.row {
+    margin:0;
+}
+
+a {
+    color: red;
+}
+
+    // ------------------------------------------------------------
+////// FOOTER
+    // ------------------------------------------------------------
+
+#footer {
+    min-height:50px;
+    background:#041B28;
+    padding: 20px;
+}
+#backToTop {
+    color: white;
+    border-right: 1px solid white;
+    height: 20px;
+    font-size: 10.5px;
+    top: 15%;
+}
+#backToTop p {
+    width: 100px;
+    color: white;
+}
+#backToTop a {
+    color: white;
+}
+#backToTop a:hover {
+    background-color: initial;
+}
+#footer_into {
+    color: white;
+    font-size: 9px;
+    top:10%
+}
+#footer_info p {
+    line-height: 14px;
+    color: white;
+}
+
+
+
