@@ -119,10 +119,16 @@
     width: inherit;
     display: none;
     position: absolute;
-    background-color: white;
+    background-color: #f8f5f2;
     z-index: 45;
     height: 100vh;
     box-shadow: 0px 0px 10px 3px rgba(0, 0, 0,.3);
+}
+#vendor_list li:nth-child(odd) {
+  background-color: #f0ece7;
+}
+#vendor_list li:nth-child(even) {
+  background-color: #f8f5f2;
 }
 .vendor_name {
     color: #0069d3;
@@ -143,6 +149,9 @@
 }
 .vendorshow_extra span {
     display: block;
+}
+.update_vendor, .destroy_vendor {
+    width:40%;
 }
 
 #vendor_form {

@@ -511,7 +511,7 @@ function mapMaker(workArea, toolBar) {
 
         var newVendorEl = $("<li data-id=\""+ lastVendorId + "\">" +
                             "<div class=\"vendorshow\">" + 
-                                "<i class=\"fa fa-circle-o drag_assign\"></i>" +
+                                "<i class=\"fa fa-circle-o drag_assign\"></i> " +
                                 "<a href=\"#\" class=\"vendor_name\">"+ name + "</a>" +
                                 "<i class=\"fa fa-eye vendorview_toggle\"></i>" +
                             "</div>" +
@@ -519,8 +519,8 @@ function mapMaker(workArea, toolBar) {
                                 "<strong>URL: </strong><span class=\"vendor_url\">" + url + "</span>" + 
                                 "<strong>Description: </strong><span class=\"vendor_desc\">" + desc + "</span>" + 
                                 "<div class=\"vendor_tags\"></div>" + 
-                                "<button class=\"update_vendor\">Update</button>" +
-                                "<button class=\"destroy_vendor\">Destroy</button>" +
+                                "<button class=\"update_vendor greenbtn\">Update</button>" +
+                                "<button class=\"destroy_vendor redbtn\">Destroy</button>" +
                             "</div></li>");
         $("#vendor_list ul").append(newVendorEl);
         return newVendorEl;
