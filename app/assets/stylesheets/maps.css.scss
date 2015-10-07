@@ -4,7 +4,8 @@
 
 #workArea_container {
     padding: 5px;
-    background-color: #e5e5e5;
+    background-color: #4c4c4c;
+    height: 100vh; // 100% viewport height
 }
 
 #workArea {
@@ -21,6 +22,7 @@
 .overlay {
     display: none;
     position: absolute;
+    margin-top: 75px;// Accounting for toolbar and navbar
     width: 100%;
     height: 100%;
     top: 0;
@@ -42,6 +44,42 @@
     display: none;
 }
 
+// ----------------------------------------
+// Toolbar MISC
+#toolBar {
+    height:25px;
+    position: relative;
+    background-color: #191919;
+    box-shadow: 0px 3px 5px #888888;
+    box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.3);
+}
+#save {
+    width: 15%;
+    min-width: 150px;
+    max-width: 250px;
+    background-color: #64b52c;
+    border: none;
+    border-bottom: 3px solid #2a7a00;
+    color: white;
+}
+#mouseTools {
+    margin-left: 25px;
+    display: inline-block;
+    background-color: #666666;
+    padding: 10px;
+    position: absolute;
+    z-index: 45;
+    box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.3);
+}
+#mouseTools button {
+    border: none;
+    color: grey;
+    background-color: black;
+}
+#mouseTools button.tool[data-type="select"] {
+    -webkit-text-stroke: 1px grey;
+    color: black;
+}
 
 
 // ----------------------------------------
@@ -49,52 +87,88 @@
 
 #vendor_craft {
     display: inline-block;
+    float: right;
+    width: 20%;
+    min-width: 200px;
+    max-width: 400px;
 }
-
+#vendor_header {
+}
+#toggle_vendors {
+    width: 80%;
+    color: white;
+    border: none;
+    background-color: #0069d3;
+    border-bottom: 3px solid #000f27;
+    text-align: left;
+}
+#toggle_vendors.open {
+    background-color: #0054a8;
+}
+#add_vendor {
+    width: 20%;
+    float: right;
+    color: orange;
+    background-color: yellow;
+    border: none;
+    border-bottom: 3px solid orange;
+}
 #vendor_list {
+    min-width: inherit;
+    max-width: inherit;
+    width: inherit;
     display: none;
+    position: absolute;
+    background-color: white;
+    z-index: 45;
+    height: 100vh;
+    box-shadow: 0px 0px 10px 3px rgba(0, 0, 0,.3);
 }
-
+.vendor_name {
+    color: #0069d3;
+}
 .drag_assign {
-    color: blue;
+    color: #0069d3;
 }
-
 .vendorview_toggle {
-    color: gainsboro;
+    color: #b1b1b1;
+    float: right;
 }
 .vendorshow .vendorview_on {
-    color: green;
+    color: #0069d3;
 }
 
 .vendorshow_extra {
     display: none;
 }
-
 .vendorshow_extra span {
     display: block;
 }
 
-#vendor_craft form {
+#vendor_form {
     position: absolute;
     z-index: 100;
     background-color: blue;
     margin: auto;
-    top: 50px; right: 0; left: 0; bottom: 0;
-    max-width: 50%;
+    top: -50px; right: 0; left: 0; bottom: 0;
+    max-width: 600px;
+    width: 50%;
     padding: 10px;
+    height:80%;
+    max-height: 1000px;
+    min-height: 600px;
 }
-
-#vendor_craft form label {
+#vendor_form label {
     display: block;
 }
-#vendor_craft form input {
+#vendor_form input {
     width: 100%;
 }
-#vendor_craft form textarea {
+#vendor_form textarea {
     width: 100%;
     resize:vertical 
 }
-#vendor_craft form a.close_overlay{
+#vendor_form a.close_overlay{
     position: absolute;
     top: 0;
     right: 0;
@@ -167,7 +241,10 @@ ul.vendorBooth span.dateRange {
 
 #tag_craft {
     display: inline-block;
+    float: right;
 }
+
+
 
 
 

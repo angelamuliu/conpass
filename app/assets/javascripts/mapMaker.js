@@ -156,6 +156,7 @@ function mapMaker(workArea, toolBar) {
 
     $("#toggle_vendors").click(function() {
         $("#vendor_list").toggle();
+        $(this).toggleClass("open");
     })
 
     $("#add_vendor").click(function() {
@@ -600,10 +601,13 @@ function mapMaker(workArea, toolBar) {
         var vendorClass = "v" + toggleEl.closest("li").data("id");
         if (toggleEl.hasClass("vendorview_on")) { // ON to OFF
             toggleEl.removeClass("vendorview_on");
+            toggleEl.removeClass("fa-eye");
+            toggleEl.addClass("fa-eye-slash");
             $(".booth."+vendorClass).removeClass("highlight");
         } else { // OFF to ON
             toggleEl.addClass("vendorview_on");
-            // NEED TO FIX -> If a vendor booth is removed, also remove form the booth...
+            toggleEl.addClass("fa-eye");
+            toggleEl.removeClass("fa-eye-slash");
             $(".booth."+vendorClass).addClass("highlight");
         }
     }

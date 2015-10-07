@@ -1,18 +1,22 @@
+<%= render partial: 'vendor_booths/jsForm' %>
+<%= render partial: 'vendors/jsForm' %>
 
-<div id="toolBar">
-    <button class="tool" data-type="rectangle">Rectangle</button>
-    <button class="tool" data-type="eraser">Eraser</button>
-    <button class="tool" data-type="select">Select</button>
-    <button class="tool" data-type="infoselect">Infoselect</button>
+<div class="container-fluid noPad">
 
-    <%= render partial: 'vendors/vendor_craft', locals: {vendors: @vendors} %>
+<div id="toolBar" class="row">
+    <button id="save"><i class="fa fa-floppy-o"></i> Save</button>
 
+    <div id="mouseTools">
+        <button class="tool" data-type="rectangle">Rectangle</button>
+        <button class="tool" data-type="select"><i class="fa fa-mouse-pointer"></i></button>
+        <button class="tool" data-type="infoselect"><i class="fa fa-mouse-pointer"></i></button>
+        <button class="tool" data-type="eraser">Eraser</button>
+    </div>
     <%= render partial: 'tags/tag_craft', locals: {tags: @tags} %>
+    <%= render partial: 'vendors/vendor_craft', locals: {vendors: @vendors} %>
 </div>
 
-<%= render partial: 'vendor_booths/jsForm' %>
-
-<div id="workArea_container">
+<div id="workArea_container" class="row">
     <div id="workArea">
         <% @booths.each do |booth| %>
             <%= content_tag :div, "", class: "booth #{booth.cssVendorClasses}", style: "left:#{booth.x_pos}px; top:#{booth.y_pos}px; width:#{booth.width}px; height:#{booth.height}px", "data-id": "#{booth.id}" do %>
@@ -39,6 +43,6 @@
     </div>
 </div>
 
-<button id="save">Save</button>
-
 <%= javascript_include_tag "mapMaker.js" %>
+
+</div> <%# Close div container-fluid %>
