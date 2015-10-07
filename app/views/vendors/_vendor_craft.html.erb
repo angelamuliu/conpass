@@ -12,7 +12,11 @@
             <% vendors.each do |vendor| %>
                 <li data-id="<%= vendor.id %>">
                     <div class="vendorshow">
-                        <i class="fa fa-circle-o drag_assign" draggable="true"></i>
+                        <% if vendor.booths.size > 0 %>
+                            <i class="fa fa-circle drag_assign" draggable="true"></i>
+                        <% else %>
+                            <i class="fa fa-circle-o drag_assign" draggable="true"></i>
+                        <% end %>
                         <a href="#" class="vendor_name"><%= vendor.name %></a>
                         <i class="fa fa-eye vendorview_toggle"></i>
                     </div>

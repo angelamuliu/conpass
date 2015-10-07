@@ -187,14 +187,13 @@ function mapMaker(workArea, toolBar) {
         toggleVendorFilter($(this));
     })
 
-
-    // TODO!!!
     $("#vendorbooth_form_submit").click(function() {
         var formEl = $(this).parent();
         if (validateVendorBoothFields(formEl)) {
             if (toolContext.vendorBoothAction === ACTIONS.CREATE) {
                 addVendorBoothToDom();
                 addVendorBoothToHistory();
+                updateDragAssignEl($("#vendor_list").find("li[data-id="+toolContext.vendorId+"]"));
             } else if (toolContext.vendorBoothAction === ACTIONS.UPDATE) {
                 updateVendorBoothInDom();
                 updateVendorBoothToHistory();
@@ -218,8 +217,11 @@ function mapMaker(workArea, toolBar) {
 
     $(".destroy_vendorBooth").click(function() {
         var vendorBoothEl = $(this).closest(".vendorBooth");
+        toolContext.vendorId = extractVendorId(vendorBoothEl[0]);
+
         deleteVendorBoothToHistory(vendorBoothEl, false);
         deleteVendorBoothInDom(vendorBoothEl);
+        updateDragAssignEl();
     })
 
     $(".close_vendorBooth").click(function() {
@@ -593,6 +595,7 @@ function mapMaker(workArea, toolBar) {
 
     // TODO !!! Bug -> If one booth has multiple vendors, then toggling one might turn
     // off highlighting for something that should have it on
+    // Idea: use toolcontext, store all highlighted vendor id classes
     function toggleVendorFilter(toggleEl) {
         var vendorClass = "v" + toggleEl.closest("li").data("id");
         if (toggleEl.hasClass("vendorview_on")) { // ON to OFF
@@ -600,7 +603,22 @@ function mapMaker(workArea, toolBar) {
             $(".booth."+vendorClass).removeClass("highlight");
         } else { // OFF to ON
             toggleEl.addClass("vendorview_on");
+            // NEED TO FIX -> If a vendor booth is removed, also remove form the booth...
             $(".booth."+vendorClass).addClass("highlight");
+        }
+    }
+
+    // Checks for booths with a vendor and replaces the drag image if there are any atm
+    function updateDragAssignEl() {
+        var vendorId = toolContext.vendorId;
+        var vendorEl = $("#vendor_list li[data-id="+vendorId+"]");
+        var dragEl = vendorEl.find(".drag_assign");
+        if ($("li.vendorBooth.v"+vendorId).not(".deleted").length > 0) {
+            dragEl.addClass("fa-circle");
+            dragEl.removeClass("fa-circle-o");
+        } else {
+            dragEl.addClass("fa-circle-o");
+            dragEl.removeClass("fa-circle");
         }
     }
 
@@ -620,8 +638,11 @@ function mapMaker(workArea, toolBar) {
             toolContext.isTemp = true;
         })
         vendorBoothEl.find(".destroy_vendorBooth").click(function() {
+            toolContext.vendorId = extractVendorId(vendorBoothEl[0]);
+
             deleteVendorBoothToHistory(vendorBoothEl, true);
             deleteVendorBoothInDom(vendorBoothEl);
+            updateDragAssignEl();
         })
     }
 
@@ -695,7 +716,7 @@ function mapMaker(workArea, toolBar) {
 
     function deleteVendorBoothInDom(vendorBoothEl) {
         vendorBoothEl.addClass("deleted");
-
+        vendorBoothEl.closest(".booth").removeClass("v"+toolContext.vendorId);
     }
 
     function deleteVendorBoothToHistory(vendorBoothEl, isTemp) {
