@@ -9,4 +9,7 @@ class HomeController < ApplicationController
     def faq
     end
 
+    def index_sam
+    end
+
 end
