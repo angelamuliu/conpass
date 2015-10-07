@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   get 'home' => 'home#index', :as => :home
   get 'about' => 'home#about', :as => :about
   get 'faq' => 'home#faq', :as => :faq
+  get 'index_sam' => 'home#index_sam', :as => :index_sam
 
   #Root url
   root :to => 'home#index'
@@ -20,6 +21,7 @@ Rails.application.routes.draw do
 
   resources :maps do
     get 'craft', :on => :member # Main map crafting drag and drop screen
+    get 'map', :on => :member
     post 'save', :on => :member # Saving map and related from the craft screen
   end
 
