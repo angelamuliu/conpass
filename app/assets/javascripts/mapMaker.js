@@ -229,6 +229,11 @@ function mapMaker(workArea, toolBar) {
         toolContext.vendorBooth.hide();
     })
 
+    $("#toggle_tags").click(function() {
+        $("#tag_list").toggle();
+        $(this).toggleClass("open");
+    })
+
 
     // ------------------------------------------------------------
 ////// MOUSEDOWN
@@ -519,9 +524,10 @@ function mapMaker(workArea, toolBar) {
                                 "<strong>URL: </strong><span class=\"vendor_url\">" + url + "</span>" + 
                                 "<strong>Description: </strong><span class=\"vendor_desc\">" + desc + "</span>" + 
                                 "<div class=\"vendor_tags\"></div>" + 
-                                "<button class=\"update_vendor greenbtn\">Update</button>" +
-                                "<button class=\"destroy_vendor redbtn\">Destroy</button>" +
-                            "</div></li>");
+                                "<div class=\"vendor_options\">" +
+                                    "<button class=\"update_vendor greenbtn\"><i class=\"fa fa-pencil\"></i> Update</button> " +
+                                    "<button class=\"destroy_vendor redbtn\"><i class=\"fa fa-trash\"></i> Destroy</button>" +
+                            "</div></div></li>");
         $("#vendor_list ul").append(newVendorEl);
         return newVendorEl;
     }

@@ -47,12 +47,13 @@
 // ----------------------------------------
 // Toolbar MISC
 #toolBar {
-    height:25px;
+    height: 35px;
     position: relative;
     background-color: #191919;
     box-shadow: 0px 3px 5px #888888;
     box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.3);
 }
+
 #save {
     width: 15%;
     min-width: 150px;
@@ -61,7 +62,17 @@
     border: none;
     border-bottom: 3px solid #2a7a00;
     color: white;
+    height: 100%;
 }
+@keyframes savePop {
+    0%   {background-color: #64b52c;}
+    33%  {background-color: #7eda45;}
+    100% {background-color: #64b52c;}
+}
+#save:hover {
+    animation: savePop 1.5s infinite;
+}
+
 #mouseTools {
     margin-left: 25px;
     display: inline-block;
@@ -81,6 +92,19 @@
     color: black;
 }
 
+button.jsAdd {
+    width: 20%;
+    float: right;
+    color: #b75f00;
+    background-color: #fbda82;
+    border: none;
+    border-bottom: 3px solid #b75f00;
+    height: inherit;
+}
+button.jsAdd:hover {
+    background-color: #e5b75f;
+}
+
 
 // ----------------------------------------
 // Vendor CSS
@@ -91,8 +115,10 @@
     width: 20%;
     min-width: 200px;
     max-width: 400px;
+    height: 100%;
 }
 #vendor_header {
+    height: inherit;
 }
 #toggle_vendors {
     width: 80%;
@@ -101,18 +127,15 @@
     background-color: #0069d3;
     border-bottom: 3px solid #000f27;
     text-align: left;
+    height: inherit;
+}
+#toggle_vendors:hover {
+    background-color: #0063be;
 }
 #toggle_vendors.open {
     background-color: #0054a8;
 }
-#add_vendor {
-    width: 20%;
-    float: right;
-    color: orange;
-    background-color: yellow;
-    border: none;
-    border-bottom: 3px solid orange;
-}
+#add_vendor {}
 #vendor_list {
     min-width: inherit;
     max-width: inherit;
@@ -122,6 +145,7 @@
     background-color: #f8f5f2;
     z-index: 45;
     height: 100vh;
+    overflow-y: scroll;
     box-shadow: 0px 0px 10px 3px rgba(0, 0, 0,.3);
 }
 #vendor_list li:nth-child(odd) {
@@ -135,10 +159,19 @@
 }
 .drag_assign {
     color: #0069d3;
+    margin: 5px;
+}
+.drag_assign:hover {
+    color: #00bee7; 
 }
 .vendorview_toggle {
     color: #b1b1b1;
     float: right;
+    padding:5px;
+}
+.vendorshow {
+    padding-top:5px;
+    padding-bottom:5px;
 }
 .vendorshow .vendorview_on {
     color: #0069d3;
@@ -146,12 +179,20 @@
 
 .vendorshow_extra {
     display: none;
+    padding: 5px;
+    padding-bottom: 10px;
+    background-color: white;
+    border-top: 1px solid #b1b1b1;
 }
 .vendorshow_extra span {
     display: block;
 }
+.vendor_options {
+    text-align: center;
+}
 .update_vendor, .destroy_vendor {
-    width:40%;
+    min-width: 80px;
+    width: 30%;
 }
 
 #vendor_form {
@@ -249,11 +290,36 @@ ul.vendorBooth span.dateRange {
 // Tag CSS
 
 #tag_craft {
+    margin-left: 5px;
     display: inline-block;
     float: right;
+    width: 20%;
+    min-width: 200px;
+    max-width: 400px;
+    height: 100%;
+}
+#tag_header {
+    height: inherit;
+}
+#toggle_tags {
+    width: 80%;
+    color: white;
+    border: none;
+    background-color: #e43046;
+    border-bottom: 3px solid #6d0000;
+    text-align: left;
+    height: inherit;
+}
+#toggle_tags:hover {
+    background-color: #c1191f;
+}
+#toggle_tags.open {
+    background-color: #8e0307;
 }
 
-
+#tag_list {
+    display: none;
+}
 
 
 

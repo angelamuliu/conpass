@@ -1,10 +1,21 @@
 <div id="tag_craft">
-    <div>
-        <button id="toggle_tags">Tags</button>
-        <button id="add_tag">
+    <div id="tag_header">
+        <button id="toggle_tags"><i class="fa fa-tag"></i> Tags</button>
+        <button id="add_tag" class="jsAdd">
             <i class="fa fa-plus"></i>
         </button>
     </div>
 
     <%# Listing existing tags %>
+    <div id="tag_list">
+        ASDFASD
+        <ul class="unordered">
+            <% tags.each do |tag| %>
+                <li data-id="<%= tag.id %>">
+                    <% tag.name %>
+                </li>
+            <% end %>
+        </ul>
+    </div>
+
 </div>

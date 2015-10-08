@@ -1,7 +1,18 @@
+
+/*
+  --red: #e43036;
+  --darkBlue: #000f27;
+*/
+
 html, body {
   width: 100%;
   height: 100%;
-  background-color: #051E2C;
+}
+
+.logo {
+  padding-top: 10px;
+  width: 100px;
+  height: auto;
 }
 
 .text-vcenter {
@@ -16,8 +27,13 @@ nav {
 }
 
 #home {
-    background:#041B28;
-  // background: url('DJOkawariBlur.jpg') no-repeat center center fixed; 
+  background-color: #000f27;
+  background-image:
+      linear-gradient(
+      to bottom left, 
+      #000f27, #23182C
+  );
+  /*: url('DJOkawariBlur.jpg') no-repeat center center fixed; */
   display: table;
   position: relative;
   width: 100%;
@@ -47,14 +63,23 @@ nav {
 }
 
 #about {
-  color: #C0C0C0;
+  background-color: #f8f5f2 !important;
 }
+
+#about h4 {
+  color: #e43036;
+}
+
+#about h2 {
+  color: #e43036;
+}
+
 #about p {
   text-align: justify;
 }
 
-footer p {
-  color: #C0C0C0;
+footer {
+  background-color: #f8f5f2 !important;
 }
 
 /* Navbar opacity changes */
@@ -110,7 +135,7 @@ footer p {
     color: #232F3E
 }
 
-div#about div {
+div#about{
     min-height:200px;
 }
 
@@ -120,5 +145,8 @@ div#about div {
 
 #organizer_about {
     background: #F0ece7;
+}
 
+footer p {
+  margin-bottom: 0px;
 }
