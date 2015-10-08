@@ -105,6 +105,65 @@ button.jsAdd:hover {
     background-color: #e5b75f;
 }
 
+// ----------------------------------------
+// JS Form
+
+.jsForm {
+    position: absolute;
+    z-index: 100;
+    background-color: #f0ece7;
+    margin: auto;
+    top: -50px; right: 0; left: 0; bottom: 0;
+    max-width: 600px;
+    width: 50%;
+    height:80%;
+    max-height: 1000px;
+    min-height: 600px;
+    box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.3);
+}
+.jsForm h3 {
+    width: 100%;
+    margin: 0;
+    padding: 10px;
+    color: white;
+}
+.jsForm label {
+    display: block;
+}
+.jsForm input {
+    width: 100%;
+}
+.jsForm textarea {
+    width: 100%;
+    resize:vertical 
+}
+.jsForm a.close_overlay{
+    position: absolute;
+    color: white;
+    font-size: 15pt;
+    margin: 8px;
+    top: 0;
+    right: 0;
+}
+.jsForm li {
+    padding: 10px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #b1b1b1;
+}
+.jsForm li:nth-child(odd) {
+  background-color: #f0ece7;
+}
+.jsForm li:nth-child(even) {
+  background-color: #f8f5f2;
+}
+
+#vendor_form h3 {
+    background-color: #0069d3;
+}
+#tag_form h3 {
+    background-color: #e43046;
+}
+
 
 // ----------------------------------------
 // Vendor CSS
@@ -133,10 +192,11 @@ button.jsAdd:hover {
     background-color: #0063be;
 }
 #toggle_vendors.open {
-    background-color: #0054a8;
+    background-color: #0033a6;
 }
 #add_vendor {}
-#vendor_list {
+
+#vendor_list, #tag_list {
     min-width: inherit;
     max-width: inherit;
     width: inherit;
@@ -148,10 +208,10 @@ button.jsAdd:hover {
     overflow-y: scroll;
     box-shadow: 0px 0px 10px 3px rgba(0, 0, 0,.3);
 }
-#vendor_list li:nth-child(odd) {
+#vendor_list li:nth-child(odd), #tag_list li:nth-child(odd) {
   background-color: #f0ece7;
 }
-#vendor_list li:nth-child(even) {
+#vendor_list li:nth-child(even), #tag_list li:nth-child(even) {
   background-color: #f8f5f2;
 }
 .vendor_name {
@@ -193,35 +253,6 @@ button.jsAdd:hover {
 .update_vendor, .destroy_vendor {
     min-width: 80px;
     width: 30%;
-}
-
-#vendor_form {
-    position: absolute;
-    z-index: 100;
-    background-color: blue;
-    margin: auto;
-    top: -50px; right: 0; left: 0; bottom: 0;
-    max-width: 600px;
-    width: 50%;
-    padding: 10px;
-    height:80%;
-    max-height: 1000px;
-    min-height: 600px;
-}
-#vendor_form label {
-    display: block;
-}
-#vendor_form input {
-    width: 100%;
-}
-#vendor_form textarea {
-    width: 100%;
-    resize:vertical 
-}
-#vendor_form a.close_overlay{
-    position: absolute;
-    top: 0;
-    right: 0;
 }
 
 .vendor_line {
@@ -320,7 +351,10 @@ ul.vendorBooth span.dateRange {
 #tag_list {
     display: none;
 }
-
+#tag_list li {
+    padding: 5px;
+    color: #e43046;
+}
 
 
 

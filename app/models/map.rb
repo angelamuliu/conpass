@@ -105,6 +105,7 @@ class Map < ActiveRecord::Base
                 Vendor.create({name: createAction["name"], convention_id: self.convention_id, 
                     description: createAction["description"], website_url: createAction["website_url"]})
             when "tag"
+                Tag.create({name: createAction["name"], convention_id: self.convention_id})
             when "booth"
                 Booth.create({x_pos: createAction["x"].to_i, y_pos: createAction["y"].to_i, 
                     width: createAction["width"].to_i, height: createAction["height"].to_i, map_id: self.id})
