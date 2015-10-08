@@ -8,9 +8,10 @@ function checkScroll() {
     $('.navbar').removeClass("scrolled");
   }
 }
-
-if ($('.navbar').length > 0) {
-  $(window).on("scroll load resize", function() {
-    checkScroll();
-  });
-}
+$(document).ready(function() {
+  if ($('.navbar').length > 0) {
+    $(window).on("scroll load resize", function() {
+      checkScroll();
+    });
+  }
+});

@@ -156,6 +156,7 @@ function mapMaker(workArea, toolBar) {
 
     $("#toggle_vendors").click(function() {
         $("#vendor_list").toggle();
+        $(this).toggleClass("open");
     })
 
     $("#add_vendor").click(function() {
@@ -226,6 +227,11 @@ function mapMaker(workArea, toolBar) {
 
     $(".close_vendorBooth").click(function() {
         toolContext.vendorBooth.hide();
+    })
+
+    $("#toggle_tags").click(function() {
+        $("#tag_list").toggle();
+        $(this).toggleClass("open");
     })
 
 
@@ -510,7 +516,7 @@ function mapMaker(workArea, toolBar) {
 
         var newVendorEl = $("<li data-id=\""+ lastVendorId + "\">" +
                             "<div class=\"vendorshow\">" + 
-                                "<i class=\"fa fa-circle-o drag_assign\"></i>" +
+                                "<i class=\"fa fa-circle-o drag_assign\"></i> " +
                                 "<a href=\"#\" class=\"vendor_name\">"+ name + "</a>" +
                                 "<i class=\"fa fa-eye vendorview_toggle\"></i>" +
                             "</div>" +
@@ -518,9 +524,10 @@ function mapMaker(workArea, toolBar) {
                                 "<strong>URL: </strong><span class=\"vendor_url\">" + url + "</span>" + 
                                 "<strong>Description: </strong><span class=\"vendor_desc\">" + desc + "</span>" + 
                                 "<div class=\"vendor_tags\"></div>" + 
-                                "<button class=\"update_vendor\">Update</button>" +
-                                "<button class=\"destroy_vendor\">Destroy</button>" +
-                            "</div></li>");
+                                "<div class=\"vendor_options\">" +
+                                    "<button class=\"update_vendor greenbtn\"><i class=\"fa fa-pencil\"></i> Update</button> " +
+                                    "<button class=\"destroy_vendor redbtn\"><i class=\"fa fa-trash\"></i> Destroy</button>" +
+                            "</div></div></li>");
         $("#vendor_list ul").append(newVendorEl);
         return newVendorEl;
     }
@@ -600,10 +607,13 @@ function mapMaker(workArea, toolBar) {
         var vendorClass = "v" + toggleEl.closest("li").data("id");
         if (toggleEl.hasClass("vendorview_on")) { // ON to OFF
             toggleEl.removeClass("vendorview_on");
+            toggleEl.removeClass("fa-eye");
+            toggleEl.addClass("fa-eye-slash");
             $(".booth."+vendorClass).removeClass("highlight");
         } else { // OFF to ON
             toggleEl.addClass("vendorview_on");
-            // NEED TO FIX -> If a vendor booth is removed, also remove form the booth...
+            toggleEl.addClass("fa-eye");
+            toggleEl.removeClass("fa-eye-slash");
             $(".booth."+vendorClass).addClass("highlight");
         }
     }

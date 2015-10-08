@@ -27,6 +27,10 @@ ul.unordered {
     padding:0;
 }
 
+.noPad {
+    padding:0;
+}
+
 body { // Don't want bootstrap nav bar obscuring top 50px of content lol
     margin:0;
     padding-top: 50px;
@@ -41,6 +45,35 @@ body { // Don't want bootstrap nav bar obscuring top 50px of content lol
 a {
     color: red;
 }
+
+    // ------------------------------------------------------------
+////// RESUABLE BUTTON STYLES
+    // ------------------------------------------------------------
+
+    .greenbtn {
+        border: 0;
+        background-color: #64b52c;
+        border-bottom: 3px solid #2a7a00;
+        color: white;
+    }
+
+    .bluebtn {
+
+    }
+
+    .greybtn {
+        border: 0;
+        background-color: #b1b1b1;
+        border-bottom: 3px solid #7e7e7e;
+        color: white;
+    }
+
+    .redbtn {
+        border: 0;
+        background-color: #b63737;
+        border-bottom: 3px solid #850c0c;
+        color: white;
+    }
 
     // ------------------------------------------------------------
 ////// FOOTER

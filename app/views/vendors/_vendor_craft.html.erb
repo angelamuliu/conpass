@@ -1,7 +1,8 @@
 <div id="vendor_craft">
-    <div>
-        <button id="toggle_vendors">Vendors</button>
-        <button id="add_vendor">
+    
+    <div id="vendor_header">
+        <button id="toggle_vendors"><i class="fa fa-balance-scale"></i> Vendors</button>
+        <button id="add_vendor" class="jsAdd">
             <i class="fa fa-plus"></i>
         </button>
     </div>
@@ -18,7 +19,7 @@
                             <i class="fa fa-circle-o drag_assign" draggable="true"></i>
                         <% end %>
                         <a href="#" class="vendor_name"><%= vendor.name %></a>
-                        <i class="fa fa-eye vendorview_toggle"></i>
+                        <i class="fa fa-eye-slash vendorview_toggle"></i>
                     </div>
                     <div class="vendorshow_extra">
                         <strong>URL: </strong> <span class="vendor_url"><%= vendor.website_url %></span>
@@ -28,40 +29,14 @@
                                 <%= tag.name %>
                             <% end %>
                         </div>
-                        <button class="update_vendor">Update</button>
-                        <button class="destroy_vendor">Destroy</button>
+                        <div class="vendor_options">
+                            <button class="update_vendor greenbtn"><i class="fa fa-pencil"></i> Update</button>
+                            <button class="destroy_vendor redbtn"><i class="fa fa-trash"></i> Destroy</button>
+                        </div>
                     </div>
                 </li>
             <% end %>
         </ul>
-    </div>
-
-    <%# Vendor overlay form %>
-    <div class="overlay">
-        <form id="vendor_form">
-            <div class="error">
-                Please enter a name for the vendor
-            </div>
-            <a href="#" class="close_overlay">
-                <i class="fa fa-times"></i>
-            </a>
-            <ul class="unordered">
-                <li>
-                    <label for="vendor_name">Name</label>
-                    <input type="text" name="vendor_name" class="vendor_name">
-                </li>
-                <li>
-                    <label for="vendor_url">URL</label>
-                    <input type="text" name="vendor_url" class="vendor_url">
-                </li>
-                <li>
-                    <label for="vendor_desc">Description</label>
-                    ​<textarea id="txtArea" rows="10" name="vendor_desc" class="vendor_desc"></textarea>
-                </li>
-            </ul>
-            <button id="vendor_form_submit">Submit</button>
-            <button class="close_overlay">Cancel</button>
-        </form>
     </div>
 
 </div>
