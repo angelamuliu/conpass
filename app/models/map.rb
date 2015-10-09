@@ -128,6 +128,7 @@ class Map < ActiveRecord::Base
                 Vendor.update(updateAction["id"], name: updateAction["name"], description: updateAction["description"],
                     website_url: updateAction["website_url"])
             when "tag"
+                Tag.update(updateAction["id"], name: updateAction["name"])
             when "booth"
                 Booth.update(updateAction["id"], x_pos: updateAction["x"].to_i, y_pos: updateAction["y"].to_i,
                     width: updateAction["width"].to_i, height: updateAction["height"].to_i)

@@ -246,7 +246,8 @@ function mapMaker(workArea, toolBar) {
                 addTagToDom();
                 addTagToHistory();
             } else if (toolContext.tagAction === ACTIONS.UPDATE) {
-
+                updateTagInDom();
+                updateTagToHistory();
             }
             $(this).closest("div.overlay").hide();
             resetForm(formEl);
@@ -257,6 +258,11 @@ function mapMaker(workArea, toolBar) {
     })
 
     $(".update_tag").click(function() {
+        toolContext.tagAction = ACTIONS.UPDATE;
+        toolContext.isTemp = false;
+        toolContext.tagEl = $(this).closest(".tag");
+        prepTagForm(toolContext.tagEl, $("#tag_form"));
+        $("#tag_form").parent().toggle();
         return false;
     })
 
@@ -794,7 +800,7 @@ function mapMaker(workArea, toolBar) {
         var name = $("input[name='tag_name']").val();
 
         // TODO : Also add vendor tags in later at some point?
-        var newTagEl = $("<li data-id=\""+lastTagId+"\">" +
+        var newTagEl = $("<li data-id=\""+lastTagId+"\" class=\"tag\">" +
                             "<div class=\"tagshow\">" +
                                 "<a href=\"\" class=\"tag_name\">"+ name + "</a>" +
                                 "<div class=\"tag_options\">" +
@@ -821,11 +827,22 @@ function mapMaker(workArea, toolBar) {
     }
 
     function updateTagInDom() {
-
+        var name = $("input[name='tag_name']").val();
+        toolContext.tagEl.find(".tag_name").text(name);
     }
 
     function updateTagToHistory() {
-
+        var name = $("input[name='tag_name']").val();
+        var tagHistory = {
+            "action" : ACTIONS.UPDATE,
+            "type" : TYPES.TAG,
+            "id" : toolContext.tagEl.data("id"),
+            "name" : name
+        }
+        if (toolContext.isTemp) { // Updated temp obj never saved
+            tagHistory["isTemp"] = true;
+        }
+        actionHistory.push(tagHistory);
     }
 
     function deleteTagInDom() {
@@ -919,6 +936,13 @@ function mapMaker(workArea, toolBar) {
 
     function showVendorBoothForm(vendorbooth_formEl) {
         vendorbooth_formEl.parent().show();
+    }
+
+    // Preps tag form with data from a tag El
+    function prepTagForm(tagEl, formEl) {
+        var name = tagEl.find(".tag_name").text();
+
+        formEl.find("input[name='tag_name']").val(name);
     }
 
     function numToDayOfWeek(num) { // Given a number between 0 - 6, converts to string that is day of week
