@@ -135,6 +135,8 @@ function mapMaker(workArea, toolBar) {
         e.stopPropagation();
     })
 
+////// Vendor clicks
+
     $("#vendor_form_submit").click(function(e) {
         var formEl = $(this).parent();
         if (validateVendorFields(formEl)) {
@@ -183,6 +185,8 @@ function mapMaker(workArea, toolBar) {
         deleteVendorInDom(vendorEl);
     })
 
+////// Vendor Booth clicks
+
     // Toggle highlighting of booths with a vendor
     $(".vendorview_toggle").click(function() {
         toggleVendorFilter($(this));
@@ -229,6 +233,8 @@ function mapMaker(workArea, toolBar) {
         toolContext.vendorBooth.hide();
     })
 
+////// Tag clicks
+
     $("#toggle_tags").click(function() {
         $("#tag_list").toggle();
         $(this).toggleClass("open");
@@ -263,16 +269,16 @@ function mapMaker(workArea, toolBar) {
         toolContext.tagEl = $(this).closest(".tag");
         prepTagForm(toolContext.tagEl, $("#tag_form"));
         $("#tag_form").parent().toggle();
-        return false;
     })
 
     $(".destroy_tag").click(function() {
-        return false;
+        var tagEl = $(this).closest(".tag");
+        deleteTagToHistory(tagEl, false);
+        deleteTagInDom(tagEl);
     })
 
     $(".tag_name").click(function() {
-        $(this).parent().siblings().first().toggle();
-        return false;
+        $(this).parent().siblings(".tagshow_extra").toggle()
     })
 
 
@@ -794,6 +800,22 @@ function mapMaker(workArea, toolBar) {
 ////// TAG
     // ------------------------------------------------------------
 
+    function addTagListeners(tagEl) {
+        tagEl.find(".update_tag").click(function() {
+            toolContext.tagEl = tagEl;
+            toolContext.tagAction = ACTIONS.UPDATE;
+            toolContext.isTemp = true;
+            prepTagForm(tagEl, $("#tag_form"));
+            $("#tag_form").parent().toggle();
+        })
+        tagEl.find(".destroy_tag").click(function() {
+            deleteTagToHistory(tagEl, true);
+            deleteTagInDom(tagEl);
+        })
+        tagEl.find(".tag_name").click(function() {
+            tagEl.children(".tagshow_extra").toggle();
+        })
+    }
 
     function addTagToDom() {
         lastTagId++;
@@ -802,15 +824,16 @@ function mapMaker(workArea, toolBar) {
         // TODO : Also add vendor tags in later at some point?
         var newTagEl = $("<li data-id=\""+lastTagId+"\" class=\"tag\">" +
                             "<div class=\"tagshow\">" +
-                                "<a href=\"\" class=\"tag_name\">"+ name + "</a>" +
+                                "<a href=\"javascript:;\" class=\"tag_name\">"+ name + "</a>" +
                                 "<div class=\"tag_options\">" +
-                                    "<a href=\"\" class=\"update_tag\"><i class=\"fa fa-pencil\"></i></a>" +
-                                    "<a href=\"\" class=\"destroy_tag\"><i class=\"fa fa-trash\"></i></a>" +
+                                    "<a href=\"javascript:;\" class=\"update_tag\"><i class=\"fa fa-pencil\"></i></a> " +
+                                    "<a href=\"javascript:;\" class=\"destroy_tag\"><i class=\"fa fa-trash\"></i></a>" +
                                 "</div>" +
                             "</div>" +
                             "<ul class=\"tagshow_extra\"></ul>" +
                             "</li>");
         $("#tag_list ul").first().append(newTagEl);
+        addTagListeners(newTagEl);
         return newTagEl;
     }
 
@@ -845,12 +868,20 @@ function mapMaker(workArea, toolBar) {
         actionHistory.push(tagHistory);
     }
 
-    function deleteTagInDom() {
-
+    function deleteTagInDom(tagEl, isTemp) {
+        var tagHistory = {
+            "action" : ACTIONS.DELETE,
+            "type": TYPES.TAG,
+            "id" : tagEl.data("id")
+        }
+        if (isTemp) { // Deleted temp obj never saved
+            tagHistory["isTemp"] = true;
+        }
+        actionHistory.push(tagHistory);
     }
 
-    function deleteTagToHistory() {
-
+    function deleteTagToHistory(tagEl) {
+        tagEl.addClass("deleted");
     }
 
     // TODO!!

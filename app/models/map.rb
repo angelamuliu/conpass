@@ -150,6 +150,7 @@ class Map < ActiveRecord::Base
             when "vendor"
                 Vendor.find(deleteAction["id"]).destroy
             when "tag"
+                Tag.find(deleteAction["id"]).destroy
             when "booth"
                 Booth.find(deleteAction["id"]).destroy
             when "vendor_tag"
