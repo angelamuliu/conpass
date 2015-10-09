@@ -10,6 +10,12 @@ class MapsController < ApplicationController
   # GET /maps/1
   # GET /maps/1.json
   def show
+    @map = Map.find(params[:id])
+    @vendors = @map.convention.vendors
+    @tags = @map.convention.tags
+    @booths = @map.booths
+    # @vendorTags =
+    @vendorBooths = @map.vendor_booths
   end
 
   # GET /maps/new
