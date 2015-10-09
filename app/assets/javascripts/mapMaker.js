@@ -264,6 +264,11 @@ function mapMaker(workArea, toolBar) {
         return false;
     })
 
+    $(".tag_name").click(function() {
+        $(this).parent().siblings().first().toggle();
+        return false;
+    })
+
 
 
     // ------------------------------------------------------------
@@ -790,9 +795,15 @@ function mapMaker(workArea, toolBar) {
 
         // TODO : Also add vendor tags in later at some point?
         var newTagEl = $("<li data-id=\""+lastTagId+"\">" +
-                            name +
-                            "<ul class=\"inline_list\">"+
-                            "<ul></li>");
+                            "<div class=\"tagshow\">" +
+                                "<a href=\"\" class=\"tag_name\">"+ name + "</a>" +
+                                "<div class=\"tag_options\">" +
+                                    "<a href=\"\" class=\"update_tag\"><i class=\"fa fa-pencil\"></i></a>" +
+                                    "<a href=\"\" class=\"destroy_tag\"><i class=\"fa fa-trash\"></i></a>" +
+                                "</div>" +
+                            "</div>" +
+                            "<ul class=\"tagshow_extra\"></ul>" +
+                            "</li>");
         $("#tag_list ul").first().append(newTagEl);
         return newTagEl;
     }

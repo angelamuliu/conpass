@@ -11,12 +11,20 @@
         <ul class="unordered">
             <% @tags.each do |tag| %>
                 <li data-id="<%= tag.id %>">
-                    <%= tag.name %> 
-                    <div class="tag_options">
-                        <a href="" class="update_tag"><i class="fa fa-pencil"></i></a>
-                        <a href="" class="destroy_tag"><i class="fa fa-trash"></i></a>
+                    <div class="tagshow">
+                        <a href="" class="tag_name"><%= tag.name %></a> 
+                        <div class="tag_options">
+                            <a href="" class="update_tag"><i class="fa fa-pencil"></i></a>
+                            <a href="" class="destroy_tag"><i class="fa fa-trash"></i></a>
+                        </div>
                     </div>
-                    <input type="hidden"> <%# Where we jankily store vendortags %>
+                    <ul class="tagshow_extra">
+                        <% tag.vendors.each do |vendor| %>
+                        <li class="vendorTag" data-id="<%= vendor.id %>">
+                            <%= vendor.name %>
+                        </li>
+                        <% end %>
+                    </ul>
                 </li>
             <% end %>
         </ul>

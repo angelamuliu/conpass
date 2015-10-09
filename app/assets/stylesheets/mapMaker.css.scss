@@ -208,10 +208,11 @@ button.jsAdd:hover {
     overflow-y: scroll;
     box-shadow: 0px 0px 10px 3px rgba(0, 0, 0,.3);
 }
-#vendor_list li:nth-child(odd), #tag_list li:nth-child(odd) {
+// Only want to style direct li children like list
+#vendor_list > li:nth-child(odd), #tag_list > li:nth-child(odd) {
   background-color: #f0ece7;
 }
-#vendor_list li:nth-child(even), #tag_list li:nth-child(even) {
+#vendor_list > li:nth-child(even), #tag_list > li:nth-child(even) {
   background-color: #f8f5f2;
 }
 .vendor_name {
@@ -351,9 +352,30 @@ ul.vendorBooth span.dateRange {
 #tag_list {
     display: none;
 }
-#tag_list li {
-    padding: 5px;
+#tag_list > li {
     color: #e43046;
+}
+.tagshow {
+    padding: 5px;
+}
+.tag_options {
+    float: right;
+}
+.tagshow_extra {
+    padding: 5px;
+    display: none;
+    background-color: white;
+    padding-bottom: 10px;
+    border-top: 1px solid #b1b1b1;
+}
+.tagshow_extra li {
+    display: inline-block;
+}
+.tagshow_extra li:first-child:before {
+    content: initial;
+}
+.tagshow_extra li:before{
+    content:'\00B7';
 }
 
 
