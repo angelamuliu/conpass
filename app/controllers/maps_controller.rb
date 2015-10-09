@@ -14,8 +14,8 @@ class MapsController < ApplicationController
     @vendors = @map.convention.vendors
     @tags = @map.convention.tags
     @booths = @map.booths
-    # @vendorTags =
     @vendorBooths = @map.vendor_booths
+    @vendorTags = @map.convention.vendor_tags
   end
 
   # GET /maps/new
@@ -75,16 +75,16 @@ class MapsController < ApplicationController
     @vendors = @map.convention.vendors
     @tags = @map.convention.tags
     @booths = @map.booths
-    # @vendorTags =
     @vendorBooths = @map.vendor_booths
+    @vendorTags = @map.convention.vendor_tags
 
     # Pass these variables into the JS as well
     gon.map = @map
     gon.vendors = @vendors
     gon.tags = @tags
-    # gon.vendorTags = @vendorTags
     gon.booths = @booths
     gon.vendorBooths = @vendorBooths
+    gon.vendorTags = @vendorTags
   end
 
   # Saving map after making changes

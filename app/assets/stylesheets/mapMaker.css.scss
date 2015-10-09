@@ -378,5 +378,25 @@ ul.vendorBooth span.dateRange {
     content:'\00B7';
 }
 
+.assign_vendortags input {
+    width: initial;
+}
+.assign_vendortags li {
+    padding: 5px;
+    border:none;
+}
+.assign_vendortags li input {
+    margin: 5px;
+}
+.assign_vendortags li:nth-child(even) {
+    width: 50%;
+    float: right;
+}
+.assign_vendortags li:nth-child(odd) {
+    width: 50%;
+    float: left;
+    border-right: 1px solid #b1b1b1;
+}
+
 
 

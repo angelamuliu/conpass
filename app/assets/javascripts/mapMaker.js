@@ -78,6 +78,9 @@ function mapMaker(workArea, toolBar) {
     var selectedTool; // Which tool is the user currently using
     var toolContext = {}; // Store information about interactions as needed
 
+    var vendorDict = {}; // {"vendor ID" : vendor name}; Updated and used in vendor tag creation
+    var tagDict = {}; // {"tag ID" : tag name}; Updated and used in vendor tag creation
+
     var workArea = workArea;
     var toolBar = toolBar;
 
@@ -87,7 +90,7 @@ function mapMaker(workArea, toolBar) {
     var lastTagId = gon.tags.length > 0 ? gon.tags[gon.tags.length - 1].id : 0;
     var lastBoothId = gon.booths.length > 0 ? gon.booths[gon.booths.length - 1].id : 0;
     var lastVendorBoothId = gon.vendorBooths.length > 0 ? gon.vendorBooths[gon.vendorBooths.length - 1].id : 0;
-    // var lastVendorTagId;
+    var lastVendorTagId = gon.vendorTags.length > 0 ? gon.vendorTags[gon.vendorTags.length - 1].id : 0;
 
 
     // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -95,6 +98,20 @@ function mapMaker(workArea, toolBar) {
     // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
     $('.datetimepicker').datetimepicker();
+
+    loadVendorDict(gon.vendors);
+    loadTagDict(gon.tags);
+
+    // TODO: On vendor delete, remove from dict
+    // on vendor add, add to dict
+    // on vendor update, update dict. Also update all instances of it both in the vendorbooth thing and vendor tag li elements
+    // Load in values from vendor dict to the tag form
+    // Checkboxes
+    // Log all checks into a single vendortag history obj
+    // Change backend to parse vendortags slightly differently when organizing
+    // Update DOM for both the tag listing
+    // When updating a tag, load in vendors into its listing
+
 
 
 
@@ -162,6 +179,7 @@ function mapMaker(workArea, toolBar) {
     })
 
     $("#add_vendor").click(function() {
+        loadVendortagsIntoForm($("#vendor_form"), true);
         $("#vendor_form").parent().toggle();
         toolContext.vendorAction = ACTIONS.CREATE;
     })
@@ -241,6 +259,7 @@ function mapMaker(workArea, toolBar) {
     })
 
     $("#add_tag").click(function() {
+        loadVendortagsIntoForm($("#tag_form"), false);
         $("#tag_form").parent().toggle();
         toolContext.tagAction = ACTIONS.CREATE;
     })
@@ -972,8 +991,23 @@ function mapMaker(workArea, toolBar) {
     // Preps tag form with data from a tag El
     function prepTagForm(tagEl, formEl) {
         var name = tagEl.find(".tag_name").text();
-
         formEl.find("input[name='tag_name']").val(name);
+        loadVendorsIntoTagForm();
+    }
+
+    // Reload the vendortag listings into either the tag or vendor form
+    function loadVendortagsIntoForm(formEl, isVendorForm) {
+        var assignEl = formEl.find(".assign_vendortags");
+        assignEl.empty();
+        if (isVendorForm) {
+            for (var key in tagDict) {
+                assignEl.append("<li><input type=\"checkbox\" value="+key+">"+tagDict[key]+"</li>");
+            }
+        } else {
+            for (var key in vendorDict) {
+                assignEl.append("<li><input type=\"checkbox\" value="+key+">"+vendorDict[key]+"</li>");
+            }
+        }
     }
 
     function numToDayOfWeek(num) { // Given a number between 0 - 6, converts to string that is day of week
@@ -1017,6 +1051,22 @@ function mapMaker(workArea, toolBar) {
             if (re.test(classes[i])) { // Matches vendor class with ID pattern
                 return parseInt(classes[i].substring(1)) // Return just ID number
             }
+        }
+    }
+
+    // Initializes the vendor dict with id and name values
+    function loadVendorDict(initialVendors) {
+        for (var i = 0; i < initialVendors.length; i++) {
+            var vendorObj = initialVendors[i];
+            vendorDict[vendorObj["id"]] = vendorObj["name"];
+        }
+    }
+
+    // Initializes the tag dict with id and name values
+    function loadTagDict(initialTags) {
+         for (var i = 0; i < initialTags.length; i++) {
+            var tagObj = initialTags[i];
+            tagDict[tagObj["id"]] = tagObj["name"];
         }
     }
 
