@@ -1,25 +1,26 @@
 
 <%# Vendor overlay form %>
 <div class="overlay">
-    <form id="vendor_form">
+    <form id="vendor_form" class="jsForm">
+        <h3>Vendor Form</h3>
         <div class="error">
             Please enter a name for the vendor
         </div>
-        <a href="#" class="close_overlay">
+        <a href="javascript:;" class="close_overlay">
             <i class="fa fa-times"></i>
         </a>
         <ul class="unordered">
             <li>
                 <label for="vendor_name">Name</label>
-                <input type="text" name="vendor_name" class="vendor_name">
+                <input type="text" name="vendor_name">
             </li>
             <li>
                 <label for="vendor_url">URL</label>
-                <input type="text" name="vendor_url" class="vendor_url">
+                <input type="text" name="vendor_url">
             </li>
             <li>
                 <label for="vendor_desc">Description</label>
-                ​<textarea id="txtArea" rows="10" name="vendor_desc" class="vendor_desc"></textarea>
+                ​<textarea id="txtArea" rows="10" name="vendor_desc"></textarea>
             </li>
         </ul>
         <button id="vendor_form_submit">Submit</button>

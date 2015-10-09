@@ -84,7 +84,7 @@ function mapMaker(workArea, toolBar) {
     // Vendors/tags/booths/vendor_tags that haven't been saved to the system are given a temp ID
     // that allows us to not waste effort creating/updating objs that are deleted anyway
     var lastVendorId = gon.vendors.length > 0 ? gon.vendors[gon.vendors.length - 1].id : 0;
-    // var lastTagId;
+    var lastTagId = gon.tags.length > 0 ? gon.tags[gon.tags.length - 1].id : 0;
     var lastBoothId = gon.booths.length > 0 ? gon.booths[gon.booths.length - 1].id : 0;
     var lastVendorBoothId = gon.vendorBooths.length > 0 ? gon.vendorBooths[gon.vendorBooths.length - 1].id : 0;
     // var lastVendorTagId;
@@ -233,6 +233,37 @@ function mapMaker(workArea, toolBar) {
         $("#tag_list").toggle();
         $(this).toggleClass("open");
     })
+
+    $("#add_tag").click(function() {
+        $("#tag_form").parent().toggle();
+        toolContext.tagAction = ACTIONS.CREATE;
+    })
+
+    $("#tag_form_submit").click(function() {
+        var formEl = $(this).parent();
+        if (validateTagFields(formEl)) {
+            if (toolContext.tagAction === ACTIONS.CREATE) {
+                addTagToDom();
+                addTagToHistory();
+            } else if (toolContext.tagAction === ACTIONS.UPDATE) {
+
+            }
+            $(this).closest("div.overlay").hide();
+            resetForm(formEl);
+        } else { // Error
+            formEl.children("div.error").slideDown(300);
+        }
+        return false;
+    })
+
+    $(".update_tag").click(function() {
+        return false;
+    })
+
+    $(".destroy_tag").click(function() {
+        return false;
+    })
+
 
 
     // ------------------------------------------------------------
@@ -749,10 +780,77 @@ function mapMaker(workArea, toolBar) {
 
 
     // ------------------------------------------------------------
+////// TAG
+    // ------------------------------------------------------------
+
+
+    function addTagToDom() {
+        lastTagId++;
+        var name = $("input[name='tag_name']").val();
+
+        // TODO : Also add vendor tags in later at some point?
+        var newTagEl = $("<li data-id=\""+lastTagId+"\">" +
+                            name +
+                            "<ul class=\"inline_list\">"+
+                            "<ul></li>");
+        $("#tag_list ul").first().append(newTagEl);
+        return newTagEl;
+    }
+
+    function addTagToHistory() {
+        var name = $("input[name='tag_name']").val();
+        var tagHistory = {
+            "action" : ACTIONS.CREATE,
+            "type": TYPES.TAG,
+            "id" : lastTagId,
+            "name" : name,
+            "isTemp" : true
+        }
+        actionHistory.push(tagHistory);
+    }
+
+    function updateTagInDom() {
+
+    }
+
+    function updateTagToHistory() {
+
+    }
+
+    function deleteTagInDom() {
+
+    }
+
+    function deleteTagToHistory() {
+
+    }
+
+    // TODO!!
+    function validateTagFields(formEl) {
+        if ($("input[name='tag_name']").val().length < 1) {
+            return false;
+        }
+        return true;
+    }
+
+
+
+    // ------------------------------------------------------------
 ////// VENDOR TAG
     // ------------------------------------------------------------
 
 
+    // Given an array of VendorTag sets [{vendorId: 4, tagId: 5}, ...], adds 
+    // DOM objects to the vendor and the tag
+    function addVendorTagsToDom() {
+
+    }
+
+    // Given an array of VendorTag sets [{vendorId: 4, tagId: 5}, ...], logs a single
+    // history item that contains the new vendor tags
+    function addVendorTagsToHistory() {
+
+    }
 
 
 
@@ -795,9 +893,9 @@ function mapMaker(workArea, toolBar) {
         var url = vendorEl.find(".vendor_url").text();
         var desc = vendorEl.find(".vendor_desc").text();
 
-        formEl.find(".vendor_name").val(name);
-        formEl.find(".vendor_url").val(url);
-        formEl.find(".vendor_desc").val(desc);
+        formEl.find("input[name='vendor_name']").val(name);
+        formEl.find("input[name='vendor_url']").val(url);
+        formEl.find("textarea[name='vendor_desc']").val(desc);
     }
 
     // Given the vendorbooth form element, gets a top left corner and edits the vendorBooth form DOM object

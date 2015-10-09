@@ -8,11 +8,15 @@
 
     <%# Listing existing tags %>
     <div id="tag_list">
-        ASDFASD
         <ul class="unordered">
-            <% tags.each do |tag| %>
+            <% @tags.each do |tag| %>
                 <li data-id="<%= tag.id %>">
-                    <% tag.name %>
+                    <%= tag.name %> 
+                    <div class="tag_options">
+                        <a href="" class="update_tag"><i class="fa fa-pencil"></i></a>
+                        <a href="" class="destroy_tag"><i class="fa fa-trash"></i></a>
+                    </div>
+                    <input type="hidden"> <%# Where we jankily store vendortags %>
                 </li>
             <% end %>
         </ul>
