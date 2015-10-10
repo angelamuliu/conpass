@@ -6,6 +6,6 @@ class Convention < ActiveRecord::Base
 
     # Scopes 
     scope :alphabetical, -> {order('name')}
-    scope :ongoing, -> {where('end_date >= ?', Date.current)}
+    scope :current, -> {where('end_date >= ?', Date.current)}
     scope :upcoming, -> {where('start_date > ?', Date.current)}
 end
