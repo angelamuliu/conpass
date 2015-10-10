@@ -25,7 +25,6 @@ class ConventionTest < ActiveSupport::TestCase
     end
     
     # Scopes
-
     should "list conventions alphabetically" do
       assert_equal 4, Convention.all.size
       assert_equal ["BOC", "Carnival", "EOC", "TOC"], Convention.alphabetical.map{|c| c.name}
