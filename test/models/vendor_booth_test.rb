@@ -21,7 +21,7 @@ class VendorBoothTest < ActiveSupport::TestCase
       
       @vb1 = FactoryGirl.create(:vendor_booth, vendor: @vendor1, booth: @booth1, start_time: Time.zone.parse('2015-01-27 01:00'), end_time: Time.zone.parse('2015-01-28 01:00'))
       @vb2 = FactoryGirl.create(:vendor_booth, vendor: @vendor2, booth: @booth1, start_time: Time.zone.parse('2015-01-24 01:00'), end_time: Time.zone.parse('2015-01-25 01:00'))
-      @vb3 = FactoryGirl.create(:vendor_booth, vendor: @vendor3, booth: @booth1 start_time: Time.zone.parse('2015-01-22 01:00'), end_time: Time.zone.parse('2015-01-23 01:00'))
+      @vb3 = FactoryGirl.create(:vendor_booth, vendor: @vendor3, booth: @booth1, start_time: Time.zone.parse('2015-01-22 01:00'), end_time: Time.zone.parse('2015-01-23 01:00'))
 
     end
 
@@ -45,7 +45,9 @@ class VendorBoothTest < ActiveSupport::TestCase
 
     # Methods
     should "return the correct timeRange" do
-      assert_equal 
+      assert_equal "01/27 Tue 1:00am - 01/28 Wed 1:00am", @vb1.timeRange()
+      assert_equal "01/24 Sat 1:00am - 01/25 Sun 1:00am", @vb2.timeRange()
+      assert_equal "01/22 Thu 1:00am - 01/23 Fri 1:00am", @vb3.timeRange()
     end
   end
 end
