@@ -5,6 +5,7 @@ class VendorBooth < ActiveRecord::Base
 
     # Validations
     validates_presence_of :start_time, :end_time
+    validates_presence_of :vendor, :booth
 
     # Scopes
     scope :chronological, -> {order('start_time')}

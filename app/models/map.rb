@@ -30,12 +30,16 @@ class Map < ActiveRecord::Base
     def saveFromHistory(jsonActionHistory)
         categorizedHistory = organizeHistory(JSON.parse(jsonActionHistory))
 
-        saveForModel("map", categorizedHistory)
-        saveForModel("vendor", categorizedHistory)
-        saveForModel("tag", categorizedHistory)
-        saveForModel("booth", categorizedHistory)
-        saveForModel("vendor_tag", categorizedHistory)
-        saveForModel("vendor_booth", categorizedHistory)
+        # Store new obj saved new IDs for vendorbooth, vendortag
+        # EX STRUCTURE: {"booth" : {"t1" : 10, "t2" : actualID, ... }, "vendor" : {... } }
+        tempToPerm = {"booth" => {}, "vendor" => {}, "tag" => {}}
+
+        saveForModel("map", categorizedHistory, tempToPerm)
+        saveForModel("vendor", categorizedHistory, tempToPerm)
+        saveForModel("tag", categorizedHistory, tempToPerm)
+        saveForModel("booth", categorizedHistory, tempToPerm)
+        saveForModel("vendor_tag", categorizedHistory, tempToPerm)
+        saveForModel("vendor_booth", categorizedHistory, tempToPerm)
     end
 
     # Takes array of hashes and organizes in types of actions so that we can save efficiently & properly
@@ -85,33 +89,37 @@ class Map < ActiveRecord::Base
     end
 
     # Takes in model name and action hash (e.g. {"create" : {...}, "update" : {...}) and does actions
-    def saveForModel(modelName, categorizedHistory)
+    def saveForModel(modelName, categorizedHistory, tempToPerm)
         if categorizedHistory.has_key?(modelName)
             actionHistory = categorizedHistory[modelName]
-            createModels(modelName, actionHistory)
+            createModels(modelName, actionHistory, tempToPerm)
             updateModels(modelName, actionHistory)
             deleteModels(modelName, actionHistory)
         end
     end
 
     # All creates are working off TEMP objs
-    def createModels(modelName, actionHistory)
+    def createModels(modelName, actionHistory, tempToPerm)
         createActions = if actionHistory["create"].nil? then {} else actionHistory["create"] end
         for idKey in createActions.keys
             createAction = createActions[idKey]
             case modelName
             when "map"
             when "vendor"
-                Vendor.create({name: createAction["name"], convention_id: self.convention_id, 
+                vendor = Vendor.create({name: createAction["name"], convention_id: self.convention_id, 
                     description: createAction["description"], website_url: createAction["website_url"]})
+                tempToPerm["vendor"][idKey] = vendor.id
             when "tag"
-                Tag.create({name: createAction["name"], convention_id: self.convention_id})
+                tag = Tag.create({name: createAction["name"], convention_id: self.convention_id})
+                tempToPerm["tag"][idKey] = tag.id
             when "booth"
-                Booth.create({x_pos: createAction["x"].to_i, y_pos: createAction["y"].to_i, 
+                booth = Booth.create({x_pos: createAction["x"].to_i, y_pos: createAction["y"].to_i, 
                     width: createAction["width"].to_i, height: createAction["height"].to_i, map_id: self.id})
+                tempToPerm["booth"][idKey] = booth.id
             when "vendor_tag"
             when "vendor_booth"
-                VendorBooth.create({vendor_id: createAction["vendor_id"], booth_id: createAction["booth_id"],
+                VendorBooth.create({vendor_id: translateTempToPermId(createAction["vendor_id"], "vendor", tempToPerm), 
+                    booth_id: translateTempToPermId(createAction["booth_id"], "booth", tempToPerm),
                     start_time: DateTime.parse(createAction["start_time"]), end_time: DateTime.parse(createAction["end_time"])})
             end
         end
@@ -157,6 +165,18 @@ class Map < ActiveRecord::Base
             when "vendor_booth"
                 VendorBooth.find(deleteAction["id"]).destroy
             end
+        end
+    end
+
+    # HELPERS
+
+    # Given an id, if it is temp ("t10") then returns the perm ID
+    # If it is perm ("10"), simply rereturns the original value
+    def translateTempToPermId(id, type, tempToPerm)
+        if id[0] == "t"
+            return tempToPerm[type][id]
+        else
+            return id
         end
     end
 

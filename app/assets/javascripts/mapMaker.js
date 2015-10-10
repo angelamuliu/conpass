@@ -85,12 +85,13 @@ function mapMaker(workArea, toolBar) {
     var toolBar = toolBar;
 
     // Vendors/tags/booths/vendor_tags that haven't been saved to the system are given a temp ID
-    // that allows us to not waste effort creating/updating objs that are deleted anyway
-    var lastVendorId = gon.vendors.length > 0 ? gon.vendors[gon.vendors.length - 1].id : 0;
-    var lastTagId = gon.tags.length > 0 ? gon.tags[gon.tags.length - 1].id : 0;
-    var lastBoothId = gon.booths.length > 0 ? gon.booths[gon.booths.length - 1].id : 0;
-    var lastVendorBoothId = gon.vendorBooths.length > 0 ? gon.vendorBooths[gon.vendorBooths.length - 1].id : 0;
-    var lastVendorTagId = gon.vendorTags.length > 0 ? gon.vendorTags[gon.vendorTags.length - 1].id : 0;
+    // stored in the data-id attr of an EL (all start with "t" ex "t1") that allows us to not waste
+    // effort creating/updating objs that are deleted anyway and more complicated operations
+    var lastVendorId = 0;
+    var lastTagId = 0;
+    var lastBoothId = 0;
+    var lastVendorBoothId = 0;
+    var lastVendorTagId = 0;
 
 
     // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -179,7 +180,7 @@ function mapMaker(workArea, toolBar) {
     })
 
     $("#add_vendor").click(function() {
-        loadVendortagsIntoForm($("#vendor_form"), true);
+        loadVendortagsIntoForm($("#vendor_form"), true, -1);
         $("#vendor_form").parent().toggle();
         toolContext.vendorAction = ACTIONS.CREATE;
     })
@@ -190,11 +191,13 @@ function mapMaker(workArea, toolBar) {
 
     $(".update_vendor").click(function() {
         toolContext.vendorEl = $(this).closest("li");
-        prepVendorForm(toolContext.vendorEl, $("#vendor_form"));
-        $("#vendor_form").parent().toggle();
         toolContext.vendorAction = ACTIONS.UPDATE;
         toolContext.isTemp = false;
         toolContext.vendorId = toolContext.vendorEl.data("id");
+
+        prepVendorForm(toolContext.vendorEl, $("#vendor_form"));
+        loadVendortagsIntoForm($("#vendor_form"), true, toolContext.vendorId);
+        $("#vendor_form").parent().toggle();
     })
 
     $(".destroy_vendor").click(function() {
@@ -259,7 +262,7 @@ function mapMaker(workArea, toolBar) {
     })
 
     $("#add_tag").click(function() {
-        loadVendortagsIntoForm($("#tag_form"), false);
+        loadVendortagsIntoForm($("#tag_form"), false, -1);
         $("#tag_form").parent().toggle();
         toolContext.tagAction = ACTIONS.CREATE;
     })
@@ -319,6 +322,7 @@ function mapMaker(workArea, toolBar) {
         switch(selectedTool) {
             case TOOLS.ERASER:
                 deleteBoothToHistory($(this), false);
+                deleteVendorBoothFromBooth($(this));
                 $(this).addClass("deleted");
                 break;
             case TOOLS.SELECT:
@@ -366,13 +370,11 @@ function mapMaker(workArea, toolBar) {
     })
 
     $(".booth").on("dragenter", function(e) {
-        console.log("ENTEr");
         e.preventDefault();  
         e.stopPropagation();
     })
 
     $(".booth").on("dragleave", function(e) {
-        console.log("LEAVE");
         e.preventDefault();  
         e.stopPropagation();
     })
@@ -409,6 +411,7 @@ function mapMaker(workArea, toolBar) {
             switch(selectedTool) {
                 case TOOLS.ERASER:
                     deleteBoothToHistory(boothEl, true);
+                    deleteVendorBoothFromBooth(boothEl);
                     boothEl.addClass("deleted");
                     break;
                 case TOOLS.SELECT:
@@ -428,6 +431,38 @@ function mapMaker(workArea, toolBar) {
                     break;
             }
         })
+
+        boothEl.on("dragenter", function(e) {
+            e.preventDefault();  
+            e.stopPropagation();
+        })
+
+        boothEl.on("dragleave", function(e) {
+            e.preventDefault();  
+            e.stopPropagation();
+        })
+
+        boothEl.on("dragover", function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            return false;
+        })
+
+        boothEl.on("drop", function(e, ui) {
+            e.preventDefault();  
+            e.stopPropagation();
+            var vendorBooth_formEl = $("#vendorbooth_form");
+            prepVendorBoothForm(vendorBooth_formEl);
+            showVendorBoothForm(vendorBooth_formEl);
+
+            toolContext.vendorBoothAction = ACTIONS.CREATE;
+            toolContext.boothId = boothEl.data("id");
+            toolContext.boothEl = boothEl;
+        })
+
+        boothEl.find(".close_vendorBooth").click(function() {
+            $(this).closest("ul").hide()
+        })
     }
 
     function startBooth(e) {
@@ -437,9 +472,11 @@ function mapMaker(workArea, toolBar) {
         lastBoothId++;
 
         toolContext.newBooth = $("<div class=\"booth\" style=\"left:"+toolContext.downX+"px;top:"+toolContext.downY+"px\""+
-                                 "data-id=\""+lastBoothId+"\">" + 
+                                 "data-id=\"t"+lastBoothId+"\">" + 
                                  "<ul class=\"unordered vendorBooth\">" + 
-                                 "<li class=\"no_vendorBooths\">No vendors assigned</li></ul>" +
+                                    "<li>Vendors assigned to this booth<a href=\"javascript:;\" class=\"close_vendorBooth\">" + 
+                                        "<i class=\"fa fa-times\"></i></a></li>" + 
+                                    "<li class=\"no_vendorBooths\">No vendors assigned</li></ul>" +
                                  "</div>");
         $("#workArea").append(toolContext.newBooth);
 
@@ -557,12 +594,20 @@ function mapMaker(workArea, toolBar) {
             $("#vendor_form").parent().toggle();
             toolContext.vendorAction = ACTIONS.UPDATE;
             toolContext.isTemp = true;
-            toolContext.vendorId = toolContext.vendorEl.data("id");
+            toolContext.vendorId = vendorEl.data("id");
         })
 
         vendorEl.find(".destroy_vendor").click(function() {
             deleteVendorToHistory(vendorEl, true);
             deleteVendorInDom(vendorEl);
+        })
+
+        vendorEl.find(".drag_assign").on("dragstart", function(e) {
+            toolContext.vendorId = vendorEl.data("id");
+        })
+
+        vendorEl.find(".vendorview_toggle").click(function() {
+            toggleVendorFilter($(this));
         })
     }
 
@@ -581,11 +626,11 @@ function mapMaker(workArea, toolBar) {
         var url = $("input[name='vendor_url']").val();
         var desc = $("textarea[name='vendor_desc']").val();
 
-        var newVendorEl = $("<li data-id=\""+ lastVendorId + "\">" +
+        var newVendorEl = $("<li data-id=\"t"+ lastVendorId + "\">" +
                             "<div class=\"vendorshow\">" + 
-                                "<i class=\"fa fa-circle-o drag_assign\"></i> " +
+                                "<i class=\"fa fa-circle-o drag_assign\" draggable=\"true\"></i> " +
                                 "<a href=\"#\" class=\"vendor_name\">"+ name + "</a>" +
-                                "<i class=\"fa fa-eye vendorview_toggle\"></i>" +
+                                "<i class=\"fa fa-eye-slash vendorview_toggle\"></i>" +
                             "</div>" +
                             "<div class=\"vendorshow_extra\">" + 
                                 "<strong>URL: </strong><span class=\"vendor_url\">" + url + "</span>" + 
@@ -607,7 +652,7 @@ function mapMaker(workArea, toolBar) {
         var vendorHistory = {
             "action" : ACTIONS.CREATE,
             "type" : TYPES.VENDOR,
-            "id" : lastVendorId,
+            "id" : "t" + lastVendorId,
             "name" : name,
             "website_url" : url,
             "description" : desc,
@@ -669,7 +714,7 @@ function mapMaker(workArea, toolBar) {
 
     // TODO !!! Bug -> If one booth has multiple vendors, then toggling one might turn
     // off highlighting for something that should have it on
-    // Idea: use toolcontext, store all highlighted vendor id classes
+    // Idea: use toolContext, store all highlighted vendor id classes
     function toggleVendorFilter(toggleEl) {
         var vendorClass = "v" + toggleEl.closest("li").data("id");
         if (toggleEl.hasClass("vendorview_on")) { // ON to OFF
@@ -731,7 +776,7 @@ function mapMaker(workArea, toolBar) {
         var vendorName = $("#vendor_list").find("li[data-id="+toolContext.vendorId+"]").children(".vendorshow").children(".vendor_name").text()
         var vendorBoothEl= toolContext.boothEl.children(".vendorBooth");
         vendorBoothEl.children(".no_vendorBooths").hide();
-        var newVendorBoothEl = $("<li class=\"vendorBooth v"+toolContext.vendorId+"\" data-id=\""+lastVendorBoothId+"\">" +
+        var newVendorBoothEl = $("<li class=\"vendorBooth v"+toolContext.vendorId+"\" data-id=\"t"+lastVendorBoothId+"\">" +
                              vendorName +
                             "<div class=\"options\">" +
                                 "<button class=\"update_vendorBooth\"><i class=\"fa fa-pencil\"></i></button>" + 
@@ -745,7 +790,7 @@ function mapMaker(workArea, toolBar) {
         // Update the booth too for highlighting
         toolContext.boothEl.addClass("v"+toolContext.vendorId);
         // If the vendor is currently being highlighted, we need to add highlights
-        if ($("li[data-id=\""+toolContext.vendorId + "\"").find(".vendorview_on").length > 0) {
+        if ($("li[data-id=\"t"+toolContext.vendorId + "\"").find(".vendorview_on").length > 0) {
             toolContext.boothEl.addClass("highlight");
         }
     }
@@ -760,7 +805,7 @@ function mapMaker(workArea, toolBar) {
             "booth_id" : toolContext.boothId,
             "start_time" : start,
             "end_time": end,
-            "id" : lastVendorBoothId,
+            "id" : "t" + lastVendorBoothId,
             "isTemp" : true
         }
         actionHistory.push(vendorBoothHistory);
@@ -785,7 +830,7 @@ function mapMaker(workArea, toolBar) {
             "end_time": end,
             "id" : toolContext.vendorBoothEl.data("id")
         }
-        if (toolContext.isTemp) { // Updated temp obj never saved
+        if (toolContext.isTemp) { // Updated temp obj vendor booth that was never saved
             vendorBoothHistory["isTemp"] = true;
         }
         actionHistory.push(vendorBoothHistory);
@@ -811,6 +856,18 @@ function mapMaker(workArea, toolBar) {
     // TODO!!
     function validateVendorBoothFields(formEl) {
         return true;
+    }
+
+    // When a booth is deleted, its associated vendor booths should be 'deleted' in the DOM
+    // We then call similar functions that also call on deletion from button press of vendorbooth
+    function deleteVendorBoothFromBooth(boothEl) {
+        var vendorBooths = boothEl.find("li.vendorBooth").addClass("deleted");
+        for (var i = 0; i < vendorBooths.length; i++) {
+            var vendorBoothEl = vendorBooths[i];
+            toolContext.vendorId = extractVendorId(vendorBoothEl);
+            updateDragAssignEl();
+            $(vendorBoothEl).addClass("deleted");
+        }
     }
 
 
@@ -841,7 +898,7 @@ function mapMaker(workArea, toolBar) {
         var name = $("input[name='tag_name']").val();
 
         // TODO : Also add vendor tags in later at some point?
-        var newTagEl = $("<li data-id=\""+lastTagId+"\" class=\"tag\">" +
+        var newTagEl = $("<li data-id=\"t"+lastTagId+"\" class=\"tag\">" +
                             "<div class=\"tagshow\">" +
                                 "<a href=\"javascript:;\" class=\"tag_name\">"+ name + "</a>" +
                                 "<div class=\"tag_options\">" +
@@ -927,7 +984,8 @@ function mapMaker(workArea, toolBar) {
     // Given an array of VendorTag sets [{vendorId: 4, tagId: 5}, ...], logs a single
     // history item that contains the new vendor tags
     function addVendorTagsToHistory() {
-
+        var vendorTagHistory = {
+        }
     }
 
 
@@ -996,16 +1054,17 @@ function mapMaker(workArea, toolBar) {
     }
 
     // Reload the vendortag listings into either the tag or vendor form
-    function loadVendortagsIntoForm(formEl, isVendorForm) {
+    // id = the vendor or tag id to apply to. If new object, -1
+    function loadVendortagsIntoForm(formEl, isVendorForm, id) {
         var assignEl = formEl.find(".assign_vendortags");
         assignEl.empty();
         if (isVendorForm) {
             for (var key in tagDict) {
-                assignEl.append("<li><input type=\"checkbox\" value="+key+">"+tagDict[key]+"</li>");
+                assignEl.append("<li><input type=\"checkbox\" data-tid="+key+" data-vid="+id+">"+tagDict[key]+"</li>");
             }
         } else {
             for (var key in vendorDict) {
-                assignEl.append("<li><input type=\"checkbox\" value="+key+">"+vendorDict[key]+"</li>");
+                assignEl.append("<li><input type=\"checkbox\"data-tid="+id+" data-vid="+key+">"+vendorDict[key]+"</li>");
             }
         }
     }
@@ -1068,6 +1127,12 @@ function mapMaker(workArea, toolBar) {
             var tagObj = initialTags[i];
             tagDict[tagObj["id"]] = tagObj["name"];
         }
+    }
+
+    // Given a ul with li elements with checkboxes, takes checked boxes and puts
+    // into a set with each as "v1t1", where v1 = vendor ID 1, t1 = tag ID 1
+    function checkedIntoSet(ulEl) {
+
     }
 
 }

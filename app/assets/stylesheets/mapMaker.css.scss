@@ -300,6 +300,7 @@ ul.vendorBooth span.dateRange {
 
 #vendorbooth_form {
     position: absolute;
+    margin-top: -75px; // Negating the offset of the overlay, which is in turn b/c of nav
     display: inline-block;
     padding: 20px;
     background-color: red;
