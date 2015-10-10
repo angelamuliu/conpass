@@ -180,7 +180,7 @@ function mapMaker(workArea, toolBar) {
     })
 
     $("#add_vendor").click(function() {
-        loadVendortagsIntoForm($("#vendor_form"), true, -1);
+        loadVendortagsIntoForm($("#vendor_form"), true);
         $("#vendor_form").parent().toggle();
         toolContext.vendorAction = ACTIONS.CREATE;
     })
@@ -196,7 +196,7 @@ function mapMaker(workArea, toolBar) {
         toolContext.vendorId = toolContext.vendorEl.data("id");
 
         prepVendorForm(toolContext.vendorEl, $("#vendor_form"));
-        loadVendortagsIntoForm($("#vendor_form"), true, toolContext.vendorId);
+        loadVendortagsIntoForm($("#vendor_form"), true, toolContext.vendorEl);
         $("#vendor_form").parent().toggle();
     })
 
@@ -262,7 +262,7 @@ function mapMaker(workArea, toolBar) {
     })
 
     $("#add_tag").click(function() {
-        loadVendortagsIntoForm($("#tag_form"), false, -1);
+        loadVendortagsIntoForm($("#tag_form"), false);
         $("#tag_form").parent().toggle();
         toolContext.tagAction = ACTIONS.CREATE;
     })
@@ -289,7 +289,9 @@ function mapMaker(workArea, toolBar) {
         toolContext.tagAction = ACTIONS.UPDATE;
         toolContext.isTemp = false;
         toolContext.tagEl = $(this).closest(".tag");
+
         prepTagForm(toolContext.tagEl, $("#tag_form"));
+        loadVendortagsIntoForm($("#tag_form"), false, toolContext.tagEl);
         $("#tag_form").parent().toggle();
     })
 
@@ -1050,21 +1052,45 @@ function mapMaker(workArea, toolBar) {
     function prepTagForm(tagEl, formEl) {
         var name = tagEl.find(".tag_name").text();
         formEl.find("input[name='tag_name']").val(name);
-        loadVendorsIntoTagForm();
     }
 
     // Reload the vendortag listings into either the tag or vendor form
     // id = the vendor or tag id to apply to. If new object, -1
-    function loadVendortagsIntoForm(formEl, isVendorForm, id) {
+    function loadVendortagsIntoForm(formEl, isVendorForm, modelEl) {
         var assignEl = formEl.find(".assign_vendortags");
         assignEl.empty();
-        if (isVendorForm) {
-            for (var key in tagDict) {
-                assignEl.append("<li><input type=\"checkbox\" data-tid="+key+" data-vid="+id+">"+tagDict[key]+"</li>");
+        if (modelEl === undefined) { // NEW forms, nothing checked before
+            var id = -1;
+            toolContext.checkedBefore = new Set();
+            if (isVendorForm) { // Making new vendor
+                for (var key in tagDict) {
+                    assignEl.append("<li><input type=\"checkbox\" data-tid="+key+" data-vid="+id+">"+tagDict[key]+"</li>");
+                }
+            } else { // Making new tag
+                for (var key in vendorDict) {
+                    assignEl.append("<li><input type=\"checkbox\"data-tid="+id+" data-vid="+key+">"+vendorDict[key]+"</li>");
+                }
             }
-        } else {
-            for (var key in vendorDict) {
-                assignEl.append("<li><input type=\"checkbox\"data-tid="+id+" data-vid="+key+">"+vendorDict[key]+"</li>");
+        } else { // UPDATE forms
+            var id = modelEl.data("id");
+            if (isVendorForm) { // Updating vendor
+                
+                // TODO!!
+
+                // toolContext.checkedBefore = checkedIntoSet(modelEl.children(".tagshow_extra"), true);
+                for (var key in tagDict) {
+                    var checkbox = $("<li><input type=\"checkbox\" data-tid="+key+" data-vid="+id+">"+tagDict[key]+"</li>");
+                    assignEl.append(checkbox);
+                }
+            } else { // Updating tag
+                toolContext.checkedBefore = checkedIntoSet(id, modelEl.children(".tagshow_extra"), false);
+                for (var key in vendorDict) {
+                    var checkbox = $("<li><input type=\"checkbox\"data-tid="+id+" data-vid="+key+">"+vendorDict[key]+"</li>");
+                    if (toolContext.checkedBefore.has("vendor-" + key + "_tag-" + id)) {
+                        checkbox.children("input").prop("checked", true);
+                    }
+                    assignEl.append(checkbox);
+                }
             }
         }
     }
@@ -1129,10 +1155,18 @@ function mapMaker(workArea, toolBar) {
         }
     }
 
-    // Given a ul with li elements with checkboxes, takes checked boxes and puts
-    // into a set with each as "v1t1", where v1 = vendor ID 1, t1 = tag ID 1
-    function checkedIntoSet(ulEl) {
+    // Given a ul element with li elements, creates set with "vendor-1_tag-1" where num = ID or temp ID
+    function checkedIntoSet(id, ulEl, isVendor) {
+        var idSet = new Set();
+        if (isVendor) {
 
+        } else {
+            var liElements = ulEl.children();
+            for (var i = 0; i < liElements.size(); i++) {
+                idSet.add("vendor-" + $(liElements[i]).data("id") + "_tag-" + id);
+            }
+        }
+        return idSet;
     }
 
 }
