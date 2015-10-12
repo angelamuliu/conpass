@@ -610,7 +610,7 @@ function mapMaker(workArea, toolBar) {
             toolContext.vendorAction = ACTIONS.UPDATE;
             toolContext.isTemp = true;
             toolContext.vendorId = vendorEl.data("id");
-            
+
             prepVendorForm(toolContext.vendorEl, $("#vendor_form"));
             loadVendortagsIntoForm($("#vendor_form"), true, toolContext.vendorEl);
             $("#vendor_form").parent().toggle();
@@ -691,6 +691,8 @@ function mapMaker(workArea, toolBar) {
         vendorEl.find(".vendor_name").text(name);
         vendorEl.find(".vendor_url").text(url);
         vendorEl.find(".vendor_desc").text(desc);
+
+        updateVendorTagNamesInDom(name, toolContext.vendorId, true);
     }
 
     // Log updating a vendor into our history array
@@ -720,6 +722,8 @@ function mapMaker(workArea, toolBar) {
         var vendorId = vendorEl.data("id");
         vendorEl.addClass("deleted");
         $(".vendorBooth .v"+vendorId).addClass("deleted");
+
+        deleteVendorTagsInDom(vendorId, true);
     }
 
     function deleteVendorToHistory(vendorEl, isTemp) {
@@ -950,6 +954,8 @@ function mapMaker(workArea, toolBar) {
     function updateTagInDom() {
         var name = $("input[name='tag_name']").val();
         toolContext.tagEl.find(".tag_name").text(name);
+
+        updateVendorTagNamesInDom(name, toolContext.tagEl.data("id"), false);
     }
 
     function updateTagToHistory() {
@@ -966,7 +972,7 @@ function mapMaker(workArea, toolBar) {
         actionHistory.push(tagHistory);
     }
 
-    function deleteTagInDom(tagEl, isTemp) {
+    function deleteTagToHistory(tagEl, isTemp) {
         var tagHistory = {
             "action" : ACTIONS.DELETE,
             "type": TYPES.TAG,
@@ -978,8 +984,10 @@ function mapMaker(workArea, toolBar) {
         actionHistory.push(tagHistory);
     }
 
-    function deleteTagToHistory(tagEl) {
+    function deleteTagInDom(tagEl) {
         tagEl.addClass("deleted");
+
+        deleteVendorTagsInDom(tagEl.data("id"), false);
     }
 
     // TODO!!
@@ -1066,6 +1074,31 @@ function mapMaker(workArea, toolBar) {
         for (var i = 0; i < toolContext.createDestroyMap["destroy"].length; i++) {
             destroyOneVendorTagInDom(toolContext.createDestroyMap["destroy"][i]);
         }
+    }
+
+    // If a tag or vendor update changes the name, we'll have to update the vendortags
+    // associated as a result
+    function updateVendorTagNamesInDom(newName, id, isVendor) {
+        if (isVendor) { // Vendor name update
+            $("#tag_list .vendorTag[data-id="+id+"]").text(newName);
+            vendorDict[id] = newName;
+        } else { // Tag name update
+            $("#vendor_list .vendorTag[data-id="+id+"]").text(newName);
+            tagDict[id] = newName;
+        }
+    }
+
+    // If a tag or vendor is deleted, we need to delete the vendor tag as well and update
+    // the dict to prevent
+    function deleteVendorTagsInDom(id, isVendor) {
+        if (isVendor) { // Vendor was destroyed
+            delete vendorDict[id];
+            $("#tag_list .vendorTag[data-id="+id+"]").addClass("deleted");
+        } else { // Tag was destroyed
+            delete tagDict[id];
+            $("#vendor_list .vendorTag[data-id="+id+"]").addClass("deleted");
+        }
+
     }
 
 
