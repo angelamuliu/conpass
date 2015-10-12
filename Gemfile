@@ -34,6 +34,13 @@ gem 'byebug', '~> 6.0.2' # Breakpoint debugging in rails
 # GEN USE: type 'byebug' to start debugging. s > step, n > next, c > stop debugging
 
 gem 'bootstrap-sass', '~> 3.3.5'
+
+# Testing
+group :test do 
+  gem 'shoulda', '~> 3.5'
+  gem 'factory_girl_rails', '~> 4.0'
+end
+
 # --------------------------------------------------
 
 # Use ActiveModel has_secure_password
