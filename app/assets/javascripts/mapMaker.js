@@ -985,10 +985,24 @@ function mapMaker(workArea, toolBar) {
     // ------------------------------------------------------------
 
 
-    // Given an array of VendorTag sets [{vendorId: 4, tagId: 5}, ...], adds 
-    // DOM objects to the vendor and the tag
+    // Given a set of "vendor-1_tag-1" like strings, adds vendor tags to associated
+    // vendors, tags in the DOM
     function addVendorTagsToDom() {
+        var vendorName; var vendorId; var tagName; var tagId;
+        toolContext.checkedAfter.forEach(function(vendorTagId) {
+            tagId = getTagIdFromVendorTag(vendorTagId);
+            vendorId = getVendorIdFromVendorTag(vendorTagId);
+            tagName = $("#tag_list li[data-id="+tagId+"] .tag_name").text()
+            vendorName = $("#vendor_list li[data-id="+vendorId+"] .vendor_name").text()
 
+            // Update tag listing
+            $("#tag_list li[data-id="+tagId+"] .tagshow_extra").append("<li class=\"vendorTag\" data-id=\""+vendorId+"\">"+vendorName+"</li>");
+
+            // Update vendor listing
+            // TODO !!!!!
+
+        })
+        
     }
 
 
@@ -1016,6 +1030,8 @@ function mapMaker(workArea, toolBar) {
         actionHistory.push(vendorTagHistory);
     }
 
+    // Given a map with create and destroy actions, updates and removes vendor tags in
+    // the DOM as necessary
     function updateVendorTagsToDom() {
 
     }
@@ -1229,6 +1245,14 @@ function mapMaker(workArea, toolBar) {
         // Whatever's left (not overlap) in after is create
         actions["create"] = Array.from(afterSet);
         return actions;
+    }
+
+    function getVendorIdFromVendorTag(vendorTagId) {
+        return vendorTagId.split("_")[0].substring(7);
+    }
+
+    function getTagIdFromVendorTag(vendorTagId) {
+        return vendorTagId.split("_")[1].substring(4);
     }
 
 
