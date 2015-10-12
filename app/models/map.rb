@@ -38,49 +38,73 @@ class Map < ActiveRecord::Base
         saveForModel("vendor", categorizedHistory, tempToPerm)
         saveForModel("tag", categorizedHistory, tempToPerm)
         saveForModel("booth", categorizedHistory, tempToPerm)
-        saveForModel("vendor_tag", categorizedHistory, tempToPerm)
+        bulkSaveForVendorTag(categorizedHistory, tempToPerm)
         saveForModel("vendor_booth", categorizedHistory, tempToPerm)
     end
 
     # Takes array of hashes and organizes in types of actions so that we can save efficiently & properly
+    # Vendor_tag is the only one organized differently due to how actions come in bulk. Positive = create, negative = destroy
     # EX STRUCTURE: { "booth" : {"create" : { "id" : {"x_pos" : 10, ...}, "id" : {...} },
     #                            "update" : { "id" : {...}, "id" : {...} }, ... }
-    #                "vendor" : {"create" : { "id" : {...}, "id" : {...} } } ... } ... }
+    #                "vendor" : {"create" : { "id" : {...}, "id" : {...} } } ... } ...
+    #                "vendor_tag" : { "vendor-id_tag-id" : 9, "vendor-id_tag-id" : -1, ... } }
     def organizeHistory(orderedHistory)
         categorizedHistory = {}
 
         for historyItem in orderedHistory
 
             # Initializing basic structure
-            if categorizedHistory.has_key?(historyItem["type"])
-                if categorizedHistory[historyItem["type"]].has_key?(historyItem["action"]) == false
-                    # Need to create the action hash for this history item
+            if historyItem["type"] == "vendor_tag"
+                if !categorizedHistory.has_key?("vendor_tag")
+                    categorizedHistory["vendor_tag"] = {}
+                end
+            else
+                if categorizedHistory.has_key?(historyItem["type"])
+                    if categorizedHistory[historyItem["type"]].has_key?(historyItem["action"]) == false
+                        # Need to create the action hash for this history item
+                        categorizedHistory[historyItem["type"]][historyItem["action"]] = {}
+                    end
+                else # Need to create both the type key and action hash value for it
+                    categorizedHistory[historyItem["type"]] = {}
                     categorizedHistory[historyItem["type"]][historyItem["action"]] = {}
                 end
-            else # Need to create both the type key and action hash value for it
-                categorizedHistory[historyItem["type"]] = {}
-                categorizedHistory[historyItem["type"]][historyItem["action"]] = {}
             end
 
-            # Adding into right category, or updating/deleting as necessary
-            case historyItem["action"]
-            when "create"
-                categorizedHistory[historyItem["type"]][historyItem["action"]][historyItem["id"]] = historyItem
-            when "update"
-                if historyItem.has_key?("isTemp") and historyItem["isTemp"] == true
-                    # Instead of creating then updating, just update the create action for the temp obj
-                    categorizedHistory[historyItem["type"]]["create"][historyItem["id"]] = historyItem
-                else
-                    # Updating a previously SAVED obj
-                    categorizedHistory[historyItem["type"]][historyItem["action"]][historyItem["id"]] = historyItem
+            if historyItem["type"] == "vendor_tag"
+                # Organizing vendor_tag's special structure
+                for createVT in historyItem["create"]
+                    if !categorizedHistory["vendor_tag"].has_key?(createVT)
+                        categorizedHistory["vendor_tag"][createVT] = 0
+                    end
+                    categorizedHistory["vendor_tag"][createVT] += 1
                 end
-            when "delete"
-                if historyItem.has_key?("isTemp") and historyItem["isTemp"] == true
-                    # Instead of creating then deleting, just remove the create action for the temp obj
-                    categorizedHistory[historyItem["type"]]["create"].delete(historyItem["id"])
-                else
-                    # Deleting a previously SAVED obj
+                for destroyVT in historyItem["destroy"]
+                    if !categorizedHistory["vendor_tag"].has_key?(destroyVT)
+                        categorizedHistory["vendor_tag"][destroyVT] = 0
+                    end
+                    categorizedHistory["vendor_tag"][destroyVT] -= 1
+                end
+            else
+                # Adding into right category, or updating/deleting as necessary
+                case historyItem["action"]
+                when "create"
                     categorizedHistory[historyItem["type"]][historyItem["action"]][historyItem["id"]] = historyItem
+                when "update"
+                    if historyItem.has_key?("isTemp") and historyItem["isTemp"] == true
+                        # Instead of creating then updating, just update the create action for the temp obj
+                        categorizedHistory[historyItem["type"]]["create"][historyItem["id"]] = historyItem
+                    else
+                        # Updating a previously SAVED obj
+                        categorizedHistory[historyItem["type"]][historyItem["action"]][historyItem["id"]] = historyItem
+                    end
+                when "delete"
+                    if historyItem.has_key?("isTemp") and historyItem["isTemp"] == true
+                        # Instead of creating then deleting, just remove the create action for the temp obj
+                        categorizedHistory[historyItem["type"]]["create"].delete(historyItem["id"])
+                    else
+                        # Deleting a previously SAVED obj
+                        categorizedHistory[historyItem["type"]][historyItem["action"]][historyItem["id"]] = historyItem
+                    end
                 end
             end
 
@@ -116,7 +140,6 @@ class Map < ActiveRecord::Base
                 booth = Booth.create({x_pos: createAction["x"].to_i, y_pos: createAction["y"].to_i, 
                     width: createAction["width"].to_i, height: createAction["height"].to_i, map_id: self.id})
                 tempToPerm["booth"][idKey] = booth.id
-            when "vendor_tag"
             when "vendor_booth"
                 VendorBooth.create({vendor_id: translateTempToPermId(createAction["vendor_id"], "vendor", tempToPerm), 
                     booth_id: translateTempToPermId(createAction["booth_id"], "booth", tempToPerm),
@@ -140,7 +163,6 @@ class Map < ActiveRecord::Base
             when "booth"
                 Booth.update(updateAction["id"], x_pos: updateAction["x"].to_i, y_pos: updateAction["y"].to_i,
                     width: updateAction["width"].to_i, height: updateAction["height"].to_i)
-            when "vendor_tag"
             when "vendor_booth"
                 VendorBooth.update(updateAction["id"], vendor_id: updateAction["vendor_id"], booth_id: updateAction["booth_id"],
                     start_time: DateTime.parse(updateAction["start_time"]), end_time: DateTime.parse(updateAction["end_time"]))
@@ -161,12 +183,28 @@ class Map < ActiveRecord::Base
                 Tag.find(deleteAction["id"]).destroy
             when "booth"
                 Booth.find(deleteAction["id"]).destroy
-            when "vendor_tag"
             when "vendor_booth"
                 VendorBooth.find(deleteAction["id"]).destroy
             end
         end
     end
+
+    def bulkSaveForVendorTag(categorizedHistory, tempToPerm)
+        for vendorTagId in categorizedHistory["vendor_tag"].keys
+            actionVal = categorizedHistory["vendor_tag"][vendorTagId]
+            if actionVal != 0
+                vendorId = extractVendorID(vendorTagId, tempToPerm)
+                tagId = extractTagId(vendorTagId, tempToPerm)
+                if actionVal > 0 # CREATE
+                    VendorTag.create({vendor_id: vendorId, tag_id: tagId})
+                elsif actionVal < 0 # DESTROY
+                    VendorTag.where("vendor_id =#{vendorId} AND tag_id =#{tagId}").destroy_all
+                end
+            end
+        end
+
+    end
+
 
     # HELPERS
 
@@ -177,6 +215,30 @@ class Map < ActiveRecord::Base
             return tempToPerm[type][id]
         else
             return id
+        end
+    end
+
+    # Since we save vendortag IDS as vendor-1_tag-1 form, we need to extract
+    # Also converts it to the perm vendor ID if it is temp
+    def extractVendorID(vendorTagId, tempToPerm)
+        rawVendorId = vendorTagId.split("_")[0]
+        vendorId = rawVendorId[7..rawVendorId.size]
+        if vendorId.include?("t")
+            return tempToPerm["vendor"][vendorId]
+        else
+            return vendorId
+        end
+    end
+
+    # Since we save vendortag IDS as vendor-1_tag-1 form, we need to extract
+    # Also converts it to the perm tag ID if it is temp
+    def extractTagId(vendorTagId, tempToPerm)
+        rawTagId = vendorTagId.split("_")[1]
+        tagId = rawTagId[4..rawTagId.size]
+        if tagId.include?("t")
+            return tempToPerm["tag"][tagId]
+        else
+            return tagId
         end
     end
 

@@ -273,9 +273,17 @@ function mapMaker(workArea, toolBar) {
             if (toolContext.tagAction === ACTIONS.CREATE) {
                 addTagToDom();
                 addTagToHistory();
+
+                toolContext.checkedAfter = checkedIntoSet("t" + lastTagId, $("#tag_form ul.assign_vendortags"), false);
+                addVendorTagsToHistory();
+                addVendorTagsToDom();
             } else if (toolContext.tagAction === ACTIONS.UPDATE) {
                 updateTagInDom();
                 updateTagToHistory();
+
+                toolContext.checkedAfter = checkedIntoSet(toolContext.tagEl.data("id"), $("#tag_form ul.assign_vendortags"), false);
+                updateVendorTagsToHistory();
+                updateVendorTagsToDom();
             }
             $(this).closest("div.overlay").hide();
             resetForm(formEl);
@@ -920,7 +928,7 @@ function mapMaker(workArea, toolBar) {
         var tagHistory = {
             "action" : ACTIONS.CREATE,
             "type": TYPES.TAG,
-            "id" : lastTagId,
+            "id" : "t" + lastTagId,
             "name" : name,
             "isTemp" : true
         }
@@ -983,11 +991,33 @@ function mapMaker(workArea, toolBar) {
 
     }
 
-    // Given an array of VendorTag sets [{vendorId: 4, tagId: 5}, ...], logs a single
-    // history item that contains the new vendor tags
+
+    // For the new tag or new vendor form, so all are create
+    // We pass in array of vendor tags to create
     function addVendorTagsToHistory() {
         var vendorTagHistory = {
+            "type" : TYPES.VENDOR_TAG,
+            "create" : Array.from(toolContext.checkedAfter),
+            "destroy" : []
         }
+        actionHistory.push(vendorTagHistory);
+    }
+
+    // With the vendor tags that were tagged before (toolContext.checkedBefore), logs BOTH new
+    // creates and destroys depending on what is checked afterwards
+    function updateVendorTagsToHistory() {
+        toolContext.checkedBefore;
+        var createDestroyMap = getCreatesAndDeletes(toolContext.checkedBefore, toolContext.checkedAfter);
+        var vendorTagHistory = {
+            "type" : TYPES.VENDOR_TAG,
+            "create" : createDestroyMap["create"],
+            "destroy" : createDestroyMap["destroy"]
+        }
+        actionHistory.push(vendorTagHistory);
+    }
+
+    function updateVendorTagsToDom() {
+
     }
 
 
@@ -1158,16 +1188,49 @@ function mapMaker(workArea, toolBar) {
     // Given a ul element with li elements, creates set with "vendor-1_tag-1" where num = ID or temp ID
     function checkedIntoSet(id, ulEl, isVendor) {
         var idSet = new Set();
-        if (isVendor) {
+        if (ulEl.hasClass("assign_vendortags")) { // ulEl is from the FORM - likely checking aftermath of form
+            if (isVendor) { // VENDOR FORM
+                var checkedEls = $("#vendor_form .assign_vendortags").find("input:checked");
+                for (var i = 0; i < checkedEls.size(); i++) {
+                    idSet.add("vendor-" + id + "_tag-" + $(checkedEls[i]).data("tid"));
+                }
+            } else { // TAG FORM
+                var checkedEls = $("#tag_form .assign_vendortags").find("input:checked");
+                for (var i = 0; i < checkedEls.size(); i++) {
+                    idSet.add("vendor-" + $(checkedEls[i]).data("vid") + "_tag-" + id);
+                }
+            }
+        } else { // ulEl is from the dom display - likely populating form
+            if (isVendor) { // Populate - VENDOR FORM
 
-        } else {
-            var liElements = ulEl.children();
-            for (var i = 0; i < liElements.size(); i++) {
-                idSet.add("vendor-" + $(liElements[i]).data("id") + "_tag-" + id);
+                // TODO !!
+
+            } else { // Populate - TAG FORM
+                var liElements = ulEl.children();
+                for (var i = 0; i < liElements.size(); i++) {
+                    idSet.add("vendor-" + $(liElements[i]).data("id") + "_tag-" + id);
+                }
             }
         }
         return idSet;
     }
+
+    // Given two sets representing checkboxes before and checkboxes after, organizes
+    // changes into CREATES and DESTROYS. Used for vendortag
+    function getCreatesAndDeletes(beforeSet, afterSet) {
+        var actions = { "destroy" : [] };
+        beforeSet.forEach(function(value) {
+            if (!afterSet.has(value)) { // Was checked, now not. DESTROY
+                actions["destroy"].push(value);
+            } else { // Overlap
+                afterSet.delete(value);
+            }
+        })
+        // Whatever's left (not overlap) in after is create
+        actions["create"] = Array.from(afterSet);
+        return actions;
+    }
+
 
 }
 
