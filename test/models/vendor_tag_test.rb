@@ -1,7 +1,8 @@
 require 'test_helper'
 
 class VendorTagTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+  # Relationships
+  should belong_to(:vendor)
+  should belong_to(:tag)
+
 end
