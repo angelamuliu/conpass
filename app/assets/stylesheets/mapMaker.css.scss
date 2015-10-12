@@ -369,14 +369,17 @@ ul.vendorBooth span.dateRange {
     padding-bottom: 10px;
     border-top: 1px solid #b1b1b1;
 }
-.tagshow_extra li {
+.vendor_tags { // Listing vendor tags from the vendor side
+    padding: 0;
+}
+.tagshow_extra li, .vendor_tags li {
     display: inline-block;
 }
-.tagshow_extra li:first-child:before {
+.tagshow_extra li:first-child:before, .vendor_tags li:first-child:before {
     content: initial;
 }
-.tagshow_extra li:before{
-    content:'\00B7';
+.tagshow_extra li:before, .vendor_tags li:before { // A dot and a space before each
+    content:'\00B7\00a0';
 }
 
 .assign_vendortags input {

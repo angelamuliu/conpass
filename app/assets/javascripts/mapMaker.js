@@ -159,12 +159,19 @@ function mapMaker(workArea, toolBar) {
         var formEl = $(this).parent();
         if (validateVendorFields(formEl)) {
             if (toolContext.vendorAction === ACTIONS.CREATE) { // Add vendor to DOM + log history
-                var newVendorEl = addVendorToDOM();
-                addVendorToHistory(newVendorEl);
-                addVendorListeners(newVendorEl);
+                addVendorToDOM();
+                addVendorToHistory();
+
+                toolContext.checkedAfter = checkedIntoSet("t" + lastVendorId, $("#vendor_form ul.assign_vendortags"), true);
+                addVendorTagsToHistory();
+                addVendorTagsToDom();
             } else if (toolContext.vendorAction === ACTIONS.UPDATE) { // Update vendor
                 updateVendorToHistory(formEl);
                 updateVendorInDom(toolContext.vendorEl);
+
+                toolContext.checkedAfter = checkedIntoSet(toolContext.vendorEl.data("id"), $("#vendor_form ul.assign_vendortags"), true);
+                updateVendorTagsToHistory();
+                updateVendorTagsToDom();
             }
             $(this).closest("div.overlay").hide();
             resetForm(formEl);
@@ -594,17 +601,19 @@ function mapMaker(workArea, toolBar) {
 
     // Attaches all required event listeners a vendor element
     function addVendorListeners(vendorEl) {
-        vendorEl.find(".vendorshow a").click(function() { // Clicking vendor name toggles its vendorshow_extra info
+        vendorEl.find("a.vendor_name").click(function() { // Clicking vendor name toggles its vendorshow_extra info
             vendorEl.children(".vendorshow_extra").toggle();
         })
 
         vendorEl.find(".update_vendor").click(function() {
             toolContext.vendorEl = vendorEl;
-            prepVendorForm(toolContext.vendorEl, $("#vendor_form"));
-            $("#vendor_form").parent().toggle();
             toolContext.vendorAction = ACTIONS.UPDATE;
             toolContext.isTemp = true;
             toolContext.vendorId = vendorEl.data("id");
+            
+            prepVendorForm(toolContext.vendorEl, $("#vendor_form"));
+            loadVendortagsIntoForm($("#vendor_form"), true, toolContext.vendorEl);
+            $("#vendor_form").parent().toggle();
         })
 
         vendorEl.find(".destroy_vendor").click(function() {
@@ -639,18 +648,21 @@ function mapMaker(workArea, toolBar) {
         var newVendorEl = $("<li data-id=\"t"+ lastVendorId + "\">" +
                             "<div class=\"vendorshow\">" + 
                                 "<i class=\"fa fa-circle-o drag_assign\" draggable=\"true\"></i> " +
-                                "<a href=\"#\" class=\"vendor_name\">"+ name + "</a>" +
+                                "<a href=\"javascript:;\" class=\"vendor_name\">"+ name + "</a>" +
                                 "<i class=\"fa fa-eye-slash vendorview_toggle\"></i>" +
                             "</div>" +
                             "<div class=\"vendorshow_extra\">" + 
-                                "<strong>URL: </strong><span class=\"vendor_url\">" + url + "</span>" + 
-                                "<strong>Description: </strong><span class=\"vendor_desc\">" + desc + "</span>" + 
-                                "<div class=\"vendor_tags\"></div>" + 
                                 "<div class=\"vendor_options\">" +
                                     "<button class=\"update_vendor greenbtn\"><i class=\"fa fa-pencil\"></i> Update</button> " +
                                     "<button class=\"destroy_vendor redbtn\"><i class=\"fa fa-trash\"></i> Destroy</button>" +
-                            "</div></div></li>");
-        $("#vendor_list ul").append(newVendorEl);
+                                "</div>" + 
+                                "<strong>URL: </strong><span class=\"vendor_url\">" + url + "</span>" + 
+                                "<strong>Description: </strong><span class=\"vendor_desc\">" + desc + "</span>" + 
+                                "<strong>Tags: </strong><ul class=\"vendor_tags\"></ul>" + 
+                            "</div>" + 
+                            "</li>");
+        addVendorListeners(newVendorEl);
+        $("#vendor_list ul.unordered").append(newVendorEl);
         return newVendorEl;
     }
 
@@ -985,26 +997,40 @@ function mapMaker(workArea, toolBar) {
     // ------------------------------------------------------------
 
 
+    function addOneVendorTagToDom(vendorTagId) {
+        var tagId = getTagIdFromVendorTag(vendorTagId);
+        var vendorId = getVendorIdFromVendorTag(vendorTagId);
+        var tagName = $("#tag_list li[data-id="+tagId+"] .tag_name").text();
+        var vendorName = $("#vendor_list li[data-id="+vendorId+"] .vendor_name").text();
+
+        // Update tag listing
+        $("#tag_list li[data-id="+tagId+"] .tagshow_extra").append("<li class=\"vendorTag\" data-id=\""+vendorId+"\">"+vendorName+"</li>");
+
+        // Update vendor listing
+        $("#vendor_list li[data-id="+vendorId+"] .vendorshow_extra .vendor_tags").append("<li class=\"vendorTag\" data-id=\""+tagId+"\">"+tagName+"</li>");
+    }
+
+    function destroyOneVendorTagInDom(vendorTagId) {
+        var tagId = getTagIdFromVendorTag(vendorTagId);
+        var vendorId = getVendorIdFromVendorTag(vendorTagId);
+        var tagName = $("#tag_list li[data-id="+tagId+"] .tag_name").text();
+        var vendorName = $("#vendor_list li[data-id="+vendorId+"] .vendor_name").text();
+
+        // Update tag listing
+        $("#tag_list li[data-id="+tagId+"] .vendorTag[data-id="+vendorId+"]").remove();
+
+        // Update vendor listing
+        $("#vendor_list li[data-id="+vendorId+"] .vendorTag[data-id="+tagId+"]").remove();
+    }
+
     // Given a set of "vendor-1_tag-1" like strings, adds vendor tags to associated
     // vendors, tags in the DOM
     function addVendorTagsToDom() {
         var vendorName; var vendorId; var tagName; var tagId;
         toolContext.checkedAfter.forEach(function(vendorTagId) {
-            tagId = getTagIdFromVendorTag(vendorTagId);
-            vendorId = getVendorIdFromVendorTag(vendorTagId);
-            tagName = $("#tag_list li[data-id="+tagId+"] .tag_name").text()
-            vendorName = $("#vendor_list li[data-id="+vendorId+"] .vendor_name").text()
-
-            // Update tag listing
-            $("#tag_list li[data-id="+tagId+"] .tagshow_extra").append("<li class=\"vendorTag\" data-id=\""+vendorId+"\">"+vendorName+"</li>");
-
-            // Update vendor listing
-            // TODO !!!!!
-
+            addOneVendorTagToDom(vendorTagId);
         })
-        
     }
-
 
     // For the new tag or new vendor form, so all are create
     // We pass in array of vendor tags to create
@@ -1021,11 +1047,11 @@ function mapMaker(workArea, toolBar) {
     // creates and destroys depending on what is checked afterwards
     function updateVendorTagsToHistory() {
         toolContext.checkedBefore;
-        var createDestroyMap = getCreatesAndDeletes(toolContext.checkedBefore, toolContext.checkedAfter);
+        toolContext.createDestroyMap = getCreatesAndDeletes(toolContext.checkedBefore, toolContext.checkedAfter);
         var vendorTagHistory = {
             "type" : TYPES.VENDOR_TAG,
-            "create" : createDestroyMap["create"],
-            "destroy" : createDestroyMap["destroy"]
+            "create" : toolContext.createDestroyMap["create"],
+            "destroy" : toolContext.createDestroyMap["destroy"]
         }
         actionHistory.push(vendorTagHistory);
     }
@@ -1033,7 +1059,13 @@ function mapMaker(workArea, toolBar) {
     // Given a map with create and destroy actions, updates and removes vendor tags in
     // the DOM as necessary
     function updateVendorTagsToDom() {
-
+        // CREATE NEW TAGS
+        for (var i = 0; i < toolContext.createDestroyMap["create"].length; i++) {
+            addOneVendorTagToDom(toolContext.createDestroyMap["create"][i]);
+        }
+        for (var i = 0; i < toolContext.createDestroyMap["destroy"].length; i++) {
+            destroyOneVendorTagInDom(toolContext.createDestroyMap["destroy"][i]);
+        }
     }
 
 
@@ -1120,12 +1152,12 @@ function mapMaker(workArea, toolBar) {
         } else { // UPDATE forms
             var id = modelEl.data("id");
             if (isVendorForm) { // Updating vendor
-                
-                // TODO!!
-
-                // toolContext.checkedBefore = checkedIntoSet(modelEl.children(".tagshow_extra"), true);
+                toolContext.checkedBefore = checkedIntoSet(id, modelEl.find(".vendor_tags"), true);
                 for (var key in tagDict) {
                     var checkbox = $("<li><input type=\"checkbox\" data-tid="+key+" data-vid="+id+">"+tagDict[key]+"</li>");
+                    if (toolContext.checkedBefore.has("vendor-" + id + "_tag-" + key)) {
+                        checkbox.children("input").prop("checked", true);
+                    }
                     assignEl.append(checkbox);
                 }
             } else { // Updating tag
@@ -1218,9 +1250,10 @@ function mapMaker(workArea, toolBar) {
             }
         } else { // ulEl is from the dom display - likely populating form
             if (isVendor) { // Populate - VENDOR FORM
-
-                // TODO !!
-
+                var liElements = ulEl.children();
+                for (var i = 0; i < liElements.size(); i++) {
+                    idSet.add("vendor-" + id + "_tag-" + $(liElements[i]).data("id"));
+                }
             } else { // Populate - TAG FORM
                 var liElements = ulEl.children();
                 for (var i = 0; i < liElements.size(); i++) {

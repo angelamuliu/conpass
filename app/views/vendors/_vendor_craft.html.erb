@@ -22,17 +22,21 @@
                         <i class="fa fa-eye-slash vendorview_toggle"></i>
                     </div>
                     <div class="vendorshow_extra">
-                        <strong>URL: </strong> <span class="vendor_url"><%= vendor.website_url %></span>
-                        <strong>Description: </strong> <span class="vendor_desc"><%= vendor.description %></span>
-                        <div class="vendor_tags">
-                            <% vendor.tags.each do |tag| %>
-                                <%= tag.name %>
-                            <% end %>
-                        </div>
+
                         <div class="vendor_options">
                             <button class="update_vendor greenbtn"><i class="fa fa-pencil"></i> Update</button>
                             <button class="destroy_vendor redbtn"><i class="fa fa-trash"></i> Destroy</button>
                         </div>
+
+                        <strong>URL: </strong> <span class="vendor_url"><%= vendor.website_url %></span>
+                        <strong>Description: </strong> <span class="vendor_desc"><%= vendor.description %></span>
+                        <strong>Tags: </strong>
+                        <ul class="vendor_tags">
+                            <% vendor.tags.each do |tag| %>
+                                <li class="vendorTag" data-id="<%= tag.id %>"><%= tag.name %></li>
+                            <% end %>
+                        </ul>
+
                     </div>
                 </li>
             <% end %>
