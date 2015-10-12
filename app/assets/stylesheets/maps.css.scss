@@ -2,80 +2,14 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-#workArea_container {
+#mapArea_container {
     padding: 5px;
-    background-color: #e5e5e5;
+    background-color: #4c4c4c;
+    height: 100vh; // 100% viewport height
 }
 
-#workArea {
+#mapArea {
     background-color: white;
     position: relative;
 }
 
-.booth {
-    border: 2px solid black;
-    background-color: white;
-    position: absolute;
-}
-
-.overlay {
-    display: none;
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    z-index: 50;
-    background-color: rgba(0,0,0,0.1);
-}
-
-.error {
-    display: none;
-    background-color: red;
-}
-
-
-
-// ----------------------------------------
-
-#vendor_craft {
-    display: inline-block;
-}
-
-#vendor_list {
-    display: none;
-}
-
-.vendorshow_extra {
-    display: none;
-}
-
-.vendorshow_extra span {
-    display: block;
-}
-
-#vendor_craft form {
-    position: absolute;
-    z-index: 100;
-    background-color: blue;
-    margin: auto;
-    top: 0; right: 0; left: 0; bottom: 0;
-    max-width: 50%;
-    padding: 10px;
-}
-
-#vendor_craft form label {
-    display: block;
-}
-#vendor_craft form input {
-    width: 100%;
-}
-#vendor_craft form textarea {
-    width: 100%;
-    resize:vertical 
-}
-#vendor_craft form a.close_overlay{
-    position: absolute;
-    top: 0;
-    right: 0;
-}

@@ -10,6 +10,12 @@ class MapsController < ApplicationController
   # GET /maps/1
   # GET /maps/1.json
   def show
+    @map = Map.find(params[:id])
+    @vendors = @map.convention.vendors
+    @tags = @map.convention.tags
+    @booths = @map.booths
+    @vendorBooths = @map.vendor_booths
+    @vendorTags = @map.convention.vendor_tags
   end
 
   # GET /maps/new
@@ -68,15 +74,17 @@ class MapsController < ApplicationController
     @map = Map.find(params[:id])
     @vendors = @map.convention.vendors
     @tags = @map.convention.tags
-    # @vendorTags
     @booths = @map.booths
+    @vendorBooths = @map.vendor_booths
+    @vendorTags = @map.convention.vendor_tags
 
     # Pass these variables into the JS as well
     gon.map = @map
     gon.vendors = @vendors
     gon.tags = @tags
-    # gon,vendorTags = @vendorTags
     gon.booths = @booths
+    gon.vendorBooths = @vendorBooths
+    gon.vendorTags = @vendorTags
   end
 
   # Saving map after making changes

@@ -1,0 +1,119 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ *= require font-awesome
+ *= require jquery.datetimepicker
+ */
+
+
+@import "font-awesome";
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
+ul.unordered {
+    list-style: none;
+    margin: 0;
+    padding:0;
+}
+
+.noPad {
+    padding:0;
+}
+
+body { // Don't want bootstrap nav bar obscuring top 50px of content lol
+    margin:0;
+    padding-top: 50px;
+    background-color: lightgray;
+    overflow-x:hidden;
+}
+
+.row {
+    margin:0;
+}
+
+a {
+    color: red;
+}
+
+h3 {
+    text-shadow: initial;
+}
+
+    // ------------------------------------------------------------
+////// RESUABLE BUTTON STYLES
+    // ------------------------------------------------------------
+
+    .greenbtn {
+        border: 0;
+        background-color: #64b52c;
+        border-bottom: 3px solid #2a7a00;
+        color: white;
+    }
+
+    .bluebtn {
+
+    }
+
+    .greybtn {
+        border: 0;
+        background-color: #b1b1b1;
+        border-bottom: 3px solid #7e7e7e;
+        color: white;
+    }
+
+    .redbtn {
+        border: 0;
+        background-color: #b63737;
+        border-bottom: 3px solid #850c0c;
+        color: white;
+    }
+
+    // ------------------------------------------------------------
+////// FOOTER
+    // ------------------------------------------------------------
+
+#footer {
+    min-height:50px;
+    background:#041B28;
+    padding: 20px;
+}
+#backToTop {
+    color: white;
+    border-right: 1px solid white;
+    height: 20px;
+    font-size: 10.5px;
+    top: 15%;
+}
+#backToTop p {
+    width: 100px;
+    color: white;
+}
+#backToTop a {
+    color: white;
+}
+#backToTop a:hover {
+    background-color: initial;
+}
+#footer_into {
+    color: white;
+    font-size: 9px;
+    top:10%
+}
+#footer_info p {
+    line-height: 14px;
+    color: white;
+}
+
+
+

@@ -24,6 +24,7 @@ gem 'spring',        group: :development
 # ADDED
 
 gem 'font-awesome-rails'
+gem 'jquery-datetimepicker-rails', '~> 2.4.1.0'
 
 gem 'gon', '~> 6.0.1' # Allows passing variables from controllers into JS as JSON
 gem 'simple_form'
@@ -31,6 +32,14 @@ gem 'json' # To parse JSON to ruby HASH, vice versa
 
 gem 'byebug', '~> 6.0.2' # Breakpoint debugging in rails
 # GEN USE: type 'byebug' to start debugging. s > step, n > next, c > stop debugging
+
+gem 'bootstrap-sass', '~> 3.3.5'
+
+# Testing
+group :test do 
+  gem 'shoulda', '~> 3.5'
+  gem 'factory_girl_rails', '~> 4.0'
+end
 
 # --------------------------------------------------
 

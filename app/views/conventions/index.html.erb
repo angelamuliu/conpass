@@ -1,29 +1,64 @@
-<h1>Listing conventions</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Start date</th>
-      <th>End date</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+<div class="row">
+    <h3>Browse Conventions</h3>
+</div>
 
-  <tbody>
+<div class="row">
+    <a href="#">
+        <i class="fa fa-star"></i>
+    </a>
+    <a href="#">
+        <i class="fa fa-filter"></i> Filter
+    </a>
+    <a href="#">
+        ABC
+    </a>
+</div>
+
+<ul class="unordered">
     <% @conventions.each do |convention| %>
-      <tr>
-        <td><%= convention.name %></td>
-        <td><%= convention.start_date %></td>
-        <td><%= convention.end_date %></td>
-        <td><%= link_to 'Show', convention %></td>
-        <td><%= link_to 'Edit', edit_convention_path(convention) %></td>
-        <td><%= link_to 'Destroy', convention, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+    <li class="row">
+        <div class="con_image">
+            <img style="width:90%;height:70px;" src="http://1.bp.blogspot.com/-Zr0pmj1bLnM/Uhh7kROhGYI/AAAAAAAAGkE/W51xFS75-Ec/s1600/no-thumbnail.png">
+        </div>
+        <p>
+            <h4><%= link_to convention.name, convention %></h4>
+            <%= convention.start_date %> - <%= convention.end_date %>
+        </p>
+    </li>
     <% end %>
-  </tbody>
-</table>
+</ul>
 
-<br>
+<!-- <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 
-<%= link_to 'New Convention', new_convention_path %>
+<div data-role="popup" id="search" data-position-to="window" class="ui-content" style="min-width:250px">
+       <form method="post" action="demoform.asp">
+        <div>
+          <label for="usrnm" class="ui-hidden-accessible">Search:</label>
+          <input type="text" name="user" id="usrnm" placeholder="Search">
+          <input type="submit" data-inline="true" value="Search">
+        </div>
+      </form>
+    </div>
+
+<div data-role="popup" id="sort" data-position-to="window" class="ui-content" style="min-width:250px">
+       <form method="post" action="demoform.asp">
+        <div>
+          <label for="usrnm" class="ui-accessible"style="padding:5px;">Name:</label>
+<input type="radio" name="Name" value="Name">
+          <label for="usrnm" class="ui-accessible">Place:</label>
+<input type="radio" name="Location" value="Place" style="width:30%;">
+          <label for="usrnm" class="ui-accessible">Time:</label>
+<input type="radio" name="Time" value="time">
+        </div>
+      </form>
+    </div>
+  </div>
+
+ -->
+
+
+
+

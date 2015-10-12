@@ -1,20 +1,49 @@
+<%= render partial: 'vendor_booths/jsForm' %>
+<%= render partial: 'vendors/jsForm' %>
+<%= render partial: 'tags/jsForm' %>
 
-<div id="toolBar">
-    <button class="tool" data-type="rectangle">Rectangle</button>
-    <button class="tool" data-type="eraser">Eraser</button>
-    <button class="tool" data-type="select">Select</button>
+<div class="container-fluid noPad">
 
+<div id="toolBar" class="row">
+    <button id="save"><i class="fa fa-floppy-o"></i> Save</button>
+
+    <div id="mouseTools">
+        <button class="tool" data-type="rectangle">Rectangle</button>
+        <button class="tool" data-type="select"><i class="fa fa-mouse-pointer"></i></button>
+        <button class="tool" data-type="infoselect"><i class="fa fa-mouse-pointer"></i></button>
+        <button class="tool" data-type="eraser">Eraser</button>
+    </div>
+    <%= render partial: 'tags/tag_craft', locals: {tags: @tags} %>
     <%= render partial: 'vendors/vendor_craft', locals: {vendors: @vendors} %>
 </div>
 
-<div id="workArea_container">
+<div id="workArea_container" class="row">
     <div id="workArea">
         <% @booths.each do |booth| %>
-            <%= content_tag :div, "", class: "booth", style: "left:#{booth.x_pos}px; top:#{booth.y_pos}px; width:#{booth.width}px; height:#{booth.height}px", "data-id": "#{booth.id}" %>
+            <%= content_tag :div, "", class: "booth #{booth.cssVendorClasses}", style: "left:#{booth.x_pos}px; top:#{booth.y_pos}px; width:#{booth.width}px; height:#{booth.height}px", "data-id": "#{booth.id}" do %>
+            <ul class="unordered vendorBooth">
+                <li>Vendors assigned to this booth<a href="javascript:;" class="close_vendorBooth"><i class="fa fa-times"></i></a></li>
+                <% if booth.vendor_booths.size > 0 %>
+                    <% booth.vendor_booths.each do |vendor_booth| %>
+                        <li class="vendorBooth v<%= vendor_booth.vendor.id %>" data-id="<%= vendor_booth.id %>">
+                            <%= vendor_booth.vendor.name %>
+                            <div class="options">
+                                <button class="update_vendorBooth"><i class="fa fa-pencil"></i></button>
+                                <button class="destroy_vendorBooth"><i class="fa fa-trash"></i></button>
+                            </div>
+                            <span class="dateRange">(<%= vendor_booth.timeRange %>)</span>
+                        </li>
+                    <% end %>
+                <% else %>
+                    <li class="no_vendorBooths">No vendors assigned</li>
+                <% end %>
+
+            </ul>
+            <% end %>
         <% end %>
     </div>
 </div>
 
-<button id="save">Save</button>
-
 <%= javascript_include_tag "mapMaker.js" %>
+
+</div> <%# Close div container-fluid %>
