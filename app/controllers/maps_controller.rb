@@ -111,6 +111,6 @@ class MapsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def map_params
-      params.require(:map).permit(:convention_id, :name, :start_date, :end_date, :actionHistory)
+      params.require(:map).permit(:convention_id, :name, :start_date, :end_date, :width, :height, :actionHistory)
     end
 end

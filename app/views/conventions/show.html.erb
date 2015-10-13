@@ -24,7 +24,7 @@
         <ul class="unordered">
             <% @maps.each do |map| %>
                 <li>
-                    <%= link_to map.name, craft_map_path %>
+                    <%= link_to map.name, craft_map_path(map) %>
                 </li>
             <% end %>
         </ul>
