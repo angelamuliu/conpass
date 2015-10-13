@@ -18,6 +18,13 @@ class MapsController < ApplicationController
     @vendorTags = @map.convention.vendor_tags
   end
 
+  # GET /maps/1/quickview/
+  # Quick administrative view that doesn't actually show the map
+  # Just like, logistics
+  def quickview
+    @map = Map.find(params[:id])
+  end
+
   # GET /maps/new
   def new
     @map = Map.new
@@ -34,8 +41,8 @@ class MapsController < ApplicationController
 
     respond_to do |format|
       if @map.save
-        format.html { redirect_to @map, notice: 'Map was successfully created.' }
-        format.json { render :show, status: :created, location: @map }
+        format.html { redirect_to quickview_map_url(@map), notice: 'Map was successfully created.' }
+        format.json { render :quickview, status: :created, location: @map }
       else
         format.html { render :new }
         format.json { render json: @map.errors, status: :unprocessable_entity }
@@ -49,7 +56,7 @@ class MapsController < ApplicationController
     respond_to do |format|
       if @map.update(map_params)
         format.html { redirect_to @map, notice: 'Map was successfully updated.' }
-        format.json { render :show, status: :ok, location: @map }
+        format.json { render :quickview, status: :ok, location: @map }
       else
         format.html { render :edit }
         format.json { render json: @map.errors, status: :unprocessable_entity }

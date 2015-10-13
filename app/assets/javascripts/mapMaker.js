@@ -2,34 +2,11 @@
 // It's only used there and we shouldn't ever load it on other pages b/c lag
 // If you really want to use it on another page -> <%= javascript_include_tag "mapMaker.js" %>
 
-
 // We can grab controller vars before dom is loaded FYI
 // console.log(gon.map);
 
 //= require jquery.datetimepicker
 
-$(document).ready(function() {
-
-    $("#workArea").css("width", gon.map.width);
-    $("#workArea").css("height", gon.map.height);
-
-    mapMaker($("#workArea"), $("#toolBar"));
-
-    $("#save").click(function() {
-        $.ajax({
-          type: "POST",
-          url: "/maps/"+gon.map.id+"/save",
-          data: {
-            actionHistory: JSON.stringify(actionHistory)
-          },
-          success: function() {
-            actionHistory = []; // Clear history on save for now
-          }
-        });
-    })
-
-
-})
 
 // TODO : Something that clears objs with the ".deleted" class b/c otherwise there
 // might be millions if someone works in a like 1 hour session lol
@@ -63,6 +40,31 @@ var TYPES = { // Used to store what object we'll want to use
 var actionHistory = []; // Store create, update action objs in here in order of occurance
 
 
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+$(document).ready(function() {
+
+    $("#workArea").css("width", gon.map.width);
+    $("#workArea").css("height", gon.map.height);
+
+    mapMaker($("#workArea"), $("#toolBar"));
+
+    $("#save").click(function() {
+        $.ajax({
+          type: "POST",
+          url: "/maps/"+gon.map.id+"/save",
+          data: {
+            actionHistory: JSON.stringify(actionHistory)
+          },
+          success: function() {
+            actionHistory = []; // Clear history on save for now
+          }
+        });
+    })
+
+
+})
 
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 

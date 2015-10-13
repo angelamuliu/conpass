@@ -1,0 +1,27 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+    <strong>Map for <%= @map.convention.name %></strong>
+</p>
+
+<p>
+  <strong>Map name/location:</strong>
+  <%= @map.name %>
+</p>
+
+<p>
+  <strong>Start date:</strong>
+  <%= @map.start_date %>
+</p>
+
+<p>
+  <strong>End date:</strong>
+  <%= @map.end_date %>
+</p>
+
+<%= link_to "Go to map crafting tool", craft_map_path, class: 'greenbtn btn-default btn-lg' %>
+
+<br /><br />
+
+<%= link_to 'Edit', edit_map_path(@map) %> |
+<%= link_to 'Back', conventions_path %>
