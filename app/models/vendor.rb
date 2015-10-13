@@ -10,5 +10,5 @@ class Vendor < ActiveRecord::Base
 
     #Scopes
     scope :alphabetical, -> {order('name')}
-    scope :by_tag, -> (tag) {joins(:vendor_tags, :tags).where('tags.name = ?', tag).order('tag.name')}
+    scope :by_tag, -> (tag) {joins(:tags).where('tags.name = ?', tag)}
 end

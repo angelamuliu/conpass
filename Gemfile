@@ -39,6 +39,7 @@ gem 'bootstrap-sass', '~> 3.3.5'
 group :test do 
   gem 'shoulda', '~> 3.5'
   gem 'factory_girl_rails', '~> 4.0'
+  gem 'hirb'
 end
 
 # --------------------------------------------------
