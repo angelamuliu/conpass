@@ -2,6 +2,7 @@
 <%# A form that is ultimately manipulated by the map crafting page %>
 <div class="overlay">
     <form id="vendorbooth_form">
+        <h4>Schedule</h4>
         <div class="error">There is something wrong with your fields</div>
 
         <ul class="unordered">
@@ -15,9 +16,11 @@
                 <input type="text" name="vendorbooth_endtime" class="datetimepicker">
             </li>
         </ul>
-
-        <button id="vendorbooth_form_submit"><i class="fa fa-check"></i></button>
-        <button class="close_overlay"><i class="fa fa-times"></i></button>
+        
+        <div class="jsForm_actions">
+            <button id="vendorbooth_form_submit" class="greenbtn"><i class="fa fa-check"></i></button>
+            <button class="close_overlay redbtn"><i class="fa fa-times"></i></button>
+        </div>
 
     </form>
 </div>

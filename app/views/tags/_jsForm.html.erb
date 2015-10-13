@@ -9,19 +9,21 @@
         <a href="javascript:;" class="close_overlay">
             <i class="fa fa-times"></i>
         </a>
-        <ul class="unordered row">
-            <li>
-                <label for="tag_name">Name</label>
-                <input type="text" name="tag_name">
-            </li>
-        </ul>
-        <h4>Assign to Vendors</h4>
-        <ul class="assign_vendortags row unordered">
-            <%# Gets populated by JS %>
-        </ul>
-        <div class="row">
-            <button id="tag_form_submit">Submit</button>
-            <button class="close_overlay">Cancel</button>
+        <div class="jsForm_fields">
+            <ul class="unordered row">
+                <li>
+                    <label for="tag_name">Name</label>
+                    <input type="text" name="tag_name">
+                </li>
+            </ul>
+            <h4>Assign to Vendors</h4>
+            <ul class="assign_vendortags row unordered">
+                <%# Gets populated by JS %>
+            </ul>
+        </div>
+        <div class="row jsForm_actions">
+            <button id="tag_form_submit" class="greenbtn">Update</button>
+            <button class="close_overlay redbtn">Cancel</button>
         </div>
     </form>
 </div>

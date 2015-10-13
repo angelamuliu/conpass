@@ -2,34 +2,11 @@
 // It's only used there and we shouldn't ever load it on other pages b/c lag
 // If you really want to use it on another page -> <%= javascript_include_tag "mapMaker.js" %>
 
-
 // We can grab controller vars before dom is loaded FYI
 // console.log(gon.map);
 
 //= require jquery.datetimepicker
 
-$(document).ready(function() {
-
-    $("#workArea").css("width", gon.map.width);
-    $("#workArea").css("height", gon.map.height);
-
-    mapMaker($("#workArea"), $("#toolBar"));
-
-    $("#save").click(function() {
-        $.ajax({
-          type: "POST",
-          url: "/maps/"+gon.map.id+"/save",
-          data: {
-            actionHistory: JSON.stringify(actionHistory)
-          },
-          success: function() {
-            actionHistory = []; // Clear history on save for now
-          }
-        });
-    })
-
-
-})
 
 // TODO : Something that clears objs with the ".deleted" class b/c otherwise there
 // might be millions if someone works in a like 1 hour session lol
@@ -63,6 +40,31 @@ var TYPES = { // Used to store what object we'll want to use
 var actionHistory = []; // Store create, update action objs in here in order of occurance
 
 
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+$(document).ready(function() {
+
+    $("#workArea").css("width", gon.map.width);
+    $("#workArea").css("height", gon.map.height);
+
+    mapMaker($("#workArea"), $("#toolBar"));
+
+    $("#save").click(function() {
+        $.ajax({
+          type: "POST",
+          url: "/maps/"+gon.map.id+"/save",
+          data: {
+            actionHistory: JSON.stringify(actionHistory)
+          },
+          success: function() {
+            actionHistory = []; // Clear history on save for now
+          }
+        });
+    })
+
+
+})
 
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
@@ -75,7 +77,7 @@ function mapMaker(workArea, toolBar) {
     // VARIABLES
     // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-    var selectedTool; // Which tool is the user currently using
+    var selectedTool = TOOLS.SELECT; // Which tool is the user currently using, default is SELECT
     var toolContext = {}; // Store information about interactions as needed
 
     var vendorDict = {}; // {"vendor ID" : vendor name}; Updated and used in vendor tag creation
@@ -103,18 +105,6 @@ function mapMaker(workArea, toolBar) {
     loadVendorDict(gon.vendors);
     loadTagDict(gon.tags);
 
-    // TODO: On vendor delete, remove from dict
-    // on vendor add, add to dict
-    // on vendor update, update dict. Also update all instances of it both in the vendorbooth thing and vendor tag li elements
-    // Load in values from vendor dict to the tag form
-    // Checkboxes
-    // Log all checks into a single vendortag history obj
-    // Change backend to parse vendortags slightly differently when organizing
-    // Update DOM for both the tag listing
-    // When updating a tag, load in vendors into its listing
-
-
-
 
     // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 ////// EVENT LISTENERS
@@ -134,7 +124,9 @@ function mapMaker(workArea, toolBar) {
     })
 
     $(".tool").click(function(e) { // Swap tool when tool button pressed
+        $(".tool").removeClass("selectedTool");
         selectedTool = this.dataset.type;
+        $(this).addClass("selectedTool");
     })
 
     $(".overlay").click(function() {
@@ -156,7 +148,7 @@ function mapMaker(workArea, toolBar) {
 ////// Vendor clicks
 
     $("#vendor_form_submit").click(function(e) {
-        var formEl = $(this).parent();
+        var formEl = $(this).closest("form");
         if (validateVendorFields(formEl)) {
             if (toolContext.vendorAction === ACTIONS.CREATE) { // Add vendor to DOM + log history
                 addVendorToDOM();
@@ -241,8 +233,12 @@ function mapMaker(workArea, toolBar) {
 
     $(".update_vendorBooth").click(function() {
         var vendorBooth_formEl = $("#vendorbooth_form");
-        prepVendorBoothForm(vendorBooth_formEl);
+        var vendorboothEl = $(this).closest(".vendorBooth");
+
+        resetForm(vendorBooth_formEl);
+        prepVendorBoothForm(vendorBooth_formEl, vendorboothEl);
         showVendorBoothForm(vendorBooth_formEl);
+
         toolContext.vendorBoothAction = ACTIONS.UPDATE;
         toolContext.vendorBoothEl = $(this).closest(".vendorBooth");
         toolContext.isTemp = false;
@@ -275,7 +271,7 @@ function mapMaker(workArea, toolBar) {
     })
 
     $("#tag_form_submit").click(function() {
-        var formEl = $(this).parent();
+        var formEl = $(this).closest("form");
         if (validateTagFields(formEl)) {
             if (toolContext.tagAction === ACTIONS.CREATE) {
                 addTagToDom();
@@ -330,6 +326,7 @@ function mapMaker(workArea, toolBar) {
         switch(selectedTool) {
             case TOOLS.RECTANGLE:
                 startBooth(e);
+                e.preventDefault(); // Stop :focus event from highlighting stuff confusingly
                 break;
             default:
         }
@@ -405,13 +402,56 @@ function mapMaker(workArea, toolBar) {
     $(".booth").on("drop", function(e, ui) {
         e.preventDefault();  
         e.stopPropagation();
+
         var vendorBooth_formEl = $("#vendorbooth_form");
+        resetForm(vendorBooth_formEl);
         prepVendorBoothForm(vendorBooth_formEl);
         showVendorBoothForm(vendorBooth_formEl);
+
         toolContext.vendorBoothAction = ACTIONS.CREATE;
         toolContext.boothId = $(this).data("id");
         toolContext.boothEl = $(this);
     })
+
+    // ------------------------------------------------------------
+////// KEYPRESS EVENTS
+    // ------------------------------------------------------------
+
+    var KEYCODES = {CTRL : 17, V : 86, C : 67};
+    var KEYSTATUS = { CTRL : false, V : false, C : false };
+
+    function senseKeyDown(e, domEl) {
+        if (e.keyCode === KEYCODES.CTRL) {
+            KEYSTATUS.CTRL = true;
+        }
+        if (KEYSTATUS.CTRL && e.keyCode === KEYCODES.C) { // CTRL + C
+            switch(selectedTool) {
+                case TOOLS.SELECT:
+                copyBooth(domEl);
+                break;
+            }
+        }
+        if (KEYSTATUS.CTRL && e.keyCode === KEYCODES.V) { // CTRL + V
+            switch(selectedTool) {
+                case TOOLS.SELECT:
+                    pasteBooth();
+                    break;
+            }
+        }
+    }
+    function senseKeyUp(e) {
+        if (e.keyCode === KEYCODES.CTRL) {
+            KEYSTATUS.CTRL = false;
+        }
+    }
+
+    $(".booth").keydown(function(e) {
+        senseKeyDown(e, $(this));
+    })
+    $(".booth").keyup(function(e) {
+        senseKeyUp(e);
+    })
+
 
     // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 ////// FUNCTIONS
@@ -469,6 +509,7 @@ function mapMaker(workArea, toolBar) {
             e.preventDefault();  
             e.stopPropagation();
             var vendorBooth_formEl = $("#vendorbooth_form");
+            resetForm(vendorBooth_formEl);
             prepVendorBoothForm(vendorBooth_formEl);
             showVendorBoothForm(vendorBooth_formEl);
 
@@ -480,6 +521,27 @@ function mapMaker(workArea, toolBar) {
         boothEl.find(".close_vendorBooth").click(function() {
             $(this).closest("ul").hide()
         })
+
+        boothEl.keydown(function(e) {
+            senseKeyDown(e, boothEl);
+        })
+        boothEl.keyup(function(e) {
+            senseKeyUp(e);
+        })
+    }
+
+    function makeBoothEl(left, top, id, width, height) {
+        width = width === undefined ? 0 : width;
+        height = height === undefined ? 0 : height;
+        return $("<div class=\"booth\" style=\"left:"+left+"px; top:"+top+"px; width:"+width+"px; height:"+height+"px;\""+
+                 "data-id=\"t"+id+"\" tabindex=1>" + 
+                    "<ul class=\"unordered vendorBooth\">" + 
+                        "<li>Vendors assigned to this booth<a href=\"javascript:;\" class=\"close_vendorBooth\">" + 
+                            "<i class=\"fa fa-times\"></i></a>"+
+                        "</li>" + 
+                        "<li class=\"no_vendorBooths\">No vendors assigned</li>"+
+                    "</ul>" +
+                "</div>");
     }
 
     function startBooth(e) {
@@ -488,13 +550,7 @@ function mapMaker(workArea, toolBar) {
         toolContext.downY = e.pageY - offset.top;
         lastBoothId++;
 
-        toolContext.newBooth = $("<div class=\"booth\" style=\"left:"+toolContext.downX+"px;top:"+toolContext.downY+"px\""+
-                                 "data-id=\"t"+lastBoothId+"\">" + 
-                                 "<ul class=\"unordered vendorBooth\">" + 
-                                    "<li>Vendors assigned to this booth<a href=\"javascript:;\" class=\"close_vendorBooth\">" + 
-                                        "<i class=\"fa fa-times\"></i></a></li>" + 
-                                    "<li class=\"no_vendorBooths\">No vendors assigned</li></ul>" +
-                                 "</div>");
+        toolContext.newBooth = makeBoothEl(toolContext.downX, toolContext.downY, lastBoothId);
         $("#workArea").append(toolContext.newBooth);
 
         workArea.mousemove(function(e) {
@@ -518,6 +574,25 @@ function mapMaker(workArea, toolBar) {
         addBoothListeners(toolContext.newBooth);
     }
 
+    // Log creating a booth into our history array
+    function addBoothToHistory(boothEl) {
+        var left = parseInt(boothEl.css("left"));
+        var top = parseInt(boothEl.css("top"));
+        var width = parseInt(boothEl.css("width"));
+        var height = parseInt(boothEl.css("height"));
+        var boothHistory = {
+            "action" : ACTIONS.CREATE,
+            "type" : TYPES.BOOTH,
+            "id" : boothEl.data("id"),
+            "x" : left,
+            "y" : top,
+            "width" : width,
+            "height" : height,
+            "isTemp" : true
+        }
+        actionHistory.push(boothHistory);
+    }
+
     function startMoveBooth(boothEl, e) {
         var offset = workArea.offset();
 
@@ -537,27 +612,8 @@ function mapMaker(workArea, toolBar) {
     }
 
     function endMoveBooth(boothEl, e, isTemp) {
-        workArea.off("mousemove"); // Stop listening for mouse move
+        workArea.off("mousemove"); // Stop listening for mouse move\
         updateBoothToHistory(boothEl, isTemp);
-    }
-
-    // Log creating a booth into our history array
-    function addBoothToHistory(boothEl) {
-        var left = parseInt(boothEl.css("left"));
-        var top = parseInt(boothEl.css("top"));
-        var width = parseInt(boothEl.css("width"));
-        var height = parseInt(boothEl.css("height"));
-        var boothHistory = {
-            "action" : ACTIONS.CREATE,
-            "type" : TYPES.BOOTH,
-            "id" : boothEl.data("id"),
-            "x" : left,
-            "y" : top,
-            "width" : width,
-            "height" : height,
-            "isTemp" : true
-        }
-        actionHistory.push(boothHistory);
     }
 
     // Log updating a booth into our history array
@@ -592,6 +648,27 @@ function mapMaker(workArea, toolBar) {
             boothHistory["isTemp"] = true;
         }
         actionHistory.push(boothHistory);
+    }
+
+    // Stores a booth in preparation for possible pasting
+    function copyBooth(boothEl) {
+        toolContext.clipboard = boothEl;
+    }
+
+    function pasteBooth() {
+        if (toolContext.clipboard !== undefined) {
+            lastBoothId++;
+            var left = parseInt(toolContext.clipboard.css("left"));
+            var top = parseInt(toolContext.clipboard.css("top"));
+            var width = parseInt(toolContext.clipboard.css("width"));
+            var height = parseInt(toolContext.clipboard.css("height"));
+
+            var clone = makeBoothEl(left + 10, top + 10, lastBoothId, width, height);
+            
+            addBoothListeners(clone);
+            $("#workArea").append(clone);
+            addBoothToHistory(clone);
+        }
     }
 
 
@@ -779,8 +856,11 @@ function mapMaker(workArea, toolBar) {
     function addVendorBoothListeners(vendorBoothEl) {
         vendorBoothEl.find(".update_vendorBooth").click(function() {
             var vendorBooth_formEl = $("#vendorbooth_form");
-            prepVendorBoothForm(vendorBooth_formEl);
+
+            resetForm(vendorBooth_formEl);
+            prepVendorBoothForm(vendorBooth_formEl, vendorBoothEl);
             showVendorBoothForm(vendorBooth_formEl);
+
             toolContext.vendorBoothAction = ACTIONS.UPDATE;
             toolContext.vendorBoothEl = vendorBoothEl;
             toolContext.isTemp = true;
@@ -805,8 +885,8 @@ function mapMaker(workArea, toolBar) {
         var newVendorBoothEl = $("<li class=\"vendorBooth v"+toolContext.vendorId+"\" data-id=\"t"+lastVendorBoothId+"\">" +
                              vendorName +
                             "<div class=\"options\">" +
-                                "<button class=\"update_vendorBooth\"><i class=\"fa fa-pencil\"></i></button>" + 
-                                "<button class=\"destroy_vendorBooth\"><i class=\"fa fa-trash\"></i></button>" +
+                                "<a href=\"javascript:;\" class=\"update_vendorBooth\"><i class=\"fa fa-pencil\"></i></a>" + 
+                                "<a href=\"javascript:;\" class=\"destroy_vendorBooth\"><i class=\"fa fa-trash\"></i></a>" +
                             "</div>" + 
                             "<span class=\"dateRange\">" + range + "</span>" +
                             "</li>");
@@ -904,10 +984,12 @@ function mapMaker(workArea, toolBar) {
 
     function addTagListeners(tagEl) {
         tagEl.find(".update_tag").click(function() {
-            toolContext.tagEl = tagEl;
             toolContext.tagAction = ACTIONS.UPDATE;
             toolContext.isTemp = true;
+            toolContext.tagEl = tagEl;
+
             prepTagForm(tagEl, $("#tag_form"));
+            loadVendortagsIntoForm($("#tag_form"), false, tagEl);
             $("#tag_form").parent().toggle();
         })
         tagEl.find(".destroy_tag").click(function() {
@@ -923,7 +1005,6 @@ function mapMaker(workArea, toolBar) {
         lastTagId++;
         var name = $("input[name='tag_name']").val();
 
-        // TODO : Also add vendor tags in later at some point?
         var newTagEl = $("<li data-id=\"t"+lastTagId+"\" class=\"tag\">" +
                             "<div class=\"tagshow\">" +
                                 "<a href=\"javascript:;\" class=\"tag_name\">"+ name + "</a>" +
@@ -1148,11 +1229,20 @@ function mapMaker(workArea, toolBar) {
     }
 
     // Given the vendorbooth form element, gets a top left corner and edits the vendorBooth form DOM object
-    function prepVendorBoothForm(vendorbooth_formEl) {
+    function prepVendorBoothForm(vendorbooth_formEl, vendorBoothEl) {
         var x = event.pageX;
         var y = event.pageY;
         vendorbooth_formEl.css("top", y);
         vendorbooth_formEl.css("left", x);
+        if (vendorBoothEl !== undefined) { // UPDATE - Load in whatever was before
+            var startDate = vendorBoothEl.children(".dateRange").text().split("-")[0];
+            startDate = expandDate(startDate.substring(1, startDate.length-1));
+            var endDate = vendorBoothEl.children(".dateRange").text().split("-")[1];
+            endDate = expandDate(endDate.substring(1, endDate.length-1));
+
+            vendorbooth_formEl.find("input[name='vendorbooth_starttime']").val(startDate);
+            vendorbooth_formEl.find("input[name='vendorbooth_endtime']").val(endDate);
+        }
     }
 
     function showVendorBoothForm(vendorbooth_formEl) {
@@ -1227,7 +1317,19 @@ function mapMaker(workArea, toolBar) {
         }
     }
 
-    // Given a JS date object, formats into shortened form
+    function removeBlanks(arr) {
+        var i = 0;
+        while (i < arr.length) {
+            if (arr[i].length === 0) {
+                arr.splice(i, 1);
+            } else {
+                i++;
+            }
+        }
+        return arr;
+    }
+
+    // Given a JS date object, formats into shortened form like "10/21 Fri 2:00 pm"
     function formatDate(date) {
         var month = date.getMonth() + 1; // JS date starts at 0 so add 1
         var dateDay = date.getDate();
@@ -1237,6 +1339,28 @@ function mapMaker(workArea, toolBar) {
         var min = date.getMinutes();
         min = min < 10 ? "0" + min : min;
         return month + "/" + dateDay + " " + day + " " + hour + ":" + min + " " + period;
+    }
+
+    // Given the shorted date form, reexpands to form like "2015/10/09 02:00"
+    function expandDate(datestring) {
+        var datePieces = removeBlanks(datestring.split(" "));
+        var month = datePieces[0].split("/")[0];
+        var day = Number(datePieces[0].split("/")[1]);
+        if (day < 10) {
+            day = "0" + day;
+        }
+        var period = datePieces[2].substring(datePieces[2].length - 2);
+        var hour = Number(datePieces[2].split(":")[0]) - 1; // jQuery dateTime picker starts at 0
+        if (period === "pm") {
+            hour = hour + 12;
+        }
+        if (hour < 10) {
+            hour = "0" + hour;
+        }
+        var minute = datePieces[2].split(":")[1].substring(0,2);
+        var year = new Date().getFullYear();
+        return year + "/" + month + "/" + day + " " + hour + ":" + minute;
+
     }
 
     // Given a DOM element, extracts the vendor ID through the class ("v19" -> vendor ID = 19)
@@ -1320,7 +1444,6 @@ function mapMaker(workArea, toolBar) {
     function getTagIdFromVendorTag(vendorTagId) {
         return vendorTagId.split("_")[1].substring(4);
     }
-
 
 }
 

@@ -21,8 +21,8 @@ Rails.application.routes.draw do
 
   resources :maps do
     get 'craft', :on => :member # Main map crafting drag and drop screen
-    get 'map', :on => :member
     post 'save', :on => :member # Saving map and related from the craft screen
+    get 'quickview', :on => :member, as: :quickview # For map makers, offers an administrative glance
   end
 
   resources :conventions

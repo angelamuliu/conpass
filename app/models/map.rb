@@ -7,6 +7,7 @@ class Map < ActiveRecord::Base
     has_many :vendor_booths, :through => :booths
 
     # Validations
+    validates_presence_of :convention
 
     # Scopes
 
@@ -190,19 +191,20 @@ class Map < ActiveRecord::Base
     end
 
     def bulkSaveForVendorTag(categorizedHistory, tempToPerm)
-        for vendorTagId in categorizedHistory["vendor_tag"].keys
-            actionVal = categorizedHistory["vendor_tag"][vendorTagId]
-            if actionVal != 0
-                vendorId = extractVendorID(vendorTagId, tempToPerm)
-                tagId = extractTagId(vendorTagId, tempToPerm)
-                if actionVal > 0 # CREATE
-                    VendorTag.create({vendor_id: vendorId, tag_id: tagId})
-                elsif actionVal < 0 # DESTROY
-                    VendorTag.where("vendor_id =#{vendorId} AND tag_id =#{tagId}").destroy_all
+        if categorizedHistory.has_key?("vendor_tag")
+            for vendorTagId in categorizedHistory["vendor_tag"].keys
+                actionVal = categorizedHistory["vendor_tag"][vendorTagId]
+                if actionVal != 0
+                    vendorId = extractVendorID(vendorTagId, tempToPerm)
+                    tagId = extractTagId(vendorTagId, tempToPerm)
+                    if actionVal > 0 # CREATE
+                        VendorTag.create({vendor_id: vendorId, tag_id: tagId})
+                    elsif actionVal < 0 # DESTROY
+                        VendorTag.where("vendor_id =#{vendorId} AND tag_id =#{tagId}").destroy_all
+                    end
                 end
             end
         end
-
     end
 
 

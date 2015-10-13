@@ -42,10 +42,6 @@ body { // Don't want bootstrap nav bar obscuring top 50px of content lol
     margin:0;
 }
 
-a {
-    color: red;
-}
-
 h3 {
     text-shadow: initial;
 }
@@ -54,30 +50,23 @@ h3 {
 ////// RESUABLE BUTTON STYLES
     // ------------------------------------------------------------
 
-    .greenbtn {
-        border: 0;
-        background-color: #64b52c;
-        border-bottom: 3px solid #2a7a00;
-        color: white;
-    }
+.greenbtn {
+    border: 0;
+    background-color: #64b52c;
+    border-bottom: 3px solid #2a7a00;
+    color: white;
+}
+.greenbtn:hover { background-color: #5aa227; }
+.greenbtn:active { background-color: #467e1e; }
 
-    .bluebtn {
-
-    }
-
-    .greybtn {
-        border: 0;
-        background-color: #b1b1b1;
-        border-bottom: 3px solid #7e7e7e;
-        color: white;
-    }
-
-    .redbtn {
-        border: 0;
-        background-color: #b63737;
-        border-bottom: 3px solid #850c0c;
-        color: white;
-    }
+.redbtn {
+    border: 0;
+    background-color: #b63737;
+    border-bottom: 3px solid #850c0c;
+    color: white;
+}
+.redbtn:hover { background-color: #770a0a; }
+.redbtn:active { background-color: #5d0808; }
 
     // ------------------------------------------------------------
 ////// FOOTER

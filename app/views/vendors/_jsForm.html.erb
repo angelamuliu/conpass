@@ -9,25 +9,29 @@
         <a href="javascript:;" class="close_overlay">
             <i class="fa fa-times"></i>
         </a>
-        <ul class="unordered">
-            <li>
-                <label for="vendor_name">Name</label>
-                <input type="text" name="vendor_name">
-            </li>
-            <li>
-                <label for="vendor_url">URL</label>
-                <input type="text" name="vendor_url">
-            </li>
-            <li>
-                <label for="vendor_desc">Description</label>
-                ​<textarea id="txtArea" rows="10" name="vendor_desc"></textarea>
-            </li>
-        </ul>
-        <h4>Assign Tags</h4>
-        <ul class="assign_vendortags row unordered">
-            <%# Gets populated by JS %>
-        </ul>
-        <button id="vendor_form_submit">Submit</button>
-        <button class="close_overlay">Cancel</button>
+        <div class="jsForm_fields">
+            <ul class="unordered">
+                <li>
+                    <label for="vendor_name">Name</label>
+                    <input type="text" name="vendor_name">
+                </li>
+                <li>
+                    <label for="vendor_url">URL</label>
+                    <input type="text" name="vendor_url">
+                </li>
+                <li>
+                    <label for="vendor_desc">Description</label>
+                    ​<textarea id="txtArea" rows="10" name="vendor_desc"></textarea>
+                </li>
+            </ul>
+            <h4>Assign Tags</h4>
+            <ul class="assign_vendortags row unordered">
+                <%# Gets populated by JS %>
+            </ul>
+        </div>
+        <div class="jsForm_actions">
+            <button id="vendor_form_submit" class="greenbtn">Update</button>
+            <button class="close_overlay redbtn">Cancel</button>
+        </div>
     </form>
 </div>
