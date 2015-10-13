@@ -6,8 +6,8 @@ class ConventionsController < ApplicationController
   def index
     @conventions = Convention.all.chronological
     @alphabetical = Convention.all.alphabetical
-    @upcoming = Convention.all.upcoming.ids
-    @current = Convention.all.current.ids
+    @upcoming = Convention.all
+    @current = Convention.all
   end
 
   # GET /conventions/1

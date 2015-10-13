@@ -130,10 +130,6 @@ overflow:auto
     text-decoration:none;
 }
 
-#sorting_information {
-	display:none;
-}
-
 #title, .col-xs-8 {
 	padding-left: 0px;
 	color: Black;
