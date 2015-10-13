@@ -76,7 +76,7 @@
 #mouseTools {
     margin-left: 25px;
     display: inline-block;
-    background-color: #666666;
+    background-color: #2f2f2f;
     padding: 10px;
     position: absolute;
     z-index: 45;
@@ -84,12 +84,18 @@
 }
 #mouseTools button {
     border: none;
-    color: grey;
-    background-color: black;
+    color: #d9d9d9;
+    background: none;
+}
+#mouseTools button:hover {
+    background-color: #434343;
 }
 #mouseTools button.tool[data-type="select"] {
-    -webkit-text-stroke: 1px grey;
+    -webkit-text-stroke: 1px #d9d9d9;
     color: black;
+}
+#mouseTools .selectedTool {
+    background-color: #555555;
 }
 
 button.jsAdd {
@@ -225,10 +231,10 @@ button.jsAdd:hover {
     box-shadow: 0px 0px 10px 3px rgba(0, 0, 0,.3);
 }
 // Only want to style direct li children like list
-#vendor_list > li:nth-child(odd), #tag_list > li:nth-child(odd) {
+#vendor_list > ul > li:nth-child(odd), #tag_list > ul > li:nth-child(odd) {
   background-color: #f0ece7;
 }
-#vendor_list > li:nth-child(even), #tag_list > li:nth-child(even) {
+#vendor_list > ul > li:nth-child(even), #tag_list > ul > li:nth-child(even) {
   background-color: #f8f5f2;
 }
 .vendor_name {
@@ -285,9 +291,10 @@ button.jsAdd:hover {
 ul.vendorBooth {
     display: none;
     position: absolute;
-    background-color: blue;
+    background-color: #f0ece7;
     z-index: 40;
-    min-width: 400px;
+    min-width: 275px;
+    box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.3);
 }
 
 .vendorBooth .options {
@@ -296,13 +303,14 @@ ul.vendorBooth {
 }
 
 ul.vendorBooth li {
-    margin: 2px;
+    margin: 5px;
 }
 
 ul.vendorBooth li:first-child {
-    background-color: red;
+    background-color: #0069d3;
+    color: white;
     margin: 0;
-    padding: 2px;
+    padding: 5px;
 }
 
 ul.vendorBooth span.dateRange {
@@ -312,6 +320,7 @@ ul.vendorBooth span.dateRange {
 
 .close_vendorBooth {
     float: right;
+    color: white;
 }
 
 #vendorbooth_form {
@@ -382,8 +391,13 @@ ul.vendorBooth span.dateRange {
 .tagshow {
     padding: 5px;
 }
+.tagshow a { color: #e43046; }
+.tagshow a:hover { color: #c1191f; }
 .tag_options {
     float: right;
+}
+.tag_options .update_tag {
+    margin-right: 3px;
 }
 .tagshow_extra {
     padding: 5px;

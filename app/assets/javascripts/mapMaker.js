@@ -134,7 +134,9 @@ function mapMaker(workArea, toolBar) {
     })
 
     $(".tool").click(function(e) { // Swap tool when tool button pressed
+        $(".tool").removeClass("selectedTool");
         selectedTool = this.dataset.type;
+        $(this).addClass("selectedTool");
     })
 
     $(".overlay").click(function() {
@@ -814,8 +816,8 @@ function mapMaker(workArea, toolBar) {
         var newVendorBoothEl = $("<li class=\"vendorBooth v"+toolContext.vendorId+"\" data-id=\"t"+lastVendorBoothId+"\">" +
                              vendorName +
                             "<div class=\"options\">" +
-                                "<button class=\"update_vendorBooth\"><i class=\"fa fa-pencil\"></i></button>" + 
-                                "<button class=\"destroy_vendorBooth\"><i class=\"fa fa-trash\"></i></button>" +
+                                "<a href=\"javascript:;\" class=\"update_vendorBooth\"><i class=\"fa fa-pencil\"></i></a>" + 
+                                "<a href=\"javascript:;\" class=\"destroy_vendorBooth\"><i class=\"fa fa-trash\"></i></a>" +
                             "</div>" + 
                             "<span class=\"dateRange\">" + range + "</span>" +
                             "</li>");
