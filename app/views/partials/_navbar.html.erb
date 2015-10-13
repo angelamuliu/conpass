@@ -16,7 +16,24 @@
         <li><a href="conventions">Conventions</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="#signup">Sign up</a></li>
+          <% if logged_in? %>
+            <li>
+              <a ><%= current_user.username %> </a>
+            </li>
+            <li>
+              <a href="logout"> Log out </a>
+            </li>
+
+          <% else %>
+           <li>
+              <a href="login">Login</a>
+            </li>
+            <li>
+              <a href="signup">Sign up </a>
+            </li>
+          <% end %>
+        </li>
+
       </ul>
     </div>
 
