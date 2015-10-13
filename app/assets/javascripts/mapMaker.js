@@ -156,7 +156,7 @@ function mapMaker(workArea, toolBar) {
 ////// Vendor clicks
 
     $("#vendor_form_submit").click(function(e) {
-        var formEl = $(this).parent();
+        var formEl = $(this).closest("form");
         if (validateVendorFields(formEl)) {
             if (toolContext.vendorAction === ACTIONS.CREATE) { // Add vendor to DOM + log history
                 addVendorToDOM();
@@ -241,8 +241,12 @@ function mapMaker(workArea, toolBar) {
 
     $(".update_vendorBooth").click(function() {
         var vendorBooth_formEl = $("#vendorbooth_form");
-        prepVendorBoothForm(vendorBooth_formEl);
+        var vendorboothEl = $(this).closest(".vendorBooth");
+
+        resetForm(vendorBooth_formEl);
+        prepVendorBoothForm(vendorBooth_formEl, vendorboothEl);
         showVendorBoothForm(vendorBooth_formEl);
+
         toolContext.vendorBoothAction = ACTIONS.UPDATE;
         toolContext.vendorBoothEl = $(this).closest(".vendorBooth");
         toolContext.isTemp = false;
@@ -275,7 +279,7 @@ function mapMaker(workArea, toolBar) {
     })
 
     $("#tag_form_submit").click(function() {
-        var formEl = $(this).parent();
+        var formEl = $(this).closest("form");
         if (validateTagFields(formEl)) {
             if (toolContext.tagAction === ACTIONS.CREATE) {
                 addTagToDom();
@@ -406,6 +410,7 @@ function mapMaker(workArea, toolBar) {
         e.preventDefault();  
         e.stopPropagation();
         var vendorBooth_formEl = $("#vendorbooth_form");
+        resetForm(vendorBooth_formEl);
         prepVendorBoothForm(vendorBooth_formEl);
         showVendorBoothForm(vendorBooth_formEl);
         toolContext.vendorBoothAction = ACTIONS.CREATE;
@@ -469,6 +474,7 @@ function mapMaker(workArea, toolBar) {
             e.preventDefault();  
             e.stopPropagation();
             var vendorBooth_formEl = $("#vendorbooth_form");
+            resetForm(vendorBooth_formEl);
             prepVendorBoothForm(vendorBooth_formEl);
             showVendorBoothForm(vendorBooth_formEl);
 
@@ -779,8 +785,11 @@ function mapMaker(workArea, toolBar) {
     function addVendorBoothListeners(vendorBoothEl) {
         vendorBoothEl.find(".update_vendorBooth").click(function() {
             var vendorBooth_formEl = $("#vendorbooth_form");
-            prepVendorBoothForm(vendorBooth_formEl);
+
+            resetForm(vendorBooth_formEl);
+            prepVendorBoothForm(vendorBooth_formEl, vendorBoothEl);
             showVendorBoothForm(vendorBooth_formEl);
+
             toolContext.vendorBoothAction = ACTIONS.UPDATE;
             toolContext.vendorBoothEl = vendorBoothEl;
             toolContext.isTemp = true;
@@ -904,10 +913,12 @@ function mapMaker(workArea, toolBar) {
 
     function addTagListeners(tagEl) {
         tagEl.find(".update_tag").click(function() {
-            toolContext.tagEl = tagEl;
             toolContext.tagAction = ACTIONS.UPDATE;
             toolContext.isTemp = true;
+            toolContext.tagEl = tagEl;
+
             prepTagForm(tagEl, $("#tag_form"));
+            loadVendortagsIntoForm($("#tag_form"), false, tagEl);
             $("#tag_form").parent().toggle();
         })
         tagEl.find(".destroy_tag").click(function() {
@@ -923,7 +934,6 @@ function mapMaker(workArea, toolBar) {
         lastTagId++;
         var name = $("input[name='tag_name']").val();
 
-        // TODO : Also add vendor tags in later at some point?
         var newTagEl = $("<li data-id=\"t"+lastTagId+"\" class=\"tag\">" +
                             "<div class=\"tagshow\">" +
                                 "<a href=\"javascript:;\" class=\"tag_name\">"+ name + "</a>" +
@@ -1148,11 +1158,20 @@ function mapMaker(workArea, toolBar) {
     }
 
     // Given the vendorbooth form element, gets a top left corner and edits the vendorBooth form DOM object
-    function prepVendorBoothForm(vendorbooth_formEl) {
+    function prepVendorBoothForm(vendorbooth_formEl, vendorBoothEl) {
         var x = event.pageX;
         var y = event.pageY;
         vendorbooth_formEl.css("top", y);
         vendorbooth_formEl.css("left", x);
+        if (vendorBoothEl !== undefined) { // UPDATE - Load in whatever was before
+            var startDate = vendorBoothEl.children(".dateRange").text().split("-")[0];
+            startDate = expandDate(startDate.substring(1, startDate.length-1));
+            var endDate = vendorBoothEl.children(".dateRange").text().split("-")[1];
+            endDate = expandDate(endDate.substring(1, endDate.length-1));
+
+            vendorbooth_formEl.find("input[name='vendorbooth_starttime']").val(startDate);
+            vendorbooth_formEl.find("input[name='vendorbooth_endtime']").val(endDate);
+        }
     }
 
     function showVendorBoothForm(vendorbooth_formEl) {
@@ -1227,7 +1246,19 @@ function mapMaker(workArea, toolBar) {
         }
     }
 
-    // Given a JS date object, formats into shortened form
+    function removeBlanks(arr) {
+        var i = 0;
+        while (i < arr.length) {
+            if (arr[i].length === 0) {
+                arr.splice(i, 1);
+            } else {
+                i++;
+            }
+        }
+        return arr;
+    }
+
+    // Given a JS date object, formats into shortened form like "10/21 Fri 2:00 pm"
     function formatDate(date) {
         var month = date.getMonth() + 1; // JS date starts at 0 so add 1
         var dateDay = date.getDate();
@@ -1237,6 +1268,28 @@ function mapMaker(workArea, toolBar) {
         var min = date.getMinutes();
         min = min < 10 ? "0" + min : min;
         return month + "/" + dateDay + " " + day + " " + hour + ":" + min + " " + period;
+    }
+
+    // Given the shorted date form, reexpands to form like "2015/10/09 02:00"
+    function expandDate(datestring) {
+        var datePieces = removeBlanks(datestring.split(" "));
+        var month = datePieces[0].split("/")[0];
+        var day = Number(datePieces[0].split("/")[1]);
+        if (day < 10) {
+            day = "0" + day;
+        }
+        var period = datePieces[2].substring(datePieces[2].length - 2);
+        var hour = Number(datePieces[2].split(":")[0]) - 1; // jQuery dateTime picker starts at 0
+        if (period === "pm") {
+            hour = hour + 12;
+        }
+        if (hour < 10) {
+            hour = "0" + hour;
+        }
+        var minute = datePieces[2].split(":")[1].substring(0,2);
+        var year = new Date().getFullYear();
+        return year + "/" + month + "/" + day + " " + hour + ":" + minute;
+
     }
 
     // Given a DOM element, extracts the vendor ID through the class ("v19" -> vendor ID = 19)
