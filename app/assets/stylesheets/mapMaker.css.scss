@@ -18,6 +18,11 @@
     background-color: white;
     position: absolute;
 }
+.booth:focus {
+    outline: none;
+    box-shadow: 0 0 0 5px #fbda82;
+    border: 2px solid #b75f00;
+}
 
 .overlay {
     display: none;

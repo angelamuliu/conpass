@@ -9,7 +9,7 @@
 
     <div id="mouseTools">
         <button class="tool" data-type="rectangle"><i class="fa fa-square-o"></i></button>
-        <button class="tool" data-type="select"><i class="fa fa-mouse-pointer"></i></button>
+        <button class="tool selectedTool" data-type="select"><i class="fa fa-mouse-pointer"></i></button>
         <button class="tool" data-type="infoselect"><i class="fa fa-mouse-pointer"></i></button>
         <button class="tool" data-type="eraser"><i class="fa fa-eraser"></i></button>
     </div>
@@ -20,7 +20,7 @@
 <div id="workArea_container" class="row">
     <div id="workArea">
         <% @booths.each do |booth| %>
-            <%= content_tag :div, "", class: "booth #{booth.cssVendorClasses}", style: "left:#{booth.x_pos}px; top:#{booth.y_pos}px; width:#{booth.width}px; height:#{booth.height}px", "data-id": "#{booth.id}" do %>
+            <%= content_tag :div, "", class: "booth #{booth.cssVendorClasses}", style: "left:#{booth.x_pos}px; top:#{booth.y_pos}px; width:#{booth.width}px; height:#{booth.height}px", "data-id": "#{booth.id}", "tabindex":1 do %>
             <ul class="unordered vendorBooth">
                 <li>Vendors assigned to this booth<a href="javascript:;" class="close_vendorBooth"><i class="fa fa-times"></i></a></li>
                 <% if booth.vendor_booths.size > 0 %>
