@@ -7,7 +7,6 @@ class Convention < ActiveRecord::Base
 
     # Scopes 
     scope :alphabetical, -> {order('name')}
-    scope :chronological, ->{order('start_date')}
     scope :current, -> {where('end_date >= ?', Date.current)}
     scope :upcoming, -> {where('start_date > ?', Date.current)}
 end

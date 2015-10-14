@@ -87,7 +87,7 @@
 	</div>
 	
 	<%= javascript_include_tag "conventions_popup.js" %>
-	<div id="sorting_information">
+	<div id="sorting information">
 		<div id="current_data">
 			<%= @current.to_a %>
 		</div>

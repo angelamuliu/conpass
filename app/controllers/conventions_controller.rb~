@@ -6,14 +6,13 @@ class ConventionsController < ApplicationController
   def index
     @conventions = Convention.all.chronological
     @alphabetical = Convention.all.alphabetical
-    @upcoming = Convention.all.upcoming.ids
-    @current = Convention.all.current.ids
+    @upcoming = Convention.all
+    @current = Convention.all
   end
 
   # GET /conventions/1
   # GET /conventions/1.json
   def show
-    @maps = @convention.maps
   end
 
   # GET /conventions/new
