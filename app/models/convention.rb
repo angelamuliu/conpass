@@ -1,5 +1,6 @@
 class Convention < ActiveRecord::Base
     # Relationships
+    belongs_to :user
     has_many :maps
     has_many :vendors, :dependent => :destroy
     has_many :tags, :dependent => :destroy

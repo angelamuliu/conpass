@@ -195,12 +195,10 @@ button.jsAdd:hover {
     margin-right: 2%;
 }
 
-#vendor_form h3 {
-    background-color: #0069d3;
-}
-#tag_form h3 {
-    background-color: #e43046;
-}
+#vendor_form h3 { background-color: #0069d3; }
+#vendor_form a.close_overlay:hover { color: #cce1f6; }
+#tag_form h3 { background-color: #e43046; }
+#tag_form a.close_overlay:hover { color: #f6c0c7; }
 
 
 // ----------------------------------------
@@ -309,13 +307,16 @@ ul.vendorBooth {
     position: absolute;
     background-color: #f0ece7;
     z-index: 40;
-    min-width: 275px;
+    min-width: 300px;
     box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.3);
 }
 
 .vendorBooth .options {
     display: inline-block;
     float: right;
+}
+.vendorBooth a {
+    margin-left: 5px;
 }
 
 ul.vendorBooth li {
@@ -338,10 +339,12 @@ ul.vendorBooth span.dateRange {
     float: right;
     color: white;
 }
+.close_vendorBooth:hover { color: #cce1f6; }
 
 #vendorbooth_form {
+    font-family: sans-serif;
+    padding: 0;
     position: absolute;
-    margin-top: -75px; // Negating the offset of the overlay, which is in turn b/c of nav
     display: inline-block;
     background-color: #f0ece7;
     z-index: 200;
