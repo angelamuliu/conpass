@@ -13,6 +13,8 @@ class ConventionsController < ApplicationController
   # GET /conventions/1
   # GET /conventions/1.json
   def show
+    @maps = @convention.maps.chronological.alphabetical
+    @vendors = @convention.vendors.alphabetical
   end
 
   # GET /conventions/new

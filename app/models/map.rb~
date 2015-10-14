@@ -9,7 +9,6 @@ class Map < ActiveRecord::Base
     # Validations
 
     # Scopes
-    scope :alphabetical, -> {order('name')}
     scope :chronological, ->{order('start_date')}
 
     # Methods

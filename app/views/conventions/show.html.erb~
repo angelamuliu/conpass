@@ -48,7 +48,7 @@
                 <%= vendor.tags %>
 	    </div>
             <div class="col-xs-5 vendor_names">
-                <%= link_to vendor.name, vendor %>
+                <%= link_to vendor.name, map %>
             </div>
             <div class="col-xs-4 vendor_name">
             </div>

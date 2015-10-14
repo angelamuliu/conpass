@@ -13,7 +13,7 @@
 
     <div class="collapse navbar-collapse" id="navbar-collapse-here">
       <ul class="nav navbar-nav">
-        <li><a href="/conventions">Conventions</a></li>
+        <li><a href="conventions">Conventions</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li><a href="#signup">Sign up</a></li>
