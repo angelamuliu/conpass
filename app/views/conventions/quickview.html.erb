@@ -1,0 +1,23 @@
+
+<%# TODO: Make this page not ugly haha it's very scrappy %>
+
+<p>
+    <strong>Maps:</strong>
+    <% if @maps.length < 1 %>
+        This convention has no maps. Where's it taking place? <%= link_to "Start adding some now!", new_map_path(convention_id: @convention.id) %>
+        <p>A map is a floorplan of some area that the convention takes place in. For example, it could be a room, an outside area, or wherever your booths are setting up ultimately.</p>
+    <% else %>
+        <ul class="unordered">
+            <% @maps.each do |map| %>
+                <li>
+                    <%= link_to map.name, craft_map_path(map) %>
+                </li>
+            <% end %>
+        </ul>
+        <br />
+        <%= link_to "Add another map", new_map_path(convention_id: @convention.id) %>
+    <% end %>
+</p>
+
+<%= link_to 'Edit', edit_convention_path(@convention) %> |
+<%= link_to 'Back', conventions_path %>

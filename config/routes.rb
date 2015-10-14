@@ -25,7 +25,9 @@ Rails.application.routes.draw do
     get 'quickview', :on => :member, as: :quickview # For map makers, offers an administrative glance
   end
 
-  resources :conventions
+  resources :conventions do
+    get 'quickview', :on => :member, as: :quickview # For map makers, offers administrative glance at convention
+  end
 
   # Authentication
   resources :users
