@@ -141,6 +141,12 @@ function mapMaker(workArea, toolBar) {
         return false;
     })
 
+    $(".dismiss_error").click(function(e) {
+        $(this).closest(".error").slideUp();
+        e.preventDefault();
+        return false;
+    })
+
     $(".overlay form").click(function(e) {
         e.stopPropagation();
     })
