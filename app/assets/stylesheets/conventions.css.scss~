@@ -2,12 +2,7 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-img#close {
-position:absolute;
-right:-14px;
-top:-14px;
-cursor:pointer
-}
+
 div#popupSort{
 position:absolute;
 left:50%;
@@ -37,6 +32,22 @@ body {
 	background-color:#041B28 !important;
 }
 
+.cancel {
+    background:gray;
+    color:white;
+    border:1px none;
+    border-radius:2px;
+    height:25px;
+    padding: 4px;
+    font-weight:700;
+    text-align:center;
+}
+
+.cancel a{
+    color:white;
+    text-decoration:none;
+}
+
 .chronological {
 	margin-bottom:0px;
 }
@@ -55,10 +66,29 @@ body {
     margin-right: 20px;
 }
 
+.con_info {
+	font-family:"Lucida Bright", "Times New Roman";
+	margin-left: 5% !important;
+	margin-right: 5% !important;
+	padding-bottom: 10px;
+}
+
+.con_info a{
+	color:#b1b1b1;
+}
+
+.con_info a:hover {
+	color: #e43046
+}
+
 .convention {
 	padding-top: 5px;
 	padding-right: 5%;
 	padding-left: 5%;
+}
+
+.dates {
+	float:right;
 }
 
 .filter {
@@ -77,6 +107,12 @@ body {
 .main a {
 	color: #e43046	
 }
+
+#map_title, #map_title a, #map_title a:hover {
+	color:black;
+	text-decoration:none;
+}
+
 
 #openHere {
 width:100%;
@@ -114,20 +150,14 @@ overflow:auto
     text-decoration: none;
 }
 
-.cancel {
-    background:gray;
-    color:white;
-    border:1px none;
-    border-radius:2px;
-    height:25px;
-    padding: 4px;
-    font-weight:700;
-    text-align:center;
+#sorting_information {
+	display:none;
 }
 
-.cancel a{
-    color:white;
-    text-decoration:none;
+#title, .col-xs-4 {
+	padding-left: 0px;
+	color: Black;
+	font-weight:600;
 }
 
 #title, .col-xs-8 {
@@ -143,6 +173,10 @@ overflow:auto
 	margin-right: 5% !important;
 }
 
+.topbar, .show_page {
+	padding-bottom:10px;
+}
+
 .topbar a{
 	color:#b1b1b1;
 }
@@ -150,8 +184,28 @@ overflow:auto
 .topbar a:hover {
 	color: #e43046
 }
+
+
 ul {
     list-style: none;
     margin: 0;
     padding:0;
+}
+
+.vendor_icons {
+	float:right;
+}
+
+.vendor_info {
+	width:50%;
+}
+
+.vendor_name {
+	width:50%;
+	color:#E43046;
+}
+
+.vendors {
+	display: none;
+	margin-bottom:0px;
 }

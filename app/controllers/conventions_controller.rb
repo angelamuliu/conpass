@@ -13,7 +13,14 @@ class ConventionsController < ApplicationController
   # GET /conventions/1
   # GET /conventions/1.json
   def show
-    @maps = @convention.maps
+    @maps = @convention.maps.chronological.alphabetical
+    @vendors = @convention.vendors.alphabetical
+  end
+
+  # GET/conventions/1/quickview
+  def quickview
+    @convention = Convention.find(params[:id])
+    @maps = @convention.maps.chronological.alphabetical
   end
 
   # GET /conventions/new
@@ -32,8 +39,8 @@ class ConventionsController < ApplicationController
 
     respond_to do |format|
       if @convention.save
-        format.html { redirect_to @convention, notice: 'Convention was successfully created.' }
-        format.json { render :show, status: :created, location: @convention }
+        format.html { redirect_to quickview_convention_url(@convention), notice: 'Convention was successfully created.' }
+        format.json { render :quickview, status: :created, location: @convention }
       else
         format.html { render :new }
         format.json { render json: @convention.errors, status: :unprocessable_entity }
