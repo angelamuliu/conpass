@@ -26,23 +26,36 @@ nav {
   border: 0 !important;
 }
 
-#home {
+#home { // SPLASH HOME
   background-color: #000f27;
   background-image:
       linear-gradient(
       to bottom left, 
       #000f27, #23182C
   );
-  /*: url('DJOkawariBlur.jpg') no-repeat center center fixed; */
   display: table;
   position: relative;
   width: 100%;
-  height: 70%;
   color: #fff;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
+  margin-top:-50px; // We hide the nav on the splash so need to take up that space
+  z-index: 20000; // Covering up the default nav for splash LOL
+}
+
+#home .login {
+    position: absolute;
+    color: white;
+    right:0;
+    padding: 10px;
+    padding-top: 20px;
+    padding-right: 30px;
+}
+#home .login:hover { 
+    color: #e43036;
+    text-decoration: none;
 }
 
 #home h1, h3 {

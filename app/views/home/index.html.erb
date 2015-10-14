@@ -1,16 +1,9 @@
 
 <%# Logged in - Convention Map Maker %>
 <% if logged_in? %>
-    <span id="homeContainer">
-    <!-- First section - Home -->
-    <div id="home">
-      <div class="text-vcenter">
-        <%= image_tag("beacon_logo_m.png", :class => "logo") %>
-        <h1>Beacon</h1>
+    <div id="homeDash">
         <h3>Welcome, <%= current_user.username %></h3>
-        <p> NEED TO PUT LISTING OF THIS USER'S CONVENTIONS HERE!</p>
         <%= link_to "Make your own", new_convention_path, class: 'btn btn-default btn-lg' %>
-      </div>
     </div>
     </span>
 
@@ -19,12 +12,13 @@
     <span id="homeContainer">
     <!-- First section - Home -->
     <div id="home">
+      <%= link_to "login", login_path, :class => "login"%>
       <div class="text-vcenter">
         <%= image_tag("beacon_logo_m.png", :class => "logo") %>
         <h1>Beacon</h1>
-        <h3>Find your way through a crowd</h3>
+        <p>Find your way through a crowd</p>
         <%= link_to "Browse conventions", conventions_path, class: 'btn btn-default btn-lg' %><br />
-        <%= link_to "Make your own", new_convention_path, class: 'btn btn-default btn-lg' %>
+        <%= link_to "Sign up to make your own", signup_path, class: 'btn btn-default btn-lg' %>
       </div>
     </div>
 

@@ -7,10 +7,13 @@
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
+
     <%= render partial: 'partials/navbar' %>
     
 <body>
-    <%= yield %>
+    <div class="main">
+        <%= yield %>
+    </div>
 </body>
 
 <%= render partial: 'partials/footer' %>
