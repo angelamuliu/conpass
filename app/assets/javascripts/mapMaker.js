@@ -160,6 +160,9 @@ function mapMaker(workArea, toolBar) {
                 addVendorToDOM();
                 addVendorToHistory();
 
+                // Add to our vendor dict so tag form has access later
+                addToVendorDict("t" + lastVendorId, $("input[name='vendor_name']").val());
+
                 toolContext.checkedAfter = checkedIntoSet("t" + lastVendorId, $("#vendor_form ul.assign_vendortags"), true);
                 addVendorTagsToHistory();
                 addVendorTagsToDom();
@@ -282,6 +285,9 @@ function mapMaker(workArea, toolBar) {
             if (toolContext.tagAction === ACTIONS.CREATE) {
                 addTagToDom();
                 addTagToHistory();
+
+                // Add to our tag dict so vendor form has access later
+                addToTagDict("t" + lastTagId, $("input[name='tag_name']").val());
 
                 toolContext.checkedAfter = checkedIntoSet("t" + lastTagId, $("#tag_form ul.assign_vendortags"), false);
                 addVendorTagsToHistory();
@@ -1394,6 +1400,14 @@ function mapMaker(workArea, toolBar) {
             var tagObj = initialTags[i];
             tagDict[tagObj["id"]] = tagObj["name"];
         }
+    }
+
+    function addToVendorDict(id, name) {
+        vendorDict[id] = name;
+    }
+
+    function addToTagDict(id, name) {
+        tagDict[id] = name;
     }
 
     // Given a ul element with li elements, creates set with "vendor-1_tag-1" where num = ID or temp ID
