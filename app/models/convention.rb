@@ -6,6 +6,9 @@ class Convention < ActiveRecord::Base
     has_many :tags, :dependent => :destroy
     has_many :vendor_tags, :through => :tags
 
+    # Validations
+    validates_presence_of :user
+
     # Scopes 
     scope :alphabetical, -> {order('name')}
     scope :chronological, ->{order('start_date')}

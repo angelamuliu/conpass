@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   get 'about' => 'home#about', :as => :about
   get 'faq' => 'home#faq', :as => :faq
   get 'index_sam' => 'home#index_sam', :as => :index_sam
+  get 'need_account' => 'home#need_account', :as => :need_account
 
   #Root url
   root :to => 'home#index'
@@ -26,6 +27,7 @@ Rails.application.routes.draw do
   end
 
   resources :conventions do
+    get 'owned', :on => :collection, as: :owned # View conventions owned by a user
     get 'quickview', :on => :member, as: :quickview # For map makers, offers administrative glance at convention
   end
 

@@ -40,6 +40,8 @@ body { // Don't want bootstrap nav bar obscuring top 50px of content lol
 
 .main { 
     background:#f8f5f2;
+    min-height: 600px;
+    padding-top:10px;
 }
 
 .row {
@@ -74,42 +76,6 @@ h3 {
 .redbtn:hover { background-color: #770a0a; }
 .redbtn:active { background-color: #5d0808; }
 
-    // ------------------------------------------------------------
-////// NAV BAR
-    // ------------------------------------------------------------
-
-nav.navbar {
-    background-color: #031925;
-    border:none;
-    box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.3);
-    overflow: hidden;
-    height: 50px;
-    margin: 0;
-}
-#navlogo img {
-    height: 75px;
-    margin-top: 5px;
-}
-nav.navbar ul {
-    float:right;
-    display: block;
-    margin-top: 13px;
-}
-.back_button {
-    margin-top: 13px;
-}
-nav.navbar a { color: white; }
-nav.navbar a:hover {
-    color: #e43036;
-    text-decoration: none;
-}
-nav.navbar li {
-    display: inline;
-    color: #b1b1b1;
-    padding-right:10px;
-    margin-left:5px;
-}
-
 
     // ------------------------------------------------------------
 ////// FOOTER
@@ -135,7 +101,8 @@ nav.navbar li {
     color: white;
 }
 #backToTop a:hover {
-    background-color: initial;
+    background-color: #09496c;
+    text-decoration: none;
 }
 #footer_into {
     color: white;

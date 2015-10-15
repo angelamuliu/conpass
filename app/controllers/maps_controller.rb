@@ -22,21 +22,33 @@ class MapsController < ApplicationController
   # Quick administrative view that doesn't actually show the map
   # Just like, logistics
   def quickview
+    if logged_out?
+        redirect_to need_account_path
+    end
     @map = Map.find(params[:id])
   end
 
   # GET /maps/new
   def new
+    if logged_out?
+        redirect_to need_account_path
+    end
     @map = Map.new
   end
 
   # GET /maps/1/edit
   def edit
+    if logged_out?
+        redirect_to need_account_path
+    end
   end
 
   # POST /maps
   # POST /maps.json
   def create
+    if logged_out?
+        redirect_to need_account_path
+    end
     @map = Map.new(map_params)
 
     respond_to do |format|
@@ -53,6 +65,9 @@ class MapsController < ApplicationController
   # PATCH/PUT /maps/1
   # PATCH/PUT /maps/1.json
   def update
+    if logged_out?
+        redirect_to need_account_path
+    end
     respond_to do |format|
       if @map.update(map_params)
         format.html { redirect_to @map, notice: 'Map was successfully updated.' }
@@ -67,6 +82,9 @@ class MapsController < ApplicationController
   # DELETE /maps/1
   # DELETE /maps/1.json
   def destroy
+    if logged_out?
+        redirect_to need_account_path
+    end
     @map.destroy
     respond_to do |format|
       format.html { redirect_to maps_url, notice: 'Map was successfully destroyed.' }
@@ -78,6 +96,9 @@ class MapsController < ApplicationController
   # Main drag and drop screen for map creation
 
   def craft
+    if logged_out?
+        redirect_to need_account_path
+    end
     @map = Map.find(params[:id])
     @vendors = @map.convention.vendors
     @tags = @map.convention.tags
@@ -96,6 +117,9 @@ class MapsController < ApplicationController
 
   # Saving map after making changes
   def save
+    if logged_out?
+        redirect_to need_account_path
+    end
     @map = Map.find(params[:id])
     @map.saveFromHistory(params[:actionHistory])
     redirect_to craft_map_path(@map)

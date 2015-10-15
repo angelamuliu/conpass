@@ -1,0 +1,5 @@
+
+<h3>Your Conventions</h3>
+<% @conventions.each do |convention| %>
+    <%= link_to convention.name, quickview_convention_path(convention) %>
+<% end %>

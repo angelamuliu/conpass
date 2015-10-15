@@ -23,19 +23,33 @@ class ConventionsController < ApplicationController
     @maps = @convention.maps.chronological.alphabetical
   end
 
+  def owned
+    @conventions = current_user.conventions
+  end
+
   # GET /conventions/new
   def new
+    if logged_out?
+        redirect_to need_account_path
+    end
     @convention = Convention.new
   end
 
   # GET /conventions/1/edit
   def edit
+    if logged_out?
+        redirect_to need_account_path
+    end
   end
 
   # POST /conventions
   # POST /conventions.json
   def create
+    if logged_out?
+        redirect_to need_account_path
+    end
     @convention = Convention.new(convention_params)
+    @convention.user = current_user
 
     respond_to do |format|
       if @convention.save
@@ -51,6 +65,10 @@ class ConventionsController < ApplicationController
   # PATCH/PUT /conventions/1
   # PATCH/PUT /conventions/1.json
   def update
+    if logged_out?
+        redirect_to need_account_path
+    end
+
     respond_to do |format|
       if @convention.update(convention_params)
         format.html { redirect_to @convention, notice: 'Convention was successfully updated.' }
@@ -65,6 +83,9 @@ class ConventionsController < ApplicationController
   # DELETE /conventions/1
   # DELETE /conventions/1.json
   def destroy
+    if logged_out?
+        redirect_to need_account_path
+    end
     @convention.destroy
     respond_to do |format|
       format.html { redirect_to conventions_url, notice: 'Convention was successfully destroyed.' }
