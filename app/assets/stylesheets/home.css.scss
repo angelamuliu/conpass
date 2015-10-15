@@ -49,7 +49,7 @@ html, body {
     padding-right: 30px;
 }
 #home .login:hover { 
-    color: #e43036;
+    color: #1073a9;
     text-decoration: none;
 }
 
@@ -61,13 +61,24 @@ html, body {
     margin-top: 50px;
     max-width:100px;
 }
+#home p {
+    margin-bottom: 30px;
+}
 
 #home .btn {
   margin-bottom: 10px;
   width: 200px;
-  background-color: rgb(0, 108, 208);//#051E2C;
-  color: #FFF;
-  border-color: rgb(0, 108, 208);
+  background: none;
+  color: #188BFF;
+  border: 1px solid #188BFF;
+  font-size: 16px;
+}
+#home .btn:hover {
+    // background-color: rgba(0, 105, 211, 0.1);
+    background-color: rgba(219, 18, 212, 0.05)
+}
+#home .btn:last-child {
+    margin-bottom: 30px;
 }
 
 #about {
@@ -132,14 +143,14 @@ nav.navbar {
 nav.navbar ul {
     float:right;
     display: block;
-    margin-top: 13px;
+    margin-top: 15px;
 }
 .back_button {
-    margin-top: 13px;
+    margin-top: 15px;
 }
 nav.navbar a { color: white; }
 nav.navbar a:hover {
-    color: #09496c;
+    color: #1073a9;
     text-decoration: none;
 }
 nav.navbar li {

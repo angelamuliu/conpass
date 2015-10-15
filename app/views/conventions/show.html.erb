@@ -1,76 +1,37 @@
 
-<div class="row con_info">
-    <div id = "title" class="col-xs-6">
-        <%= @convention.name %>
+<div class="container-fluid">
+
+    <%# Topmost nav for convention%>
+    <div class="row con_info">
+        <div id="title" class="col-xs-12">
+            <h3><%= @convention.name %></h3>
+            <span><%= @convention.dateRange() %></span>
+        </div>
     </div>
-    <div class="col-xs-6 dates">
-        <%= @convention.start_date.strftime('%m/%d/%y') %> - <%= @convention.end_date.strftime('%m/%d/%y') %>
-    <%= @convention.start_date.strftime('%l:%M%p') %> - <%= @convention.end_date.strftime('%l:%M%p') %>
+
+
+    <%# Subnav with toggle and filter options %>
+    <div id="sub_header" class="row">
+        <a href="javascript:;" class="tab selected" data-toggle="convention_vendors"><i class="fa fa-balance-scale"></i> Vendors</a>
+
+        <a href="javascript:;" class="tab" data-toggle="convention_maps"><i class="fa fa-map"></i> Maps</a>
     </div>
+
+    <%# Data shown, tab toggles control which is in view %>
+    <div id="con_results" class="row">
+        <div class="tab_data" id="convention_vendors">
+            <%= render :partial => "convention_vendors", locals: {vendors: @vendors} %>
+        </div>
+        <div class="tab_data" id="convention_maps">
+            <%= render :partial => "convention_maps", locals: {maps: @maps } %>
+        </div>
+    </div>
+
 </div>
 
-<div id="sub_header" class="row topbar show_page">
-    <div onclick ="maps()" id = "title" class="col-xs-8">
-    <!-- inline styling for javascript, will fix -->
-    <a href="#"id="map_title" style="color:black;">
-        Convention Maps
-        </a>
-    </div>
-    <div  onclick ="vendors()" class="title col-xs-4">
-        <a href="#"id="vendor_title">
-            Vendors
-        </a>
-    </div>
-</div>
-
-<ul id="maps" class="maps">
-    <% @maps.each do |map| %>
-    <li class="row convention">
-    <div class="con_id">
-            <%= map.id %>
-    </div>
-        <div class="con_image">
-            <img style="width:90%;height:70px;" src="http://1.bp.blogspot.com/-Zr0pmj1bLnM/Uhh7kROhGYI/AAAAAAAAGkE/W51xFS75-Ec/s1600/no-thumbnail.png">
-        </div>
-        <p>
-            <h5><%= link_to map.name, map %></h5>
-            <%= map.start_date.strftime('%m/%d/%y') %> - <%= map.end_date.strftime('%m/%d/%y') %>
-	<%= map.start_date.strftime('%l:%M%p') %> - <%= map.end_date.strftime('%l:%M%p') %>
-        </p>
-    </li>
-    <% end %>
-</ul>
-
-<ul id="vendors" class="vendors">
-    <% @vendors.each do |vendor| %>
-    <li class="row convention">
-    <div class="con_id">
-            <%= vendor.tags %>
-    </div>
-        <div class="col-xs-5 vendor_names">
-            <%= link_to vendor.name, vendor %>
-        </div>
-        <div class="col-xs-4 vendor_name">
-        </div>
-        <div class="col-xs-1 vendor_info">
-                    <a id="popup" onclick="div_show()" href="#">
-        		    <i class="fa fa-map"></i>
-        		</a>
-    </div>
-        <div class="col-xs-1 vendor_info">
-                <div class="vendor_info vendor_icons">
-                    <a id="star<%=vendor.id%>" onclick="star(<%= vendor.id%>)" href="#">
-        		    <i class="fa fa-star-o"></i>
-        		</a>
-            </div>
-    </div>
-    </li>
-  <% end %>
-</ul>
 
 
 
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 
 <div id="openHere">
 	<div id="popupSort">

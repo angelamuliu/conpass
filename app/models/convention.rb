@@ -14,4 +14,8 @@ class Convention < ActiveRecord::Base
     scope :chronological, ->{order('start_date')}
     scope :current, -> {where('end_date >= ?', Date.current)}
     scope :upcoming, -> {where('start_date > ?', Date.current)}
+
+    def dateRange()
+        return start_date.strftime('%m/%d %l:%M %p') + " - " + end_date.strftime('%m/%d %l:%M %p')
+    end
 end

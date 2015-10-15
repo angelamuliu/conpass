@@ -10,5 +10,21 @@
 //= require jquery
 //= require jquery_ujs
 //= require bootstrap-sprockets
-//= require turbolinks
 //= require_tree ./global
+//= require turbolinks
+//= require jquery.turbolinks
+
+$(document).ready(function() {
+
+    // Tab toggle code. To use:
+    // Tab headers get the class "tab", and if selected, "selected". data-toggle = ID of container to show when selected
+    // Tab data containers get class "tab_data" and id matches with the header
+    $("a.tab").on('click touchstart', function() {
+        $(".tab").removeClass("selected");
+        $(".tab_data").hide();
+
+        var tabDataId_toShow = $(this).data("toggle");
+        $("#" + tabDataId_toShow).show();
+        $(this).addClass("selected");
+    })
+})

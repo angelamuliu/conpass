@@ -59,7 +59,7 @@ function sort() {
 function vendors() {
 	if (document.getElementById('map_title').style.color == 'black')
 	{
-		document.getElementById('maps').style.display = "none";
+		document.getElementById('convention_maps').style.display = "none";
 		document.getElementById('vendors').style.display = "block";
 		document.getElementById('sub_header').innerHTML = '<div onclick ="vendors()" id = "title" class="col-xs-7"><!-- inline styling for javascript, will fix --><a href="#"id="vendor_title" style="color:black;"> Vendors</a></div><div  onclick ="alphabetize_show()" class="col-xs-2"><a href="#"id="alphabet">ABC</a></div><div class="col-xs-1 filter" style="margin-top:0px !important"><a id="popup" onclick="div_show() href="#"><i class="fa fa-filter"></i></a></div><div class="col-xs-1" style="margin-top:0px !important"><a id="map_icon" onclick="maps()" href="#"><i class="fa fa-map"></i></a></div>';
 	}
@@ -69,7 +69,7 @@ function maps() {
 	if (document.getElementById('vendor_title').style.color == 'black')
 	{
 		document.getElementById('maps').style.display = "block";
-		document.getElementById('vendors').style.display = "none";
+		document.getElementById('convention_vendors').style.display = "none";
 		document.getElementById('sub_header').innerHTML = '<div onclick ="maps()" id = "title" class="col-xs-8"><!-- inline styling for javascript, will fix --><a href="#"id="map_title" style="color:black;">Convention Maps</a> </div> <div  onclick ="vendors()" class="title col-xs-4"><a href="#"id="vendor_title"> Vendors</a></div>';
 	}
 }

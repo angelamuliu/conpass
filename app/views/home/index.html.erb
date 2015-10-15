@@ -1,7 +1,7 @@
 
 <%# Logged in - Convention Map Maker %>
 <% if logged_in? %>
-    <div id="homeDash">
+    <div class="row" id="homeDash">
         <h3>Welcome, <%= current_user.username %></h3>
         <%= link_to "Make your own", new_convention_path, class: 'btn btn-default btn-lg' %>
     </div>
@@ -17,8 +17,8 @@
         <%= image_tag("beacon_logo_m.png", :class => "logo") %>
         <h1>Beacon</h1>
         <p>Find your way through a crowd</p>
-        <%= link_to "Browse conventions", conventions_path, class: 'btn btn-default btn-lg' %><br />
-        <%= link_to "Sign up to make your own", signup_path, class: 'btn btn-default btn-lg' %>
+        <%= link_to "Browse conventions", conventions_path, class: 'btn btn-lg' %><br />
+        <%= link_to "Make your own", signup_path, class: 'btn btn-lg' %>
       </div>
     </div>
 

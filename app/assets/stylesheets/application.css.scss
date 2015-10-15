@@ -21,6 +21,9 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
+
+
+
 ul.unordered {
     list-style: none;
     margin: 0;
@@ -35,21 +38,35 @@ body { // Don't want bootstrap nav bar obscuring top 50px of content lol
     margin:0;
     padding-top: 50px;
     overflow-x:hidden;
-    background-color:#041B28 !important;
+    background-color: #041B28 !important;
 }
-
-.main { 
+.main {
     background:#f8f5f2;
     min-height: 600px;
-    padding-top:10px;
+}
+.main a {
+    color: #e43046  
 }
 
 .row {
     margin:0;
 }
 
+    // ------------------------------------------------------------
+////// HEADER TEXTS
+    // ------------------------------------------------------------
+
+h1 { }
+h2 {
+    font-family: Georgia, serif;
+}
 h3 {
+    font-size: 18px;
+    font-family: Georgia, serif;
     text-shadow: initial;
+}
+h4 {
+
 }
 
     // ------------------------------------------------------------
@@ -113,6 +130,25 @@ h3 {
     line-height: 14px;
     color: white;
 }
+
+    // ------------------------------------------------------------
+////// TAB STYLING
+    // ------------------------------------------------------------
+
+.tab.selected {
+    color: blue;
+}
+
+    // ------------------------------------------------------------
+////// BOOTSTRAP OVERRIDES
+    // ------------------------------------------------------------
+
+.container-fluid {
+    padding: 0;
+}
+
+
+
 
 
 

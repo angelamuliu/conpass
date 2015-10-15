@@ -4,7 +4,12 @@ class VendorsController < ApplicationController
   # GET /vendors
   # GET /vendors.json
   def index
-    @vendors = Vendor.all
+    # if params[:id]
+    #     @convention = Convention.find(params[:id])
+    #     @vendors = @convention.vendors
+    # else
+        @vendors = Vendor.all
+    # end
   end
 
   # GET /vendors/1
