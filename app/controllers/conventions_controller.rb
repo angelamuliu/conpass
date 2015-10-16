@@ -23,8 +23,10 @@ class ConventionsController < ApplicationController
     @maps = @convention.maps.chronological.alphabetical
   end
 
-  def owned
-    @conventions = current_user.conventions
+  def toggle_active
+    @convention = Convention.find(params[:id])
+    @convention.toggleActive()
+    redirect_to home_path
   end
 
   # GET /conventions/new

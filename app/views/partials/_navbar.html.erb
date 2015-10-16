@@ -6,9 +6,6 @@
     <% end %>
     <ul>
     <% if logged_in? %>
-        <%= link_to (owned_conventions_path) do %>
-            <li id="yourConventions"></li>
-        <% end %>
         <li><%= current_user.username %></li>
         <li><%= link_to "logout", logout_path %></li>
     <% else %>

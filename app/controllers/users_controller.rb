@@ -14,8 +14,9 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      redirect_to home_path, notice: 'User #{@user.username} was successfully created.'
-      session[:user_id] = @user.id
+        Convention.makeDefault(@user)
+        redirect_to home_path, notice: 'User #{@user.username} was successfully created.'
+        session[:user_id] = @user.id
     else
       flash[:error] = "This user could not be created."
       render action: "new"

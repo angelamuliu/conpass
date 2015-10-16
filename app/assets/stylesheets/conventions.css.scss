@@ -260,3 +260,53 @@ ul {
 	width:50%;
 	color:#E43046;
 }
+
+
+
+    // ------------------------------------------------------------
+////// OWNED CONVENTIONS STYLING
+    // ------------------------------------------------------------
+@media only screen and (min-width:45em) { // MED/LARGE
+    .convention_cards li {
+        width: 350px;
+        padding: 15px;
+    }
+}
+@media only screen and (max-width:45em) { // SMALL
+    .convention_cards li {
+        width: 100%;
+        padding: 5px;
+    }
+}
+.convention_cards li {
+    display: inline-table;
+    background-color: #f0ece7;
+    border: 1px solid #DACCB2;
+    border-radius: 5px;
+    border-bottom: 2px solid #DCC69D;
+    margin-bottom:5px;
+    position: relative;
+}
+.convention_cards h4 {
+    margin: 0;
+}
+.convention_cards form {
+    background:initial;
+    padding:0;
+}
+.convention_cards p {
+    margin: 0;
+}
+
+.active_toggle {
+    position: absolute;
+    right:0;
+    top:0;
+    background:none;
+    border:none;
+    color: #b1b1b1;
+}
+.active_toggle .active {
+    color: #0069d3;
+}
+

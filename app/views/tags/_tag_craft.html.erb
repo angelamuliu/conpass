@@ -9,21 +9,25 @@
     <%# Listing existing tags %>
     <div id="tag_list">
         <ul class="unordered">
-            <% @tags.each do |tag| %>
-                <li data-id="<%= tag.id %>" class="tag">
-                    <div class="tagshow">
-                        <a href="javascript:;" class="tag_name"><%= tag.name %></a> 
-                        <div class="tag_options">
-                            <a href="javascript:;" class="update_tag"><i class="fa fa-pencil"></i></a>
-                            <a href="javascript:;" class="destroy_tag"><i class="fa fa-trash"></i></a>
+            <% if @tags.size < 1 %>
+                <li>No tags yet.</li>
+            <% else %>
+                <% @tags.each do |tag| %>
+                    <li data-id="<%= tag.id %>" class="tag">
+                        <div class="tagshow">
+                            <a href="javascript:;" class="tag_name"><%= tag.name %></a> 
+                            <div class="tag_options">
+                                <a href="javascript:;" class="update_tag"><i class="fa fa-pencil"></i></a>
+                                <a href="javascript:;" class="destroy_tag"><i class="fa fa-trash"></i></a>
+                            </div>
                         </div>
-                    </div>
-                    <ul class="tagshow_extra">
-                        <% tag.vendors.each do |vendor| %>
-                        <li class="vendorTag" data-id="<%= vendor.id %>"><%= vendor.name %></li>
-                        <% end %>
-                    </ul>
-                </li>
+                        <ul class="tagshow_extra">
+                            <% tag.vendors.each do |vendor| %>
+                            <li class="vendorTag" data-id="<%= vendor.id %>"><%= vendor.name %></li>
+                            <% end %>
+                        </ul>
+                    </li>
+                <% end %>
             <% end %>
         </ul>
     </div>

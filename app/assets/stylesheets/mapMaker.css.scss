@@ -236,7 +236,6 @@ button.jsAdd:hover {
     min-width: inherit;
     max-width: inherit;
     width: inherit;
-    display: none;
     position: absolute;
     background-color: #f8f5f2;
     z-index: 45;
@@ -401,9 +400,6 @@ ul.vendorBooth span.dateRange {
     background-color: #8e0307;
 }
 
-#tag_list {
-    display: none;
-}
 #tag_list > li {
     color: #e43046;
 }

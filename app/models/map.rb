@@ -16,7 +16,6 @@ class Map < ActiveRecord::Base
     # Methods
 
 
-
     # TODO !!!
     # When saveFromHistory is called, we need to validate that the
     # user actually OWNS the objects they are editing! Otherwise they could mess
@@ -43,6 +42,8 @@ class Map < ActiveRecord::Base
         saveForModel("booth", categorizedHistory, tempToPerm)
         bulkSaveForVendorTag(categorizedHistory, tempToPerm)
         saveForModel("vendor_booth", categorizedHistory, tempToPerm)
+
+        self.convention.touch # Refresh updated date for convention
     end
 
     # Takes array of hashes and organizes in types of actions so that we can save efficiently & properly

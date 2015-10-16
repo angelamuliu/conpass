@@ -27,9 +27,10 @@ Rails.application.routes.draw do
   end
 
   resources :conventions do
-    get 'owned', :on => :collection, as: :owned # View conventions owned by a user
     get 'quickview', :on => :member, as: :quickview # For map makers, offers administrative glance at convention
   end
+    
+    post 'toggle_active/:id' => 'conventions#toggle_active', as: :toggle_active
 
   # Authentication
   resources :users

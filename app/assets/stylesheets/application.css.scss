@@ -47,10 +47,12 @@ body { // Don't want bootstrap nav bar obscuring top 50px of content lol
 .main a {
     color: #e43046  
 }
-
 .row {
     margin:0;
 }
+
+// IF YOU WANT YOUR THING TO HAVE PADDING, put it in a <section></section> tag!
+
 
     // ------------------------------------------------------------
 ////// HEADER TEXTS
@@ -66,7 +68,8 @@ h3 {
     text-shadow: initial;
 }
 h4 {
-
+    font-weight: 200;
+    font-size: 16px;
 }
 
     // ------------------------------------------------------------

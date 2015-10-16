@@ -1,11 +1,55 @@
 
 <%# Logged in - Convention Map Maker %>
 <% if logged_in? %>
-    <div class="row" id="homeDash">
-        <h3>Welcome, <%= current_user.username %></h3>
-        <%= link_to "Make your own", new_convention_path, class: 'btn btn-default btn-lg' %>
+    <div class="row">
+        <section>
+        <% if @conventions.active.size < 1 %>
+            <h3>Welcome to Beacon, <%= current_user.username %>!</h3>
+            <p>
+                You're one step closer to making your own interactive maps for whatever convention, fair, or fun activity you're planning! HERE ARE SOME GUIDES???S?S??S?
+            </p>
+        <% else %>
+            <h3>Hello, <%= current_user.username %></h3>
+        <% end %>
+            <%= link_to "Make your own", new_convention_path, class: 'btn btn-lg' %>
+        </section>
     </div>
-    </span>
+    <div class="row">
+        <section>
+        <h3>Your Conventions</h3>
+        <ul class="unordered convention_cards">
+            <% @conventions.each do |convention| %>
+                <li>
+                    <%= link_to quickview_convention_path(convention) do %>
+                        <h4><%= convention.name %></h4>
+                    <% end %>
+                    <p>
+                        <% if convention.active %>
+                            <strong>Currently active</strong> (visible to public)
+                            <%= button_to toggle_active_path(convention), data: { confirm: "Are you sure you want to deactive this convention? This will prevent attendees from viewing the maps."},class: "active_toggle" do %>
+                                <i class="fa fa-eye active"></i>
+                            <% end %>
+                        <% else %>
+                            <strong>Currently hidden</strong> (only visible to you)
+                            <%= button_to toggle_active_path(convention), data: { confirm: "Are you certain the convention #{convention.name} and its maps are ready to be shared with the public?"}, class: "active_toggle" do %>
+                                <i class="fa fa-eye"></i>
+                            <% end %>
+                        <% end %>
+
+                        <strong>Maps: </strong>
+                        <% if convention.maps.size < 1 %>
+                            This convention doesn't have any maps yet. Would you like to make one?
+                        <% else %>
+                            <% convention.maps.each do |map| %>
+                                <%= link_to map.name, craft_map_path(map) %><% if map != convention.maps.last() %>,<% end %>
+                            <% end %>
+                        <% end %>
+                    </p>
+                </li>
+            <% end %>
+        </ul>
+        </section>
+    </div>
 
 <%# Not logged in - Attendee %>
 <% else %>
