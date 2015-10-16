@@ -4,12 +4,12 @@
 <div id="mapArea_container" class="row">
     <div id="mapArea" style="width:<%= @map.width %>px; height:<%= @map.height %>px">
         <% @booths.each do |booth| %>
-            <%= content_tag :div, "", class: "booth #{booth.cssVendorClasses}", style: "left:#{booth.x_pos}px; top:#{booth.y_pos}px; width:#{booth.width}px; height:#{booth.height}px", "data-id": "#{booth.id}" do %>
-            <ul class="unordered vendorBooth">
-                <li>Vendors assigned to this booth<a href="javascript:;" class="close_vendorBooth"><i class="fa fa-times"></i></a></li>
+            <%= content_tag :div, "", class: "booth #{booth.cssVendorClasses}", onclick: "javascript:vendor_toggle(#{booth.id})", style: "left:#{booth.x_pos}px; top:#{booth.y_pos}px; width:#{booth.width}px; height:#{booth.height}px", "data-id": "#{booth.id}" do %>
+            <ul class="unordered vendorBooth" onclick="javascript:vendor_toggle(<%= booth.id %>)">
+                <li>Vendors assigned to this booth<a href="javascript:;" class="close_vendorBooth" ><i class="fa fa-times"></i></a></li>
                 <% if booth.vendor_booths.size > 0 %>
                     <% booth.vendor_booths.each do |vendor_booth| %>
-                        <li class="vendorBooth v<%= vendor_booth.vendor.id %>" data-id="<%= vendor_booth.id %>">
+                        <li class="vendorBooth v<%= vendor_booth.vendor.id %>" data-id="<%= vendor_booth.id %>" >
                             <%= vendor_booth.vendor.name %>
                             <span class="dateRange">(<%= vendor_booth.timeRange %>)</span>
                         </li>
@@ -23,3 +23,16 @@
         <% end %>
     </div>
 </div>
+
+<script>
+function vendor_toggle(x) {
+	if($('[data-id=' + x + ']')[0].children[0].style.display = "none")
+	{
+		$('[data-id=' + x + ']')[0].children[0].style.display = "block";
+	}
+	else
+	{
+		$('[data-id=' + x + ']')[0].children[0].style.display = "none";
+	}
+}
+</script>

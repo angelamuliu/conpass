@@ -1,0 +1,39 @@
+
+<%# Extra filtering funcionality on vendor listing due to likely larger number %>
+<div class="row sub_header_nav">
+    <%= link_to home_path do %>
+        <i class="fa fa-star"></i> Vendors
+    <% end %>
+    <div class="actions">
+        <a href="javascript:;" id="filter_vendors"><i class="fa fa-filter"></i> Filter</a>
+        <a href="javascript:;" id="order_vendors">ABC</a>
+    </div>
+</div>
+
+<ul class="convention_vendors">
+    <% vendors.each do |vendor| %>
+    <li class="row convention_vendor">
+
+        <div class="col-xs-5 vendor_name">
+            <%= link_to vendor.name, vendor %>
+        </div>
+
+        <div class="col-xs-4"></div>
+
+        <div class="col-xs-1 vendor_info">
+            <div class="vendor_info vendor_icons">
+                <a id="star<%=vendor.id%>" onclick="star(<%= vendor.id%>)" href="#">
+                    <i class="fa fa-star-o"></i>
+                </a>
+            </div>
+        </div>
+
+        <div class="col-xs-1 vendor_info">
+            <a id="popup" onclick="div_show()" href="#">
+                <i class="fa fa-map"></i>
+            </a>
+        </div>
+
+    </li>
+  <% end %>
+</ul>

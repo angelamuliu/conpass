@@ -27,19 +27,24 @@
 .overlay {
     display: none;
     position: fixed;
-    margin-top: 50px;// Accounting for toolbar and navbar
     width: 100%;
     height: 100%;
     top: 0;
     left: 0;
-    z-index: 50;
+    z-index: 2000; // Overlay on top of navbar
     background-color: rgba(0,0,0,0.3);
 }
 
 .error {
     display: none;
     background-color: red;
+    text-align: center;
+    padding: 5px;
+    background-color: #cc0000;
+    color: white;
 }
+.dismiss_error { color: white; }
+.dismiss_error:hover { color: #ff9999; }
 
 .highlight {
     background-color: yellow;
@@ -120,17 +125,19 @@ button.jsAdd:hover {
 // JS Form
 
 .jsForm {
+    padding: 0;
     position: relative;
     z-index: 100;
     background-color: #f0ece7;
     margin: auto;
-    top: 20px; right: 0; left: 0; bottom: 0;
     max-width: 600px;
     min-width: 350px;
     width: 50%;
-    height: 80%;
     min-height: 600px;
+    height: 85%;
+    top: 75px;
     box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.3);
+    font-family: sans-serif;
 }
 .jsForm h3 {
     width: 100%;
@@ -157,7 +164,10 @@ button.jsAdd:hover {
     right: 0;
 }
 .jsForm_fields {
+    border-right: 1px solid #b1b1b1;
+    border-left: 1px solid #b1b1b1;
     overflow-y: scroll;
+    height: 80%;
 }
 .jsForm li {
     padding: 10px;
@@ -178,18 +188,17 @@ button.jsAdd:hover {
     padding: 10px;
     border-top: 1px solid #b1b1b1;
     background-color: #f0ece7;
+    position: relative;
 }
 .jsForm_actions button {
     width: 40%;
     margin-right: 2%;
 }
 
-#vendor_form h3 {
-    background-color: #0069d3;
-}
-#tag_form h3 {
-    background-color: #e43046;
-}
+#vendor_form h3 { background-color: #0069d3; }
+#vendor_form a.close_overlay:hover { color: #cce1f6; }
+#tag_form h3 { background-color: #e43046; }
+#tag_form a.close_overlay:hover { color: #f6c0c7; }
 
 
 // ----------------------------------------
@@ -227,7 +236,6 @@ button.jsAdd:hover {
     min-width: inherit;
     max-width: inherit;
     width: inherit;
-    display: none;
     position: absolute;
     background-color: #f8f5f2;
     z-index: 45;
@@ -298,13 +306,16 @@ ul.vendorBooth {
     position: absolute;
     background-color: #f0ece7;
     z-index: 40;
-    min-width: 275px;
+    min-width: 300px;
     box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.3);
 }
 
 .vendorBooth .options {
     display: inline-block;
     float: right;
+}
+.vendorBooth a {
+    margin-left: 5px;
 }
 
 ul.vendorBooth li {
@@ -327,10 +338,12 @@ ul.vendorBooth span.dateRange {
     float: right;
     color: white;
 }
+.close_vendorBooth:hover { color: #cce1f6; }
 
 #vendorbooth_form {
+    font-family: sans-serif;
+    padding: 0;
     position: absolute;
-    margin-top: -75px; // Negating the offset of the overlay, which is in turn b/c of nav
     display: inline-block;
     background-color: #f0ece7;
     z-index: 200;
@@ -387,9 +400,6 @@ ul.vendorBooth span.dateRange {
     background-color: #8e0307;
 }
 
-#tag_list {
-    display: none;
-}
 #tag_list > li {
     color: #e43046;
 }

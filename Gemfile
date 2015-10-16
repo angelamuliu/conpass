@@ -25,6 +25,7 @@ gem 'spring',        group: :development
 
 gem 'font-awesome-rails'
 gem 'jquery-datetimepicker-rails', '~> 2.4.1.0'
+gem 'jquery-turbolinks'
 
 gem 'gon', '~> 6.0.1' # Allows passing variables from controllers into JS as JSON
 gem 'simple_form'

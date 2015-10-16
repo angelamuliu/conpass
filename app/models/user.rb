@@ -1,4 +1,7 @@
 class User < ActiveRecord::Base
+
+    has_many :conventions, :dependent => :destroy
+
   
   has_secure_password
   # attr_accessible :name, :username, :password, :password_confirmation

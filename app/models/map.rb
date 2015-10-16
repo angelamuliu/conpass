@@ -10,9 +10,10 @@ class Map < ActiveRecord::Base
     validates_presence_of :convention
 
     # Scopes
+    scope :alphabetical, -> {order('name')}
+    scope :chronological, ->{order('start_date')}
 
     # Methods
-
 
 
     # TODO !!!
@@ -41,6 +42,8 @@ class Map < ActiveRecord::Base
         saveForModel("booth", categorizedHistory, tempToPerm)
         bulkSaveForVendorTag(categorizedHistory, tempToPerm)
         saveForModel("vendor_booth", categorizedHistory, tempToPerm)
+
+        self.convention.touch # Refresh updated date for convention
     end
 
     # Takes array of hashes and organizes in types of actions so that we can save efficiently & properly

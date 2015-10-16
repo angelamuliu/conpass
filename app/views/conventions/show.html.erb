@@ -1,37 +1,68 @@
-<p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Name:</strong>
-  <%= @convention.name %>
-</p>
+<div class="container-fluid">
 
-<p>
-  <strong>Start date:</strong>
-  <%= @convention.start_date %>
-</p>
+    <%# Topmost nav for convention%>
+    <div class="row con_info">
+        <div id="title" class="col-xs-12">
+            <h3><%= @convention.name %></h3>
+            <span><%= @convention.dateRange() %></span>
+        </div>
+    </div>
 
-<p>
-  <strong>End date:</strong>
-  <%= @convention.end_date %>
-</p>
 
-<p>
-    <strong>Maps:</strong>
-    <% if @maps.length < 1 %>
-        This convention has no maps. Where's it taking place? <%= link_to "Start adding some now!", new_map_path(convention_id: @convention.id) %>
-        <p>A map is a floorplan of some area that the convention takes place in. For example, it could be a room, an outside area, or wherever your booths are setting up ultimately.</p>
-    <% else %>
-        <ul class="unordered">
-            <% @maps.each do |map| %>
-                <li>
-                    <%= link_to map.name, craft_map_path(map) %>
-                </li>
-            <% end %>
-        </ul>
-        <br />
-        <%= link_to "Add another map", new_map_path(convention_id: @convention.id) %>
-    <% end %>
-</p>
+    <%# Subnav with toggle and filter options %>
+    <div id="sub_header" class="row">
+        <a href="javascript:;" class="tab selected" data-toggle="convention_vendors"><i class="fa fa-balance-scale"></i> Vendors</a>
 
-<%= link_to 'Edit', edit_convention_path(@convention) %> |
-<%= link_to 'Back', conventions_path %>
+        <a href="javascript:;" class="tab" data-toggle="convention_maps"><i class="fa fa-map"></i> Maps</a>
+    </div>
+
+    <%# Data shown, tab toggles control which is in view %>
+    <div id="con_results" class="row">
+        <div class="tab_data" id="convention_vendors">
+            <%= render :partial => "convention_vendors", locals: {vendors: @vendors} %>
+        </div>
+        <div class="tab_data" id="convention_maps">
+            <%= render :partial => "convention_maps", locals: {maps: @maps } %>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+
+<div id="openHere">
+	<div id="popupSort">
+		<div class="popupHeader">Filter</div>
+		<form id="form" method="post" name="form">
+			<input type="radio" id="r1" name="Sort" value="Current">Current
+			<br>
+			<input type="radio" id="r2" name="Sort" value="Upcoming">Upcoming
+			<div class="row">
+				<div class="col-xs-6">
+					<div class="submit">
+						<a href="javascript:%20sort()" id="submit">Submit</a>
+					</div>
+				</div>
+				<div class="col-xs-6">
+					<div class="cancel">
+						<a href="#" id="cancel" onclick ="div_hide()">Cancel</a>	
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+<!-- Popup Div Ends Here -->
+</div>
+
+<%= javascript_include_tag "conventions_popup.js" %>
+<div id="sorting_information">
+	<div id="current_data">
+		<%= @current.to_a %>
+	</div>
+	<div id="upcoming_data">
+		<%= @upcoming.to_s %>
+	</div>
+</div>

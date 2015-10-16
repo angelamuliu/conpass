@@ -14,6 +14,11 @@ class ApplicationController < ActionController::Base
     current_user
   end
   helper_method :logged_in?
+
+  def logged_out?
+    return !current_user
+  end
+  helper_method :logged_out?
   
   def check_login
     redirect_to login_url, alert: "You need to log in to view this page." if current_user.nil?

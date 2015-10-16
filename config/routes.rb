@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   get 'about' => 'home#about', :as => :about
   get 'faq' => 'home#faq', :as => :faq
   get 'index_sam' => 'home#index_sam', :as => :index_sam
+  get 'need_account' => 'home#need_account', :as => :need_account
 
   #Root url
   root :to => 'home#index'
@@ -25,7 +26,11 @@ Rails.application.routes.draw do
     get 'quickview', :on => :member, as: :quickview # For map makers, offers an administrative glance
   end
 
-  resources :conventions
+  resources :conventions do
+    get 'quickview', :on => :member, as: :quickview # For map makers, offers administrative glance at convention
+  end
+    
+    post 'toggle_active/:id' => 'conventions#toggle_active', as: :toggle_active
 
   # Authentication
   resources :users
