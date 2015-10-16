@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
 
-    has_many :conventions, :dependent => :destroy
+  has_many :conventions, :dependent => :destroy
 
   
   has_secure_password
