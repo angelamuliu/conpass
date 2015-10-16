@@ -16,13 +16,9 @@
  *= require jquery.datetimepicker
  */
 
-
 @import "font-awesome";
 @import "bootstrap-sprockets";
 @import "bootstrap";
-
-
-
 
 ul.unordered {
     list-style: none;
@@ -40,6 +36,7 @@ body { // Don't want bootstrap nav bar obscuring top 50px of content lol
     overflow-x:hidden;
     background-color: #041B28 !important;
 }
+
 .main {
     background:#f8f5f2;
     min-height: 600px;
@@ -51,6 +48,13 @@ body { // Don't want bootstrap nav bar obscuring top 50px of content lol
     margin:0;
 }
 
+input,
+button,
+select,
+textarea {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+}
+
 // IF YOU WANT YOUR THING TO HAVE PADDING, put it in a <section></section> tag!
 
 
@@ -58,13 +62,8 @@ body { // Don't want bootstrap nav bar obscuring top 50px of content lol
 ////// HEADER TEXTS
     // ------------------------------------------------------------
 
-h1 { }
-h2 {
-    font-family: Georgia, serif;
-}
 h3 {
     font-size: 18px;
-    font-family: Georgia, serif;
     text-shadow: initial;
 }
 h4 {
@@ -150,8 +149,20 @@ h4 {
     padding: 0;
 }
 
+/* Forms */
+form {
+  background-color: inherit;
+}
 
-
-
-
-
+.login input[type="text"]
+{
+  margin-bottom: -1px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.login input[type="password"]
+{
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
