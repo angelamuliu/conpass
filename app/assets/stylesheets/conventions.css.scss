@@ -248,13 +248,14 @@ ul {
 }
 
 
-.vendor_icons {
+#convention_vendors li.row a.star {
 	float:right;
 }
-
-.vendor_info {
-	width:50%;
+#convention_vendors li.row {
+    padding-left: 10px;
+    padding-right: 10px;
 }
+
 
 .vendor_names {
 	width:50%;
