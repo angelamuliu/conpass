@@ -83,8 +83,12 @@ h4 {
     border-bottom: 3px solid #2a7a00;
     color: white;
 }
-.greenbtn:hover { background-color: #5aa227; }
+.greenbtn:hover { 
+    background-color: #5aa227;
+    color: white;
+}
 .greenbtn:active { background-color: #467e1e; }
+.greenbtn:focus { color: white; }
 
 .redbtn {
     font-family: sans-serif;
@@ -93,8 +97,13 @@ h4 {
     border-bottom: 3px solid #850c0c;
     color: white;
 }
-.redbtn:hover { background-color: #770a0a; }
+.redbtn:hover {
+    background-color: #770a0a;
+    color: white;
+}
 .redbtn:active { background-color: #5d0808; }
+.redbtn:focus { color: white;}
+a.redbtn { color: white;}
 
 
     // ------------------------------------------------------------

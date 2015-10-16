@@ -1,19 +1,24 @@
 <%= include_gon %> <%# Even though gon loaded on application.html, reload just in case %>
+<%= render partial: 'jsForm', locals: {map: @map} %>
 <%= render partial: 'vendor_booths/jsForm' %>
 <%= render partial: 'vendors/jsForm' %>
 <%= render partial: 'tags/jsForm' %>
+<%= render partial: 'saving_splash' %>
 
 <div class="container-fluid noPad">
 
 <div id="toolBar" class="row">
     <button id="save"><i class="fa fa-floppy-o"></i> Save</button>
 
-    <div id="mouseTools">
-        <button class="tool" data-type="rectangle"><i class="fa fa-square-o"></i></button>
-        <button class="tool selectedTool" data-type="select"><i class="fa fa-mouse-pointer"></i></button>
-        <button class="tool" data-type="infoselect"><i class="fa fa-mouse-pointer"></i></button>
-        <button class="tool" data-type="eraser"><i class="fa fa-eraser"></i></button>
+    <div id="map_options">
+        <span>
+            <%= link_to @map.convention.name, @map.convention %> | <%= @map.name %>
+            <a href="javascript:;" id="map_config"><i class="fa fa-cog"></i></a>
+        </span>
     </div>
+
+    <%= render partial: 'mousetools' %>
+
     <%= render partial: 'tags/tag_craft', locals: {tags: @tags} %>
     <%= render partial: 'vendors/vendor_craft', locals: {vendors: @vendors} %>
 </div>

@@ -24,7 +24,10 @@
     border: 2px solid #b75f00;
 }
 
-.overlay {
+// .overlay can be dismissed by pressing on it
+// .strong_overlay cannot be dismissed without pressing on certain links
+// They look very similar however
+.overlay, .strong_overlay {
     display: none;
     position: fixed;
     width: 100%;
@@ -54,8 +57,32 @@
     display: none !important;
 }
 
-// ----------------------------------------
+
+
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Map options flaggy thing
+
+#map_options {
+    display: inline-block;
+    margin-left: 25px;
+    position: relative;
+    z-index: 50;
+    background: red;
+    padding: 10px;
+    padding-bottom: 15px;
+    background-color: #2f2f2f;
+    box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.3);
+    color: white;
+}
+#map_options span {
+    position: relative;
+    top: 2px;
+}
+
+
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Toolbar MISC
+
 #toolBar {
     height: 35px;
     position: relative;
@@ -73,6 +100,10 @@
     border-bottom: 3px solid #2a7a00;
     color: white;
     height: 100%;
+
+    // Janky, maybe figure out true issue later
+    position: relative;
+    top: -5px;
 }
 @keyframes savePop {
     0%   {background-color: #64b52c;}
@@ -121,7 +152,9 @@ button.jsAdd:hover {
     background-color: #e5b75f;
 }
 
-// ----------------------------------------
+
+
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // JS Form
 
 .jsForm {
@@ -155,7 +188,7 @@ button.jsAdd:hover {
     width: 100%;
     resize:vertical 
 }
-.jsForm a.close_overlay{
+.jsForm a.close_overlay, .jsForm a.close_strong_overlay {
     position: absolute;
     color: white;
     font-size: 15pt;
@@ -190,18 +223,70 @@ button.jsAdd:hover {
     background-color: #f0ece7;
     position: relative;
 }
-.jsForm_actions button {
+.jsForm_actions button, .jsForm_actions .btn {
     width: 40%;
     margin-right: 2%;
 }
 
+#fakeMapForm h3, #map_form h3 { background-color: #2f2f2f; }
 #vendor_form h3 { background-color: #0069d3; }
 #vendor_form a.close_overlay:hover { color: #cce1f6; }
 #tag_form h3 { background-color: #e43046; }
 #tag_form a.close_overlay:hover { color: #f6c0c7; }
 
+#fakeMapForm { // For the super janky 'fake' jsForm (but actually form)
+    display: block;
+}
+#fakeMapForm .error {
+    display: block;
+}
 
-// ----------------------------------------
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+// CRAFT TIP POPUPS CSS
+
+.craft_tip {
+    display: inline-block;
+    position: absolute;
+    padding: 10px;
+    background-color: white;
+    box-shadow: 0px 3px 3px 0px rgba(0,0,0,0.3);
+}
+.craft_tip.up {
+    margin-top: 10px;
+}
+
+#saving {
+    display:none; // Slides down
+    top: 75px;
+    left: 75px;
+    color: #64b52c;
+}
+#saveSuccess, #saveError { display: none;}
+#saveError { color: #cc0000; }
+
+.triangle {
+    border: none;
+    position: absolute;
+}
+
+// https://css-tricks.com/snippets/css/css-triangle/
+.arrow-up {
+    top: -10px;
+    width: 0; 
+    height: 0; 
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid white;
+}
+.arrow-right {
+    width: 0; 
+    height: 0; 
+    border-top: 60px solid transparent;
+    border-bottom: 60px solid transparent;
+    border-left: 60px solid green;
+}
+
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Vendor CSS
 
 #vendor_craft {
@@ -297,8 +382,7 @@ button.jsAdd:hover {
 }
 
 
-
-// ----------------------------------------
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Vendorbooth CSS
 
 ul.vendorBooth {
@@ -368,8 +452,7 @@ ul.vendorBooth span.dateRange {
 
 
 
-
-// ----------------------------------------
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Tag CSS
 
 #tag_craft {

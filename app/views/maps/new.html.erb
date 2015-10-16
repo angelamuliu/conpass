@@ -1,5 +1,21 @@
-<h1>New map</h1>
 
-<%= render 'form' %>
+<%= render 'form' %> <%# We style this to look like the map form that appears on the craft screen %>
 
-<%= link_to 'Back', maps_path %>
+<%# We have the a fake duplicate of the craft screen in the BG haha %>
+<div class="container-fluid noPad">
+    <div id="toolBar" class="row">
+        <button id="save"><i class="fa fa-floppy-o"></i> Save</button>
+        <div id="map_options">
+            <span>
+                <%= Convention.find(params[:convention_id]).name %> | N/A
+                <a href="javascript:;" id="map_config"><i class="fa fa-cog"></i></a>
+            </span>
+        </div>
+        <%= render partial: 'mousetools' %>
+    </div>
+
+    <div id="workArea_container" class="row">
+        <div id="workArea">
+        </div>
+    </div>
+</div>

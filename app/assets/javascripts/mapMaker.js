@@ -50,20 +50,6 @@ $(document).ready(function() {
 
     mapMaker($("#workArea"), $("#toolBar"));
 
-    $("#save").click(function() {
-        $.ajax({
-          type: "POST",
-          url: "/maps/"+gon.map.id+"/save",
-          data: {
-            actionHistory: JSON.stringify(actionHistory)
-          },
-          success: function() {
-            actionHistory = []; // Clear history on save for now
-          }
-        });
-    })
-
-
 })
 
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -71,6 +57,29 @@ $(document).ready(function() {
 
 
 function mapMaker(workArea, toolBar) {
+
+    $("#save").click(function() {
+        $.ajax({
+          type: "POST",
+          url: "/maps/"+gon.map.id+"/save",
+          data: {
+            actionHistory: JSON.stringify(actionHistory)
+          },
+          beforeSend: function() {
+            showSaving();
+          },
+          error: function() {
+            setTimeout(saveError, 300);
+            setTimeout(hideSaving, 2000);
+            actionHistory = []; // Clear history on save for now
+          },
+          success: function() {
+            saveSuccessful();
+            setTimeout(hideSaving, 500);
+            actionHistory = []; // Clear history on save for now
+          }
+        });
+    })
 
 
     // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -141,6 +150,12 @@ function mapMaker(workArea, toolBar) {
         return false;
     })
 
+    $(".close_strong_overlay").click(function(e) {
+        $(this).closest("div.strong_overlay").hide();
+        e.preventDefault();
+        return false;
+    })
+
     $(".dismiss_error").click(function(e) {
         $(this).closest(".error").slideUp();
         e.preventDefault();
@@ -150,6 +165,12 @@ function mapMaker(workArea, toolBar) {
     $(".overlay form").click(function(e) {
         e.stopPropagation();
     })
+
+////// Map clicks
+$("#map_config").click(function() {
+    $("#map_form").parent().show()
+})
+
 
 ////// Vendor clicks
 
@@ -582,8 +603,10 @@ function mapMaker(workArea, toolBar) {
 
     function finishBooth(e) {
         workArea.off("mousemove"); // Stop listening for mouse move
-        addBoothToHistory(toolContext.newBooth);
-        addBoothListeners(toolContext.newBooth);
+        if (boothBigEnough()) {
+            addBoothToHistory(toolContext.newBooth);
+            addBoothListeners(toolContext.newBooth);
+        }
     }
 
     // Log creating a booth into our history array
@@ -681,6 +704,17 @@ function mapMaker(workArea, toolBar) {
             $("#workArea").append(clone);
             addBoothToHistory(clone);
         }
+    }
+
+    // Don't create booths if they are below a certain point
+    function boothBigEnough() {
+        var width = parseInt(toolContext.newBooth.css("width"));
+        var height = parseInt(toolContext.newBooth.css("height"));
+        if (width < 25 && height < 25) {
+            toolContext.newBooth.remove();
+            return false;
+        }
+        return true;
     }
 
 
@@ -1463,6 +1497,29 @@ function mapMaker(workArea, toolBar) {
 
     function getTagIdFromVendorTag(vendorTagId) {
         return vendorTagId.split("_")[1].substring(4);
+    }
+
+    // Saving craft tip functions 
+    function showSaving() {
+        $("#saveSuccess").hide()
+        $("#saveError").hide();
+
+        $("#saving").parent().show();
+        $("#currentlySaving").show();
+        $("#saving").slideDown(200);
+    }
+    function hideSaving() {
+        $("#saving").slideUp(200, function () {
+            $("#saving").parent().hide();
+        });
+    }
+    function saveSuccessful() {
+        $("#currentlySaving").hide();
+        $("#saveSuccess").show();
+    }
+    function saveError() {
+        $("#currentlySaving").hide();
+        $("#saveError").show();
     }
 
 }

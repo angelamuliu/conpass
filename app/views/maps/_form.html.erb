@@ -1,26 +1,28 @@
 
+<div class="strong_overlay" id="fakeMapForm">
+    <%= simple_form_for @map, html: { class: "jsForm"} do |f| %>
+        <h3>Map Form</h3>
 
-<%= simple_form_for @map do |f| %>
-    <% if @map.errors.any? %>
-        <div id="error_explanation">
-          <h2><%= pluralize(@map.errors.count, "error") %> prohibited this map from being saved:</h2>
+        <ul class="unordered row">
+            <li>
+                <%= f.input :convention_id, :collection => Convention.all, :selected => params[:convention_id] %>
+            </li>
+            <li>
+                <%= f.input :name, :label => "Name" %>
+            </li>
+            <%#= f.input :start_date %>
+            <%#= f.input :end_date %>
+            <li>
+                <%= f.input :width, :label => "Width (px)" %>
+            </li>
+            <li>
+                <%= f.input :height, :label => "Height (px)" %>
+            </li>
+        </ul>
 
-          <ul>
-          <% @map.errors.full_messages.each do |message| %>
-            <li><%= message %></li>
-          <% end %>
-          </ul>
+        <div class="row jsForm_actions">
+            <%= f.submit "Confirm", class: "greenbtn btn"%>
+            <%= link_to 'Back', home_path, class: "redbtn btn" %>
         </div>
-      <% end %>
-
-    <%= f.input :convention_id, :collection => Convention.all, :selected => params[:convention_id] %>
-    <%= f.input :name, :label => "Map name/location" %>
-    <%= f.input :start_date %>
-    <%= f.input :end_date %>
-    <%= f.input :width, :label => "Width (px)" %>
-    <%= f.input :height, :label => "Height (px)" %>
-
-    <div class="actions">
-        <%= f.submit "Confirm" %>
-    </div>
-<% end %>
+    <% end %>
+</div>

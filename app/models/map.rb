@@ -7,7 +7,7 @@ class Map < ActiveRecord::Base
     has_many :vendor_booths, :through => :booths
 
     # Validations
-    validates_presence_of :convention
+    validates_presence_of :convention, :name
 
     # Scopes
     scope :alphabetical, -> {order('name')}
