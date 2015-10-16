@@ -7,7 +7,21 @@
 
 <p>
   <strong>Convention:</strong>
-  <%= @vendor.convention_id %>
+  <%= link_to @vendor.convention.name, @vendor.convention %>
+</p>
+
+<p> 
+	<strong>Times:</strong> 
+
+</p>
+
+<p>
+  <strong>Website:</strong>
+  <% if !@vendor.website_url.present?  %>
+  	None provided
+  <% else %>
+  	<%= link_to @vendor.website_url, "http://#{@vendor.website_url}" %>
+  	<% end %>
 </p>
 
 <p>
@@ -15,10 +29,8 @@
   <%= @vendor.description %>
 </p>
 
-<p>
-  <strong>Website url:</strong>
-  <%= @vendor.website_url %>
-</p>
 
-<%= link_to 'Edit', edit_vendor_path(@vendor) %> |
-<%= link_to 'Back', vendors_path %>
+<% if logged_in? %>
+	<%= link_to 'Edit', edit_vendor_path(@vendor) %> |
+	<%= link_to 'Back', vendors_path %>
+<% end %>

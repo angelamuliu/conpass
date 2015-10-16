@@ -14,13 +14,15 @@
   <tbody>
     <% @vendors.each do |vendor| %>
       <tr>
-        <td><%= vendor.name %></td>
-        <td><%= vendor.convention_id %></td>
+        <td><%= link_to vendor.name, vendor %></td>
+        <td><%= link_to vendor.convention.name, vendor.convention %></td>
         <td><%= vendor.description %></td>
-        <td><%= vendor.website_url %></td>
-        <td><%= link_to 'Show', vendor %></td>
-        <td><%= link_to 'Edit', edit_vendor_path(vendor) %></td>
-        <td><%= link_to 'Destroy', vendor, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to vendor.website_url, "http://#{vendor.website_url}" %></td>
+
+        <% if logged_in? %>
+          <td><%= link_to 'Edit', edit_vendor_path(vendor) %></td>
+          <td><%= link_to 'Destroy', vendor, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>
