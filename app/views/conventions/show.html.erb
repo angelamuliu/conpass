@@ -20,7 +20,7 @@
     <%# Data shown, tab toggles control which is in view %>
     <div id="con_results" class="row">
         <div class="tab_data" id="convention_vendors">
-            <%= render :partial => "convention_vendors", locals: {vendors: @vendors} %>
+            <%= render :partial => "convention_vendors", locals: {vendors: @vendors, tags: @tags} %>
         </div>
         <div class="tab_data" id="convention_maps">
             <%= render :partial => "convention_maps", locals: {maps: @maps } %>

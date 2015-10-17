@@ -12,7 +12,7 @@
 
 <ul class="convention_vendors">
     <% vendors.each do |vendor| %>
-    <li class="row convention_vendor">
+    <li class="row convention_vendor <%= vendor.cssTagClasses() %>">
         <%= link_to vendor.name, vendor %>
         <a id="star<%=vendor.id%>" onclick="star(<%= vendor.id%>)" class="star" href="javascript:;">
             <i class="fa fa-star-o"></i>
@@ -20,3 +20,26 @@
     </li>
   <% end %>
 </ul>
+
+<%# Filter modal %>
+<div class="overlay">
+    <form id="filter_modal" class="jsForm">
+        <h3>Filter by...</h3>
+
+        <a href="javascript:;" class="close_overlay">
+            <i class="fa fa-times"></i>
+        </a>
+
+        <ul class="unordered">
+            <% tags.each do |tag| %>
+                <li>
+                    <input type="checkbox" value="tag_<%= tag.id %>"><%= tag.name %>
+                </li>
+            <% end %>
+        </ul>
+        <div class="jsForm_actions">
+            <button id="filter_vendors_submit" class="greenbtn btn">Submit</button>
+            <button class="close_overlay redbtn btn">Cancel</button>
+        </div>
+    </form>
+</div>
