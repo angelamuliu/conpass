@@ -1,5 +1,4 @@
-
-<%= simple_form_for(@convention) do |f| %>
+<%= simple_form_for @convention, :html => { class: "convention-form" } do |f| %>
   <% if @convention.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@convention.errors.count, "error") %> prohibited this convention from being saved:</h2>
@@ -12,11 +11,12 @@
     </div>
   <% end %>
 
-  <%= f.input :name %>
+  <!--input type="text" id="convention_name" name="convention[name]" class="form-control" placeholder="Name" required autofocus-->
+  <%= f.input :name, placeholder: "Name", label: false, input_html: { class: "form-control" } %>
   <%= f.input :start_date %>
   <%= f.input :end_date %>
 
   <div class="actions">
-    <%= f.submit %>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Save</button>
   </div>
 <% end %>

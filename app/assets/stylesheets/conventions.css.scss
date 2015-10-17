@@ -3,39 +3,39 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 
-    // ------------------------------------------------------------
+// ------------------------------------------------------------
 ////// CONVENTION SUBNAV
-    // ------------------------------------------------------------
+// ------------------------------------------------------------
 
 .con_info {
-    padding-bottom: 10px;
-    background-color: white;
+  padding-bottom: 10px;
+  background-color: white;
 }
 .con_info #title h3 { margin-bottom: 0; }
 .con_info span {
-    color: #8C8C8C;
-    font-size: 12px;
+  color: #8C8C8C;
+  font-size: 12px;
 }
 
 #sub_header {
-    background-color: white;
-    margin-left:3px;
-    margin-bottom: -2px;
+  background-color: white;
+  margin-left:3px;
+  margin-bottom: -2px;
 }
 #sub_header .tab {
-    position: relative;
-    z-index: 1;
-    border-radius: 5px 5px 0px 0px;
-    padding: 10px;
-    padding-right:20px;
-    padding-left: 20px;
-    display: inline-block;
+  position: relative;
+  z-index: 1;
+  border-radius: 5px 5px 0px 0px;
+  padding: 10px;
+  padding-right:20px;
+  padding-left: 20px;
+  display: inline-block;
 
-    color: #EFEFEF;
-    background-color: #325E8A;
-    border-bottom: none;
-    border-left: 2px solid #163B61;
-    border-right: 1px solid #4390DC;
+  color: #EFEFEF;
+  background-color: #325E8A;
+  border-bottom: none;
+  border-left: 2px solid #163B61;
+  border-right: 1px solid #4390DC;
 }
 #sub_header .tab.selected {
     z-index: 10;
@@ -47,104 +47,107 @@
 #sub_header a { text-decoration: none; }
 
 .sub_header_nav { // Another level of nav, hidden sometimes
-    background-color: #E2DBCE;
-    padding: 5px;
-    padding-right: 10px;
-    padding-left: 10px;
-    border-bottom: 1px solid #b1b1b1;
+  background-color: #E2DBCE;
+  padding: 5px;
+  padding-right: 10px;
+  padding-left: 10px;
+  border-bottom: 1px solid #b1b1b1;
 }
 .sub_header_nav a:first-child {
-    float: left;
+  float: left;
 }
 .sub_header_nav .actions {
-    float: right;
+  float: right;
 }
 .sub_header_nav .actions a {
-    margin-left: 10px;
-    padding-right: 10px;
-    border-right: 1px solid #b1b1b1;
+  margin-left: 10px;
+  padding-right: 10px;
+  border-right: 1px solid #b1b1b1;
 }
 .sub_header_nav .actions a:last-child { 
-    border: none;
-    padding-right: 0;
+  border: none;
+  padding-right: 0;
 }
 
 #con_results .tab_data {
-    border-top: 2px solid #DACCB2;
+  border-top: 2px solid #DACCB2;
 }
 #con_results { // The active tab 'sticks out' from the results
-    position: relative;
-    z-index: 10;
+  position: relative;
+  z-index: 10;
+}
+
+/* Forms */
+.convention-form input {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.convention-form button {
+  margin-top: 10px;
 }
 
 
-
-
-    // ------------------------------------------------------------
+// ------------------------------------------------------------
 ////// MODAL
-    // ------------------------------------------------------------
+// ------------------------------------------------------------
 
 div#popupSort{
-position:absolute;
-left:50%;
-top:17%;
-margin-left:-40%;
-border:2px solid gray;
-font-family:'Raleway',sans-serif;
-width:80%;
-}
-form {
-    padding:10px 50px;
-    font-family:raleway;
-    background-color:#fff
+  position:absolute;
+  left:50%;
+  top:17%;
+  margin-left:-40%;
+  border:2px solid gray;
+  font-family:'Raleway',sans-serif;
+  width:80%;
 }
 
 #alphabet {
-	margin: 5px;
-	padding: 0px;
+  margin: 5px;
+  padding: 0px;
 }
 
 .alphabetical {
-	display: none;
-	margin-bottom:0px;
+  display: none;
+  margin-bottom:0px;
 }
 
 .cancel {
-    background:gray;
-    color:white;
-    border:1px none;
-    border-radius:2px;
-    height:25px;
-    padding: 4px;
-    font-weight:700;
-    text-align:center;
+  background:gray;
+  color:white;
+  border:1px none;
+  border-radius:2px;
+  height:25px;
+  padding: 4px;
+  font-weight:700;
+  text-align:center;
 }
 
 .cancel a{
-    color:white;
-    text-decoration:none;
+  color:white;
+  text-decoration:none;
 }
 
 .chronological {
-	margin-bottom:0px;
+  margin-bottom:0px;
 }
 
 .col-xs-1 {
-	margin-top: 5px;
+  margin-top: 5px;
 }
 
 .con_id {
-    display:none;
+  display:none;
 }
 
 .con_image {
-    max-width: 200px;
-    float: left;
-    margin-right: 20px;
+  max-width: 200px;
+  float: left;
+  margin-right: 20px;
 }
 
 .con_info {
-	padding-bottom: 10px;
+  padding-bottom: 10px;
 }
 
 // .convention {
@@ -154,97 +157,97 @@ form {
 // }
 
 .filter {
-	border-left: 1px solid #808080;
-	border-right: 1px solid #808080;
-	text-align: center;
+  border-left: 1px solid #808080;
+  border-right: 1px solid #808080;
+  text-align: center;
 }
 
 
 #map_title, #map_title a, #map_title a:hover {
-	color:black;
-	text-decoration:none;
+  color:black;
+  text-decoration:none;
 }
 
 
 #openHere {
-width:100%;
-height:100%;
-opacity:.95;
-top:0;
-left:0;
-display:none;
-position:fixed;
-background-color:#313131;
-overflow:auto
+  width:100%;
+  height:100%;
+  opacity:.95;
+  top:0;
+  left:0;
+  display:none;
+  position:fixed;
+  background-color:#313131;
+  overflow:auto
 }
 
 .popupHeader {
-	font-family:"Lucida Bright", "Times New Roman";
-	background-color: #e43046;
-	color:white;
-	font-weight:900;
-	padding:10px 10px 10px 40px;
+  font-family:"Lucida Bright", "Times New Roman";
+  background-color: #e43046;
+  color:white;
+  font-weight:900;
+  padding:10px 10px 10px 40px;
 }
 
 .submit {
-    background:green;
-    color:white;
-    border:1px none;
-    border-radius:2px;
-    height:25px;
-    padding: 4px;
-    font-weight:700;
-    text-align:center;
+  background:green;
+  color:white;
+  border:1px none;
+  border-radius:2px;
+  height:25px;
+  padding: 4px;
+  font-weight:700;
+  text-align:center;
 }
 
 .submit a{
-    color:white;
-    text-decoration: none;
+  color:white;
+  text-decoration: none;
 }
 
 #sorting_information {
-	display:none;
+  display:none;
 }
 
 .topbar a{
-	color:#b1b1b1;
+  color:#b1b1b1;
 }
 
 .topbar a:hover {
-	color: #e43046
+  color: #e43046
 }
 
 
 ul {
-    list-style: none;
-    margin: 0;
-    padding:0;
+  list-style: none;
+  margin: 0;
+  padding:0;
 }
 
-    // ------------------------------------------------------------
+// ------------------------------------------------------------
 ////// CONVENTION MAPS
-    // ------------------------------------------------------------
+// ------------------------------------------------------------
 
 #convention_maps {
-    display: none;
+  display: none;
 }
 
 
 
-    // ------------------------------------------------------------
+// ------------------------------------------------------------
 ////// CONVENTION VENDORS
-    // ------------------------------------------------------------
+// ------------------------------------------------------------
 
 
 #convention_vendors {
-    margin-bottom:0px;
+  margin-bottom:0px;
 }
 
 #convention_vendors li:nth-child(odd) {
-    background-color: #f0ece7;
+  background-color: #f0ece7;
 }
 #convention_vendors li:nth-child(even) {
-    background-color: #f8f5f2;
+  background-color: #f8f5f2;
 }
 
 
@@ -277,56 +280,56 @@ ul {
 
 
 .vendor_names {
-	width:50%;
-	color:#E43046;
+  width:50%;
+  color:#E43046;
 }
 
 
 
-    // ------------------------------------------------------------
+// ------------------------------------------------------------
 ////// OWNED CONVENTIONS STYLING
-    // ------------------------------------------------------------
+// ------------------------------------------------------------
 @media only screen and (min-width:45em) { // MED/LARGE
-    .convention_cards li {
-        width: 350px;
-        padding: 15px;
-    }
+  .convention_cards li {
+    width: 350px;
+    padding: 15px;
+  }
 }
 @media only screen and (max-width:45em) { // SMALL
-    .convention_cards li {
-        width: 100%;
-        padding: 5px;
-    }
+  .convention_cards li {
+    width: 100%;
+    padding: 5px;
+  }
 }
 .convention_cards li {
-    display: inline-table;
-    background-color: #f0ece7;
-    border: 1px solid #DACCB2;
-    border-radius: 5px;
-    border-bottom: 2px solid #DCC69D;
-    margin-bottom:5px;
-    position: relative;
+  display: inline-table;
+  background-color: #f0ece7;
+  border: 1px solid #DACCB2;
+  border-radius: 5px;
+  border-bottom: 2px solid #DCC69D;
+  margin-bottom:5px;
+  position: relative;
 }
 .convention_cards h4 {
-    margin: 0;
+  margin: 0;
 }
 .convention_cards form {
-    background:initial;
-    padding:0;
+  background:initial;
+  padding:0;
 }
 .convention_cards p {
-    margin: 0;
+  margin: 0;
 }
 
 .active_toggle {
-    position: absolute;
-    right:0;
-    top:0;
-    background:none;
-    border:none;
-    color: #b1b1b1;
+  position: absolute;
+  right:0;
+  top:0;
+  background:none;
+  border:none;
+  color: #b1b1b1;
 }
 .active_toggle .active {
-    color: #0069d3;
+  color: #0069d3;
 }
 
