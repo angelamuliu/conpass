@@ -10,35 +10,49 @@
     <%# Listing existing vendors %>
     <div id="vendor_list">
         <ul class="unordered">
-            <% vendors.each do |vendor| %>
-                <li data-id="<%= vendor.id %>">
-                    <div class="vendorshow">
-                        <% if vendor.booths.size > 0 %>
-                            <i class="fa fa-circle drag_assign" draggable="true"></i>
-                        <% else %>
-                            <i class="fa fa-circle-o drag_assign" draggable="true"></i>
-                        <% end %>
-                        <a href="javascript:;" class="vendor_name"><%= vendor.name %></a>
-                        <i class="fa fa-eye-slash vendorview_toggle"></i>
-                    </div>
-                    <div class="vendorshow_extra">
+            <% if vendors.size < 1 %>
 
-                        <div class="vendor_options">
-                            <button class="update_vendor greenbtn"><i class="fa fa-pencil"></i> Update</button>
-                            <button class="destroy_vendor redbtn"><i class="fa fa-trash"></i> Destroy</button>
-                        </div>
-
-                        <strong>URL: </strong> <span class="vendor_url"><%= vendor.website_url %></span>
-                        <strong>Description: </strong> <span class="vendor_desc"><%= vendor.description %></span>
-                        <strong>Tags: </strong>
-                        <ul class="vendor_tags">
-                            <% vendor.tags.each do |tag| %>
-                                <li class="vendorTag" data-id="<%= tag.id %>"><%= tag.name %></li>
-                            <% end %>
-                        </ul>
-
-                    </div>
+                <li class="no_models">
+                    <i class="no_models fa fa-balance-scale"></i><br />
+                    <strong>No vendors yet!</strong>
+                    <p>
+                        A vendor is what your attendee is going to at your convention - a food truck for a food festival, a company for a job fair, a researcher's booth at a conference... They're all vendors, the destinations of your guests!
+                    </p>
                 </li>
+
+            <% else %>
+
+                <% vendors.each do |vendor| %>
+                    <li data-id="<%= vendor.id %>">
+                        <div class="vendorshow">
+                            <% if vendor.booths.size > 0 %>
+                                <i class="fa fa-circle drag_assign" draggable="true"></i>
+                            <% else %>
+                                <i class="fa fa-circle-o drag_assign" draggable="true"></i>
+                            <% end %>
+                            <a href="javascript:;" class="vendor_name"><%= vendor.name %></a>
+                            <i class="fa fa-eye-slash vendorview_toggle"></i>
+                        </div>
+                        <div class="vendorshow_extra">
+
+                            <div class="vendor_options">
+                                <button class="update_vendor greenbtn"><i class="fa fa-pencil"></i> Update</button>
+                                <button class="destroy_vendor redbtn"><i class="fa fa-trash"></i> Destroy</button>
+                            </div>
+
+                            <strong>URL: </strong> <span class="vendor_url"><%= vendor.website_url %></span>
+                            <strong>Description: </strong> <span class="vendor_desc"><%= vendor.description %></span>
+                            <strong>Tags: </strong>
+                            <ul class="vendor_tags">
+                                <% vendor.tags.each do |tag| %>
+                                    <li class="vendorTag" data-id="<%= tag.id %>"><%= tag.name %></li>
+                                <% end %>
+                            </ul>
+
+                        </div>
+                    </li>
+                <% end %>
+
             <% end %>
         </ul>
     </div>

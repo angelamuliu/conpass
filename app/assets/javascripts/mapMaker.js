@@ -58,7 +58,9 @@ $(document).ready(function() {
 
 function mapMaker(workArea, toolBar) {
 
-    $("#save").click(function() {
+    $("#save").click(saveMap);
+
+    function saveMap() {
         $.ajax({
           type: "POST",
           url: "/maps/"+gon.map.id+"/save",
@@ -79,7 +81,7 @@ function mapMaker(workArea, toolBar) {
             actionHistory = []; // Clear history on save for now
           }
         });
-    })
+    }
 
 
     // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -167,9 +169,27 @@ function mapMaker(workArea, toolBar) {
     })
 
 ////// Map clicks
-$("#map_config").click(function() {
-    $("#map_form").parent().show()
-})
+    $("#map_config").click(function() {
+        $("#map_form").parent().show()
+    })
+
+    $("#map_form_submit").click(function(e) {
+        var formEl = $(this).closest("form");
+        var name = $("input[name='map_name']").val();
+        var width = $("input[name='map_width']").val();
+        var height = $("input[name='map_height']").val();
+        var mapHistory = {
+            "action" : ACTIONS.UPDATE,
+            "type" : TYPES.MAP,
+            "id" : gon.map.id,
+            "name" : name,
+            "width" : width,
+            "height" : height,
+            "isTemp" : false
+        }
+        actionHistory.push(mapHistory);
+        saveMap();
+    })
 
 
 ////// Vendor clicks
@@ -763,6 +783,9 @@ $("#map_config").click(function() {
     }
 
     function addVendorToDOM() {
+        // Remove tooltip that appears if theres no vendors
+        $("#vendor_list li.no_models").remove();
+
         lastVendorId++;
         var name = $("input[name='vendor_name']").val();
         var url = $("input[name='vendor_url']").val();
@@ -1048,6 +1071,9 @@ $("#map_config").click(function() {
     }
 
     function addTagToDom() {
+        // Hide the tip that appears by default
+        $("#tag_list li.no_models").remove();
+
         lastTagId++;
         var name = $("input[name='tag_name']").val();
 
