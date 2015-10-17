@@ -5,9 +5,11 @@
 
       <%= form_tag sessions_path, :class => "login" do %>
 
-        <input type="text" id="username" class="form-control" placeholder="Username" required autofocus>
-        <input type="password" id="password" class="form-control" placeholder="Password" required>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Log in</button>
+
+      <%= text_field_tag :username, params[:username], class: "form-control", id: "username", placeholder: "Username", :required => true, :autofocus => true %>
+      <%= password_field_tag :password, params[:password], class: "form-control", id: "password", placeholder: "Password", :required => true %>
+      <%= submit_tag "Log In", class: "btn btn-lg btn-primary btn-block" %>
+      
       <% end %>
       
     </div>
