@@ -11,11 +11,6 @@ class MapsController < ApplicationController
   # GET /maps/1.json
   def show
     @map = Map.find(params[:id])
-    @vendors = @map.convention.vendors
-    @tags = @map.convention.tags
-    @booths = @map.booths
-    @vendorBooths = @map.vendor_booths
-    @vendorTags = @map.convention.vendor_tags
   end
 
   # GET /maps/1/quickview/
@@ -50,12 +45,13 @@ class MapsController < ApplicationController
         redirect_to need_account_path
     end
     @map = Map.new(map_params)
-
+    
     respond_to do |format|
       if @map.save
-        format.html { redirect_to quickview_map_url(@map), notice: 'Map was successfully created.' }
-        format.json { render :quickview, status: :created, location: @map }
+        format.html { redirect_to craft_map_url(@map), notice: 'Map was successfully created.' }
+        # format.json { render :quickview, status: :created, location: @map }
       else
+        params[:convention_id] = map_params[:convention_id]
         format.html { render :new }
         format.json { render json: @map.errors, status: :unprocessable_entity }
       end

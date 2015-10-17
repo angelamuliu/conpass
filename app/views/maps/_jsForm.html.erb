@@ -1,0 +1,39 @@
+
+<%# Map overlay form %>
+<div class="strong_overlay">
+    <form id="map_form" class="jsForm">
+        <h3>Map Form</h3>
+        <div class="error">
+            <i class="fa fa-exclamation-circle"></i> Please name this map
+            <a href="javascript:;" class="dismiss_error">
+                <i class="fa fa-times"></i>
+            </a>
+        </div>
+        <a href="javascript:;" class="close_strong_overlay">
+            <i class="fa fa-times"></i>
+        </a>
+
+        <div class="jsForm_fields">
+            <ul class="unordered row">
+                <li>
+                    <label for="map_name">Name</label>
+                    <input type="text" name="map_name" value=<%= map.name %>>
+                </li>
+                <li>
+                    <label for="map_width">Width (px)</label>
+                    <input type="text" name="map_width" value=<%= map.width %>>
+                </li>
+                <li>
+                    <label for="map_height">Height (px)</label>
+                    <input type="text" name="map_height" value=<%= map.height %>>
+                </li>
+            </ul>
+        </div>
+
+        <div class="row jsForm_actions">
+            <button id="map_form_submit" class="btn greenbtn">Submit</button>
+            <button class="close_strong_overlay btn redbtn">Cancel</button>
+        </div>
+    </form>
+</div>
+

@@ -11,7 +11,9 @@
         <% else %>
             <h3>Hello, <%= current_user.username %></h3>
         <% end %>
-            <%= link_to "Make your own", new_convention_path, class: 'btn btn-lg' %>
+            <%= link_to new_convention_path, class: 'btn btn-lg' do %>
+                <i class="fa fa-plus"></i> New Convention
+            <% end %>
         </section>
     </div>
     <div class="row">

@@ -9,9 +9,19 @@
     <%# Listing existing tags %>
     <div id="tag_list">
         <ul class="unordered">
+
             <% if @tags.size < 1 %>
-                <li>No tags yet.</li>
+
+                <li class="no_models">
+                    <i class="no_models fa fa-tag"></i><br />
+                    <strong>No tags yet!</strong>
+                    <p>
+                        A tag is what your attendee will be filtering with - make them relevant! For example, a tag could be "spicy" for a food truck offering spicy food.
+                    </p>
+                </li>
+
             <% else %>
+
                 <% @tags.each do |tag| %>
                     <li data-id="<%= tag.id %>" class="tag">
                         <div class="tagshow">
@@ -28,6 +38,7 @@
                         </ul>
                     </li>
                 <% end %>
+
             <% end %>
         </ul>
     </div>

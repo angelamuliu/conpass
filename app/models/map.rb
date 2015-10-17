@@ -7,7 +7,7 @@ class Map < ActiveRecord::Base
     has_many :vendor_booths, :through => :booths
 
     # Validations
-    validates_presence_of :convention
+    validates_presence_of :convention, :name
 
     # Scopes
     scope :alphabetical, -> {order('name')}
@@ -159,6 +159,8 @@ class Map < ActiveRecord::Base
             updateAction = updateActions[idKey]
             case modelName
             when "map"
+                Map.update(updateAction["id"], name: updateAction["name"], width: updateAction["width"], 
+                           height: updateAction["height"])
             when "vendor"
                 Vendor.update(updateAction["id"], name: updateAction["name"], description: updateAction["description"],
                     website_url: updateAction["website_url"])
