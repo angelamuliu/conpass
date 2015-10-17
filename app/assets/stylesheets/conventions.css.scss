@@ -38,7 +38,7 @@
     border-right: 1px solid #4390DC;
 }
 #sub_header .tab.selected {
-    z-index: 20;
+    z-index: 10;
     background-color: #0069d3;
     color: white;
     border-left: 2px solid #033D77;
@@ -252,8 +252,27 @@ ul {
 	float:right;
 }
 #convention_vendors li.row {
+    padding:5px;
     padding-left: 10px;
     padding-right: 10px;
+}
+
+// Vendor filter modal
+#filter_modal {
+    top: 60px;
+    min-height: initial;
+    height: initial;
+}
+#filter_modal h3 {
+    background-color: #e43036;
+}
+#filter_modal li {
+    padding: 10px;
+}
+#filter_modal .jsForm_actions { border: none;}
+#filter_modal input {
+    width: inherit;
+    margin-right: 5px;
 }
 
 

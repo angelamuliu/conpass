@@ -27,4 +27,20 @@ $(document).ready(function() {
         $("#" + tabDataId_toShow).show();
         $(this).addClass("selected");
     })
+
+
+    // Overlay code -> Give anything the class "close_overlay" so clicking it will close
+    // Use: Wrap whatever you want in overlay with div with class overlay
+    $(".close_overlay").click(function(e) {
+        $(this).closest("div.overlay").hide();
+        e.preventDefault();
+        return false;
+    })
+    $(".overlay").click(function() {
+        $(this).hide();
+    })
+    $(".overlay form").click(function(e) {
+        e.stopPropagation();
+    })
+
 })

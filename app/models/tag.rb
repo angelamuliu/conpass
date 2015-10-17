@@ -8,4 +8,7 @@ class Tag < ActiveRecord::Base
     validates_presence_of :name
     #validates_inclusion_of :convention_id, in: Convention.all.map{|c| c.id}, message: "Convention does not exist"
 
+    # Scopes
+    scope :alphabetical, -> {order('name')}
+
 end

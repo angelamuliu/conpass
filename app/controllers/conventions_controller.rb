@@ -15,6 +15,7 @@ class ConventionsController < ApplicationController
   def show
     @maps = @convention.maps.chronological.alphabetical
     @vendors = @convention.vendors.alphabetical
+    @tags = @convention.tags.alphabetical
   end
 
   # GET/conventions/1/quickview

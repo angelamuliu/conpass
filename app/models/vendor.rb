@@ -12,4 +12,14 @@ class Vendor < ActiveRecord::Base
     scope :alphabetical, -> {order('name')}
     scope :by_tag, -> (tag) {joins(:tags).where('tags.name = ?', tag)}
 
+    # Methods
+
+    def cssTagClasses()
+        tagIds = tags.collect { |tag| tag.id }
+        tagIds = Set.new(tagIds)
+        tagClass = ""
+        tagIds.map { |tag_id| tagClass = tagClass + "tag_" + tag_id.to_s + " "}
+        return tagClass
+    end
+
 end

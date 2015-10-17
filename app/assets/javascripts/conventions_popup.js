@@ -85,3 +85,32 @@ function star(x) {
 	}
 
 }
+
+
+
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Vendor filter modal
+
+$(document).ready(function() {
+
+    $("#filter_vendors").click(function() {
+        $("#filter_modal").parent().show();
+    })
+
+    $("#filter_vendors_submit").click(function() {
+        var checked = $("#filter_modal").find("input:checked");
+        // When none checked, we turn off the filter
+        if (checked.length < 1) {
+            $(".convention_vendor").show();
+        } else {
+            $(".convention_vendor").hide();
+            for (var i = 0; i < checked.length; i++ ){
+                var tagClass = checked[i].value
+                $("."+tagClass).show();
+            }
+        }
+        $("#filter_modal").parent().hide();
+        return false;
+    })
+
+})
