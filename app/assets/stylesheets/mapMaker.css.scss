@@ -23,6 +23,12 @@
     box-shadow: 0 0 0 5px #fbda82;
     border: 2px solid #b75f00;
 }
+.booth_label {
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    position: absolute;
+}
 
 // .overlay can be dismissed by pressing on it
 // .strong_overlay cannot be dismissed without pressing on certain links

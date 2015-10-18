@@ -11,6 +11,7 @@ class MapsController < ApplicationController
   # GET /maps/1.json
   def show
     @map = Map.find(params[:id])
+    @booths = @map.booths
   end
 
   # GET /maps/1/quickview/
