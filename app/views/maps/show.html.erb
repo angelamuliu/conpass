@@ -25,6 +25,11 @@
     </div>
 </div>
 
+<%# If SHOW is passed in the optional param :centerBooth_id, we can find a booth to center the map on! %>
+<% if @centeredBooth %>
+    <script>centerOnBooth(<%= @centeredBooth.x_pos %>, <%= @centeredBooth.y_pos %>, <%= @centeredBooth.width %>, <%= @centeredBooth.height %>, <%= @centeredBooth.id %>)</script>
+<% end %>
+
 <script>
 function vendor_toggle(x) {
 	if($('[data-id=' + x + ']')[0].children[0].style.display = "none")

@@ -20,5 +20,21 @@
   <%= @vendor.website_url %>
 </p>
 
+
+
+<%# TEMPORARY %>
+<ul>
+<% @vendorBooths.each do |vendorBooth| %>
+
+    <li>
+        <%= link_to map_path(vendorBooth.booth.map, :centerbooth_id => vendorBooth.booth.id) do %>
+            <i class="fa fa-map"></i> <%= vendorBooth.booth.map.name %> | Booth <%= vendorBooth.booth.id %>
+        <% end %>
+    </li>
+<% end %>
+</ul>
+
+
+
 <%= link_to 'Edit', edit_vendor_path(@vendor) %> |
 <%= link_to 'Back', vendors_path %>

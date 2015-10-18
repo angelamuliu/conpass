@@ -15,6 +15,7 @@ class VendorsController < ApplicationController
   # GET /vendors/1
   # GET /vendors/1.json
   def show
+    @vendorBooths = @vendor.vendor_booths
   end
 
   # GET /vendors/new

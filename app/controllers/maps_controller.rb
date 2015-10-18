@@ -12,6 +12,7 @@ class MapsController < ApplicationController
   def show
     @map = Map.find(params[:id])
     @booths = @map.booths
+    @centeredBooth = Booth.find(params[:centerbooth_id])
   end
 
   # GET /maps/1/quickview/
