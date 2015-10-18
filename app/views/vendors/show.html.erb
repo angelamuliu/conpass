@@ -27,7 +27,7 @@
 <% @vendorBooths.each do |vendorBooth| %>
 
     <li>
-        <%= link_to map_path(vendorBooth.booth.map, :centerbooth_id => vendorBooth.booth.id) do %>
+        <%= link_to map_path(vendorBooth.booth.map, :centerbooth_id => vendorBooth.booth.id, :vendorbooth_id => vendorBooth.id) do %>
             <i class="fa fa-map"></i> <%= vendorBooth.booth.map.name %> | Booth <%= vendorBooth.booth.id %>
         <% end %>
     </li>

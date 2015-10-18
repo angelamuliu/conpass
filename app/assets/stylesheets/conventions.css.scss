@@ -88,6 +88,25 @@
 }
 
 
+////// Convention Index
+.top_index {
+    background: white;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #b1b1b1;
+}
+.convention_list li:nth-child(odd) {
+  background-color: #f0ece7;
+}
+.convention_list li:nth-child(even) {
+  background-color: #f8f5f2;
+}
+.row.convention {
+    padding:5px;
+    padding-bottom: 10px;
+    padding-top:10px;
+}
+
+
 // ------------------------------------------------------------
 ////// MODAL
 // ------------------------------------------------------------
