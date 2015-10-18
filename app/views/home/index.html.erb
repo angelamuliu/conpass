@@ -40,11 +40,12 @@
 
                         <strong>Maps: </strong>
                         <% if convention.maps.size < 1 %>
-                            This convention doesn't have any maps yet. Would you like to make one?
+                            This convention doesn't have any maps yet! <%= link_to "Click here to add one.", new_map_path(convention_id: convention.id) %>
                         <% else %>
                             <% convention.maps.each do |map| %>
                                 <%= link_to map.name, craft_map_path(map) %><% if map != convention.maps.last() %>,<% end %>
                             <% end %>
+                            <br /><%= link_to "Add another map", new_map_path(convention_id: convention.id) %>
                         <% end %>
                     </p>
                 </li>
