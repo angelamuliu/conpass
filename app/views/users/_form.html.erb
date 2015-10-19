@@ -1,27 +1,22 @@
-<%= form_for @user do |f| %>
-	<% if @user.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+<%= simple_form_for @user do |f| %>
+    
+    <% if @user.errors.any? %>
+        <div id="error_explanation">
+          <ul>
+          <% @user.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+          </ul>
+        </div>
+    <% end %>
 
-      <ul>
-      <% @user.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-	<p>
-    <%= f.label :username, "Username" %><br />
-    <%= f.text_field :username %>
-  </p>
-  <p>
-    <%= f.label :password %><br />
-    <%= f.password_field :password %>
-  </p>
-  <p>
-    <%= f.label :password_confirmation, "Confirm Password" %><br />
-    <%= f.password_field :password_confirmation %>
-  </p>
+    <p>
+        <%= f.input :username, placeholder: "Username", label: false, :required => true, input_html: {class: "form-control"} %>
+        <%= f.input :password, placeholder: "Password", label: false, :required => true, input_html: {class: "form-control"} %>
+        <br />
+        <%= f.input :password_confirmation, placeholder: "Confirm Password", :required => true, label: false, input_html: {class: "form-control"} %>
+    </p>
 
-  <p><%= f.submit (@user.new_record? ? "Sign up" : "Update") %></p>
+
+  <%= f.submit (@user.new_record? ? "Sign up" : "Update"), class: "greenbtn btn-lg" %>
 <% end %>
