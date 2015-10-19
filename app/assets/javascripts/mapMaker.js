@@ -79,6 +79,7 @@ function mapMaker(workArea, toolBar) {
             saveSuccessful();
             setTimeout(hideSaving, 500);
             actionHistory = []; // Clear history on save for now
+            location.reload(); // Refresh page
           }
         });
     }
@@ -480,8 +481,8 @@ function mapMaker(workArea, toolBar) {
         if (KEYSTATUS.CTRL && e.keyCode === KEYCODES.C) { // CTRL + C
             switch(selectedTool) {
                 case TOOLS.SELECT:
-                copyBooth(domEl);
-                break;
+                    copyBooth(domEl);
+                    break;
             }
         }
         if (KEYSTATUS.CTRL && e.keyCode === KEYCODES.V) { // CTRL + V
@@ -723,6 +724,10 @@ function mapMaker(workArea, toolBar) {
             addBoothListeners(clone);
             $("#workArea").append(clone);
             addBoothToHistory(clone);
+
+            // Finally, switch focus and 'clicpboard' to newly copied object
+            toolContext.clipboard = clone;
+            clone.focus();
         }
     }
 
