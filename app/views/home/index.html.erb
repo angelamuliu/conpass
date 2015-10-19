@@ -27,12 +27,12 @@
                     <% end %>
                     <p>
                         <% if convention.active %>
-                            <strong>Currently active</strong> (visible to public)
+                            <strong>Active</strong>, visible to public | <%= link_to "View public page", convention %>)
                             <%= button_to toggle_active_path(convention), data: { confirm: "Are you sure you want to deactive this convention? This will prevent attendees from viewing the maps."},class: "active_toggle" do %>
                                 <i class="fa fa-eye active"></i>
                             <% end %>
                         <% else %>
-                            <strong>Currently hidden</strong> (only visible to you)
+                            <strong>Private</strong>, only visible to you | <%= link_to "Preview", convention %>
                             <%= button_to toggle_active_path(convention), data: { confirm: "Are you certain the convention #{convention.name} and its maps are ready to be shared with the public?"}, class: "active_toggle" do %>
                                 <i class="fa fa-eye"></i>
                             <% end %>
