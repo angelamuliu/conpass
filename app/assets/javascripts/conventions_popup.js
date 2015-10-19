@@ -7,21 +7,17 @@ function div_hide(){
 document.getElementById('openHere').style.display = "none";
 }
 
+// By default starts chronological
 function alphabetize(){
-if(document.getElementById('alphabetical').style.display == "none")
-{
-	document.getElementById('alphabet').style.fontWeight = 700;
-	document.getElementById('alphabet').style.color = "red";
-	document.getElementById('chronological').style.display = "none";
-	document.getElementById('alphabetical').style.display = "block";
-}
-else
-{
-	document.getElementById('alphabet').style.fontWeight = 400;
-	document.getElementById('alphabet').style.color = "gray";
-	document.getElementById('chronological').style.display = "block";
-	document.getElementById('alphabetical').style.display = "none";
-}
+    if ($("#alphabet").text().indexOf("ABC") > -1) { // Sort alphabetical
+        document.getElementById('chronological').style.display = "none";
+        document.getElementById('alphabetical').style.display = "block";
+        document.getElementById('alphabet').innerHTML = "Sort (Chronological)";
+    } else { // Sort chronological
+        document.getElementById('chronological').style.display = "block";
+        document.getElementById('alphabetical').style.display = "none";
+        document.getElementById('alphabet').innerHTML = "Sort (ABC)";
+    }
 }
 
 function sort() {

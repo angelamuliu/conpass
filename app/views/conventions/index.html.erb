@@ -1,14 +1,15 @@
 
 <div class="container-fluid">
-    <div class="row top_index">
-        <div class="col-xs-8">
+
+    <div class="row topbar top_index">
+        <div id = "title" class="col-xs-10">
             <h3>Browse Conventions</h3>
         </div>
-<!--    <div  onclick ="alphabetize()" class="col-xs-1">
-            <a href="#"id="alphabet">
-                ABC
+        <div onclick ="alphabetize()" class="col-xs-1">
+            <a href="javascript:;" id="alphabet">
+                Sort (ABC)
             </a>
-        </div> -->
+        </div>
     </div>
 
     <ul id="chronological" class="chronological convention_list">
@@ -29,35 +30,27 @@
         <% end %>
     </ul>
 
-<!-- 
+
     <ul id="alphabetical" class="alphabetical convention_list">
-        <%# @alphabetical.each do |convention| %>
-        <li class="row convention">
-        <div class="con_id">
-                <%#= convention.id %>
-        </div>
-            <div class="con_image">
-                <img style="width:90%;height:70px;" src="http://1.bp.blogspot.com/-Zr0pmj1bLnM/Uhh7kROhGYI/AAAAAAAAGkE/W51xFS75-Ec/s1600/no-thumbnail.png">
-            </div>
-            <p>
-                <h5><%#= link_to convention.name, convention %></h5>
-                <%#= convention.start_date.strftime('%m/%d/%y') %> - <%#= convention.end_date.strftime('%m/%d/%y') %>
-        <%#= convention.start_date.strftime('%l:%M%p') %> - <%#= convention.end_date.strftime('%l:%M%p') %>
-            </p>
-        </li>
-        <%# end %>
-    </ul> -->
-
-
-
-
+        <% @alphabetical.each do |convention| %>
+            <li class="row convention">
+                <div class="con_id">
+                        <%= convention.id %>
+                </div>
+                <div class="con_image">
+                    <img style="" src="/assets/tocLogo.png">
+                </div>
+                <p>
+                    <h5><%= link_to convention.name, convention %></h5>
+                    <%= convention.start_date.strftime('%m/%d/%y') %> - <%= convention.end_date.strftime('%m/%d/%y') %>
+                    <%= convention.start_date.strftime('%l:%M%p') %> - <%= convention.end_date.strftime('%l:%M%p') %>
+                </p>
+            </li>
+        <% end %>
+    </ul>
 
 </div>
 
-
-
-
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 
 <div id="openHere">
 	<div id="popupSort">
