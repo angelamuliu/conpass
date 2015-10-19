@@ -1,61 +1,52 @@
 
 <div class="container-fluid">
-    <div class="row topbar">
-        <div id = "title" class="col-xs-8">
+    <div class="row top_index">
+        <div class="col-xs-8">
             <h3>Browse Conventions</h3>
         </div>
-        <div class="col-xs-1">
-            <a href="#">
-                <i class="fa fa-star"></i>
-            </a>
-        </div>
-        <div class="col-xs-1 filter">
-            <a id="popup" onclick="div_show()" href="#">
-                <i class="fa fa-filter"></i>
-            </a>
-        </div>
-        <div  onclick ="alphabetize()" class="col-xs-1">
+<!--    <div  onclick ="alphabetize()" class="col-xs-1">
             <a href="#"id="alphabet">
                 ABC
             </a>
-        </div>
+        </div> -->
     </div>
 
-    <ul id="chronological" class="chronological">
+    <ul id="chronological" class="chronological convention_list">
         <% @conventions.each do |convention| %>
         <li class="row convention">
-        <div class="con_id">
-                <%= convention.id %>
-        </div>
+            <div class="con_id">
+                    <%= convention.id %>
+            </div>
             <div class="con_image">
-             <img style="" src="/assets/tocLogo.png">
+                <img style="" src="/assets/tocLogo.png">
             </div>
             <p>
                 <h5><%= link_to convention.name, convention %></h5>
                 <%= convention.start_date.strftime('%m/%d/%y') %> - <%= convention.end_date.strftime('%m/%d/%y') %>
-        <%= convention.start_date.strftime('%l:%M%p') %> - <%= convention.end_date.strftime('%l:%M%p') %>
+                <%= convention.start_date.strftime('%l:%M%p') %> - <%= convention.end_date.strftime('%l:%M%p') %>
             </p>
         </li>
         <% end %>
     </ul>
 
-    <ul id="alphabetical" class="alphabetical">
-        <% @alphabetical.each do |convention| %>
+<!-- 
+    <ul id="alphabetical" class="alphabetical convention_list">
+        <%# @alphabetical.each do |convention| %>
         <li class="row convention">
         <div class="con_id">
-                <%= convention.id %>
+                <%#= convention.id %>
         </div>
             <div class="con_image">
                 <img style="width:90%;height:70px;" src="http://1.bp.blogspot.com/-Zr0pmj1bLnM/Uhh7kROhGYI/AAAAAAAAGkE/W51xFS75-Ec/s1600/no-thumbnail.png">
             </div>
             <p>
-                <h5><%= link_to convention.name, convention %></h5>
-                <%= convention.start_date.strftime('%m/%d/%y') %> - <%= convention.end_date.strftime('%m/%d/%y') %>
-        <%= convention.start_date.strftime('%l:%M%p') %> - <%= convention.end_date.strftime('%l:%M%p') %>
+                <h5><%#= link_to convention.name, convention %></h5>
+                <%#= convention.start_date.strftime('%m/%d/%y') %> - <%#= convention.end_date.strftime('%m/%d/%y') %>
+        <%#= convention.start_date.strftime('%l:%M%p') %> - <%#= convention.end_date.strftime('%l:%M%p') %>
             </p>
         </li>
-        <% end %>
-    </ul>
+        <%# end %>
+    </ul> -->
 
 
 

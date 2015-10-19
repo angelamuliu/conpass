@@ -55,8 +55,14 @@ textarea {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
 }
 
-// IF YOU WANT YOUR THING TO HAVE PADDING, put it in a <section></section> tag!
+hr {
+    border-bottom: 1px solid #0069d3;
+}
 
+// IF YOU WANT YOUR THING TO HAVE PADDING, put it in a <section></section> tag!
+section {
+    padding:10px;
+}
 
     // ------------------------------------------------------------
 ////// HEADER TEXTS
@@ -82,6 +88,7 @@ h4 {
     border-bottom: 3px solid #2a7a00;
     color: white;
 }
+a.greenbtn { color: white; }
 .greenbtn:hover { 
     background-color: #5aa227;
     color: white;

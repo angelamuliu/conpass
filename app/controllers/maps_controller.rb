@@ -12,6 +12,13 @@ class MapsController < ApplicationController
   def show
     @map = Map.find(params[:id])
     @booths = @map.booths
+    if params[:centerbooth_id]
+        @centeredBooth = Booth.find(params[:centerbooth_id])
+    end
+    if params[:vendorbooth_id]
+        @vendorBooth = VendorBooth.find(params[:vendorbooth_id])
+        @centeredVendor = Vendor.find(@vendorBooth.vendor.id)
+    end
   end
 
   # GET /maps/1/quickview/

@@ -44,3 +44,26 @@ $(document).ready(function() {
     })
 
 })
+
+
+
+
+
+
+// Probably should move this later
+
+// USED ON: MAP SHOW PAGE (when given optional param :centeredBooth_id)
+// Given the x,y coords of topleft point of booth and width and height,
+// centers view on the booth and highlights it too
+function centerOnBooth(x, y, width, height, id) {
+    var left = -x - 0.5 * width + 0.5 * (window.innerWidth);
+    var top = -y - height + 0.5 * (window.innerHeight);
+    $("#mapArea").css("left", left);
+    $("#mapArea").css("top", top);
+    $(".booth[data-id="+id+"]").addClass("highlight");
+}
+
+
+
+
+

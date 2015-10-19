@@ -9,8 +9,12 @@
 }
 
 #workArea {
-    background-color: white;
+    background-color: #f8f5f2;
     position: relative;
+    
+    // http://stackoverflow.com/questions/7261464/is-it-possible-to-create-a-grid-like-background-in-css-without-images-or-tables
+    background-image: repeating-linear-gradient(0deg, #fff, #fff 1px, transparent 1px, transparent 20px),
+    repeating-linear-gradient(-90deg, #fff, #fff 1px, transparent 1px, transparent 20px);
 }
 
 .booth {

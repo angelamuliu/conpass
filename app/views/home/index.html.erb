@@ -6,13 +6,22 @@
         <% if @conventions.active.size < 1 %>
             <h3>Welcome to Beacon, <%= current_user.username %>!</h3>
             <p>
-                You're one step closer to making your own interactive maps for whatever convention, fair, or fun activity you're planning! HERE ARE SOME GUIDES???S?S??S?
+                Ready to make an interactive map for your convention, fair, or other fun activity?
+                <br />
+                Click <%= link_to "here", new_convention_path %> or on the "New Convention" button below to get started!
+            </p>
+            <p>
+                If you’re new to Beacon, check out this <%= link_to "faq", faq_path %> to help you get started. <br />
+                For your convenience, we've made a sample convention for you to use as reference.
             </p>
         <% else %>
             <h3>Hello, <%= current_user.username %></h3>
         <% end %>
-            <%= link_to new_convention_path, class: 'btn btn-lg' do %>
+            <%= link_to new_convention_path, class: 'greenbtn btn btn-lg' do %>
                 <i class="fa fa-plus"></i> New Convention
+            <% end %>
+            <%= link_to faq_path, class: 'btn' do %>
+                <i class="fa fa-question-circle"></i> FAQ
             <% end %>
         </section>
     </div>
@@ -27,12 +36,12 @@
                     <% end %>
                     <p>
                         <% if convention.active %>
-                            <strong>Currently active</strong> (visible to public)
+                            <strong>Active</strong>, visible to public | <%= link_to "View public page", convention %>)
                             <%= button_to toggle_active_path(convention), data: { confirm: "Are you sure you want to deactive this convention? This will prevent attendees from viewing the maps."},class: "active_toggle" do %>
                                 <i class="fa fa-eye active"></i>
                             <% end %>
                         <% else %>
-                            <strong>Currently hidden</strong> (only visible to you)
+                            <strong>Private</strong>, only visible to you | <%= link_to "Preview", convention %>
                             <%= button_to toggle_active_path(convention), data: { confirm: "Are you certain the convention #{convention.name} and its maps are ready to be shared with the public?"}, class: "active_toggle" do %>
                                 <i class="fa fa-eye"></i>
                             <% end %>
@@ -40,11 +49,12 @@
 
                         <strong>Maps: </strong>
                         <% if convention.maps.size < 1 %>
-                            This convention doesn't have any maps yet. Would you like to make one?
+                            This convention doesn't have any maps yet! <%= link_to "Click here to add one.", new_map_path(convention_id: convention.id) %>
                         <% else %>
                             <% convention.maps.each do |map| %>
                                 <%= link_to map.name, craft_map_path(map) %><% if map != convention.maps.last() %>,<% end %>
                             <% end %>
+                            <br /><%= link_to "Add another map", new_map_path(convention_id: convention.id) %>
                         <% end %>
                     </p>
                 </li>

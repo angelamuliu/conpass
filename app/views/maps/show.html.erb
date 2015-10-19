@@ -1,6 +1,18 @@
 
 <div class="container-fluid noPad">
 
+<div class="row top_index mapshow">
+    <%= link_to convention_path(@map.convention), class: "backToCon" do %>
+        <i class="fa fa-th-list"></i>
+    <% end %>
+    <% if @centeredVendor %>
+        <h3><%= @map.name %> | <%= @centeredVendor.name %></h3>
+        <span><%= @vendorBooth.timeRange() %><span>
+    <% else %>
+        <h3><%= @map.name %></h3>
+    <% end %>
+</div>
+
 <div id="mapArea_container" class="row">
     <div id="mapArea" style="width:<%= @map.width %>px; height:<%= @map.height %>px">
         <% @booths.each do |booth| %>
@@ -24,6 +36,11 @@
         <% end %>
     </div>
 </div>
+
+<%# If SHOW is passed in the optional param :centerBooth_id, we can find a booth to center the map on! %>
+<% if @centeredBooth %>
+    <script>centerOnBooth(<%= @centeredBooth.x_pos %>, <%= @centeredBooth.y_pos %>, <%= @centeredBooth.width %>, <%= @centeredBooth.height %>, <%= @centeredBooth.id %>)</script>
+<% end %>
 
 <script>
 function vendor_toggle(x) {

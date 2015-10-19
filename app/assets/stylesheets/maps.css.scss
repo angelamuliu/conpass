@@ -9,7 +9,19 @@
 }
 
 #mapArea {
-    background-color: white;
+    background-color: #f8f5f2;
     position: relative;
+    z-index: 1;
 }
 
+.mapshow {
+    z-index: 2;
+    position: relative;
+    width: 100%;
+    padding-left:15px;
+}
+
+.backToCon {
+    float: right;
+    padding:10px;
+}
