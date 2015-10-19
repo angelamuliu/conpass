@@ -15,6 +15,8 @@
 
     <%= f.input :convention_id, :collection => Convention.all, :selected => params[:convention_id] %>
     <%= f.input :name, :label => "Map name/location" %>
+    <%= f.input :start_date %>
+    <%= f.input :end_date %>
     <%= f.input :width, :label => "Width (px)" %>
     <%= f.input :height, :label => "Height (px)" %>
 

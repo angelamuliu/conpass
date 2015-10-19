@@ -19,6 +19,7 @@ if(document.getElementById('alphabet').innerHTML.contains('Sort (ABC)'))
 else
 {
 	document.getElementById('alphabet').style.fontWeight = 400;
+	document.getElementById('alphabet').style.color = "gray";
 	document.getElementById('chronological').style.display = "block";
 	document.getElementById('alphabetical').style.display = "none";
 	document.getElementById('alphabet').innerHTML = "Sort (ABC)";
