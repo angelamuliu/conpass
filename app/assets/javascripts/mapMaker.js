@@ -308,6 +308,7 @@ function mapMaker(workArea, toolBar) {
     })
 
     $(".close_vendorBooth").click(function() {
+        debugger;
         toolContext.vendorBooth.hide();
     })
 

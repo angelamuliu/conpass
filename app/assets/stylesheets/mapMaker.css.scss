@@ -433,7 +433,8 @@ ul.vendorBooth span.dateRange {
     float: right;
     color: white;
 }
-.close_vendorBooth:hover { color: #cce1f6; }
+.vendorBooth a.close_vendorBooth {color: white;}
+.vendorBooth .close_vendorBooth:hover { color: #cce1f6; }
 
 #vendorbooth_form {
     font-family: sans-serif;

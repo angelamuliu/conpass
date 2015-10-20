@@ -3,14 +3,9 @@
 
 <div class="row top_index mapshow">
     <%= link_to convention_path(@map.convention), class: "backToCon" do %>
-        <i class="fa fa-th-list"></i>
+        <i class="fa fa-th-list"></i> Back
     <% end %>
-    <% if @centeredVendor %>
-        <h3><%= @map.name %> | <%= @centeredVendor.name %></h3>
-        <span><%= @vendorBooth.timeRange() %><span>
-    <% else %>
-        <h3><%= @map.name %></h3>
-    <% end %>
+    <h3><%= @map.name %></h3>
 </div>
 
 <div id="mapArea_container" class="row">
@@ -20,8 +15,10 @@
             onclick: "javascript:centerOnBooth(#{booth.x_pos}, #{booth.y_pos}, #{booth.width}, #{booth.height}, #{booth.id})",
              style: "left:#{booth.x_pos}px; top:#{booth.y_pos}px; width:#{booth.width}px; height:#{booth.height}px", "data-id": "#{booth.id}" do %>
             <div class="booth_label"><%= booth.id %></div>
-            <ul class="unordered vendorBooth">
-                <li>Vendors assigned to this booth<a href="javascript:;" class="close_vendorBooth" ><i class="fa fa-times"></i></a></li>
+            <ul class="unordered vendorBooth" onclick="closeVendorBooth(event)">
+                <li>Vendors assigned to this booth
+                    <a href="javascript:;" class="close_vendorBooth" ><i class="fa fa-times"></i></a>
+                </li>
                 <% if booth.vendor_booths.size > 0 %>
                     <% booth.vendor_booths.each do |vendor_booth| %>
                         <li class="vendorBooth v<%= vendor_booth.vendor.id %>" data-id="<%= vendor_booth.id %>" >

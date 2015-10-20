@@ -60,12 +60,19 @@ function centerOnBooth(x, y, width, height, id) {
     $("ul.vendorBooth").slideUp();
     var left = -x - 0.5 * width + 0.5 * (window.innerWidth);
     var top = -y;
-    // var top = -y - height + 0.5 * (window.innerHeight);
+
     $("#mapArea").css("left", left);
     $("#mapArea").css("top", top);
     $(".booth[data-id="+id+"]").addClass("highlight");
     $(".booth[data-id="+id+"] ul.vendorBooth").slideDown();
 }
+function closeVendorBooth(event) {
+    event.stopPropagation();
+    $("ul.vendorBooth").slideUp();
+}
+
+
+
 
 
 
