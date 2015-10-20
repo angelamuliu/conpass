@@ -16,9 +16,11 @@
 <div id="mapArea_container" class="row">
     <div id="mapArea" style="width:<%= @map.width %>px; height:<%= @map.height %>px">
         <% @booths.each do |booth| %>
-            <%= content_tag :div, "", class: "booth #{booth.cssVendorClasses}", onclick: "javascript:vendor_toggle(#{booth.id})", style: "left:#{booth.x_pos}px; top:#{booth.y_pos}px; width:#{booth.width}px; height:#{booth.height}px", "data-id": "#{booth.id}" do %>
+            <%= content_tag :div, "", class: "booth #{booth.cssVendorClasses}", 
+            onclick: "javascript:centerOnBooth(#{booth.x_pos}, #{booth.y_pos}, #{booth.width}, #{booth.height}, #{booth.id})",
+             style: "left:#{booth.x_pos}px; top:#{booth.y_pos}px; width:#{booth.width}px; height:#{booth.height}px", "data-id": "#{booth.id}" do %>
             <div class="booth_label"><%= booth.id %></div>
-            <ul class="unordered vendorBooth" onclick="javascript:vendor_toggle(<%= booth.id %>)">
+            <ul class="unordered vendorBooth">
                 <li>Vendors assigned to this booth<a href="javascript:;" class="close_vendorBooth" ><i class="fa fa-times"></i></a></li>
                 <% if booth.vendor_booths.size > 0 %>
                     <% booth.vendor_booths.each do |vendor_booth| %>

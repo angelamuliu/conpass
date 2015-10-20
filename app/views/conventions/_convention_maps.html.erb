@@ -2,15 +2,9 @@
 <ul class="maps">
     <% maps.each do |map| %>
     <li class="row convention">
-    <div class="con_id">
-            <%= map.id %>
-    </div>
-        <div class="con_image">
-            <img style="width:90%;height:70px;" src="http://1.bp.blogspot.com/-Zr0pmj1bLnM/Uhh7kROhGYI/AAAAAAAAGkE/W51xFS75-Ec/s1600/no-thumbnail.png">
-        </div>
-        <p>
-            <h5><%= link_to map.name, map %></h5>
-        </p>
+        <%= link_to map do %>
+            <h5> <i class="fa fa-map"></i> <%= map.name %></h5>
+        <% end %>
     </li>
     <% end %>
 </ul>

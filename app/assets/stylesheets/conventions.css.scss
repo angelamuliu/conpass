@@ -245,6 +245,18 @@ ul {
 #convention_maps {
   display: none;
 }
+ul.maps li.row i {
+    display:inline-block;
+}
+ul.maps li.row {
+    padding:10px;
+}
+ul.maps li:nth-child(odd) {
+    background-color: #f0ece7;
+}
+ul.maps li:nth-child(even) {
+    background-color: #f8f5f2;
+}
 
 
 
