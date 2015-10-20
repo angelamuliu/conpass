@@ -4,10 +4,10 @@ class ConventionsController < ApplicationController
   # GET /conventions
   # GET /conventions.json
   def index
-    @conventions = Convention.all.chronological
-    @alphabetical = Convention.all.alphabetical
-    @upcoming = Convention.all.upcoming.ids
-    @current = Convention.all.current.ids
+    @conventions = Convention.active.chronological
+    @alphabetical = Convention.active.alphabetical
+    @upcoming = Convention.active.upcoming.ids
+    @current = Convention.active.current.ids
   end
 
   # GET /conventions/1
