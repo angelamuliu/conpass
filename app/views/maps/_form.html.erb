@@ -5,6 +5,12 @@
 
         <ul class="unordered row">
             <li>
+                <p>
+                    <i class="fa fa-info-circle"></i> A map is any sort of location that a convention takes place at. A room for a job fair, a park for an outdoor event...The place that will be the space for your attendees and vendors!
+                    <br />You'll be drawing it soon, but you can change the map's size anytime later.
+                </p>
+            </li>
+            <li>
                 <%= f.input :convention_id, :collection => Convention.all, :selected => params[:convention_id] %>
             </li>
             <li>
