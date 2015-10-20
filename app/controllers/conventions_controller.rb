@@ -56,7 +56,9 @@ class ConventionsController < ApplicationController
 
     respond_to do |format|
       if @convention.save
-        format.html { redirect_to quickview_convention_url(@convention), notice: 'Convention was successfully created.' }
+        format.html { redirect_to new_map_path(convention_id: @convention.id), notice: 'Convention was successfully created.' }
+
+        # format.html { redirect_to quickview_convention_url(@convention), notice: 'Convention was successfully created.' }
         format.json { render :quickview, status: :created, location: @convention }
       else
         format.html { render :new }
