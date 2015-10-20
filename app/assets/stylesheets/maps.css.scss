@@ -38,3 +38,9 @@
     bottom:0;
     width: 100%;
 }
+#zoomButtons {
+    position: fixed;
+    right: 0;
+    top: 115px;
+    z-index: 5;
+}
