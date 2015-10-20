@@ -65,5 +65,32 @@ function centerOnBooth(x, y, width, height, id) {
 
 
 
+// Should definitely move this elsewhere sometime
+
+var zoomOptions = [0.5, 1, 2, 4];
+var zoomIndex = 1; // Refers to index in array above, 1 => 1
+
+function zoomIn() {
+    if (zoomIndex < zoomOptions.length - 1) {
+        zoomIndex++;
+        var zoomFactor = zoomOptions[zoomIndex] / zoomOptions[zoomIndex - 1];
+
+        // First zoom in map area
+        var mapWidth = $("#mapArea").css("width");
+        var mapHeight = $("#mapArea").css("height");
+        $("#mapArea").css("width", mapWidth * zoomFactor);
+        $("#mapArea").css("height", mapHeight * zoomFactor);
+
+    }
+}
+function zoomOut() {
+    if (zoomIndex > 0) {
+        zoomIndex--;
+    }
+}
+
+
+
+
 
 

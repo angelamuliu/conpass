@@ -91,6 +91,9 @@ function mapMaker(workArea, toolBar) {
 
     var selectedTool = TOOLS.SELECT; // Which tool is the user currently using, default is SELECT
     var toolContext = {}; // Store information about interactions as needed
+    var transform = { // Store information about transformations to ensure data is saved correctly
+        "zoom" : 1 // 100%
+    };
 
     var vendorDict = {}; // {"vendor ID" : vendor name}; Updated and used in vendor tag creation
     var tagDict = {}; // {"tag ID" : tag name}; Updated and used in vendor tag creation

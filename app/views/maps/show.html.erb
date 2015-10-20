@@ -42,6 +42,12 @@
     <script>centerOnBooth(<%= @centeredBooth.x_pos %>, <%= @centeredBooth.y_pos %>, <%= @centeredBooth.width %>, <%= @centeredBooth.height %>, <%= @centeredBooth.id %>)</script>
 <% end %>
 
+<%# Zoom in and out buttons %>
+<div id="zoomButtons">
+    <a href="javascript:;" id="zoomIn"><i class="fa fa-plus"></i></a>
+</div>
+
+
 <script>
 function vendor_toggle(x) {
 	if($('[data-id=' + x + ']')[0].children[0].style.display = "none")
