@@ -91,7 +91,7 @@ class ConventionsController < ApplicationController
     end
     @convention.destroy
     respond_to do |format|
-      format.html { redirect_to conventions_url, notice: 'Convention was successfully destroyed.' }
+      format.html { redirect_to home_url, notice: 'Convention was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
