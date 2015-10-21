@@ -28,4 +28,59 @@ $(document).ready(function() {
         $("#" + tabDataId_toShow).show();
         $(this).addClass("selected");
     })
+
+    // Overlay code -> Give anything the class "close_overlay" so clicking it will close
+    // Use: Wrap whatever you want in overlay with div with class overlay
+    $(".close_overlay").click(function(e) {
+        $(this).closest("div.overlay").hide();
+        e.preventDefault();
+        return false;
+    })
+    $(".overlay").click(function() {
+        $(this).hide();
+    })
+    $(".overlay form").click(function(e) {
+        e.stopPropagation();
+    })
+
 })
+
+
+
+
+
+// SHould move this later
+// USED ON: MAP SHOW PAGE
+// centers view on the booth and highlights it too
+function center(boothEl) {
+    var boothX = parseInt(boothEl.css("left"));
+    var boothY = parseInt(boothEl.css("top"));
+    var boothWidth = parseInt(boothEl.css("width"));
+
+    var left = -boothX - 0.5 * boothWidth + 0.5 * (window.innerWidth);
+    var top = -boothY;
+
+    $("#mapArea").css("left", left);
+    $("#mapArea").css("top", top);
+}
+function centerOnBooth() {
+    // debugger;
+    $(".booth").removeClass("highlight");
+    $("ul.vendorBooth").slideUp();
+
+    var booth = $(this);
+    center(booth);
+
+    $(this).addClass("highlight");
+    $(this).children("ul.vendorBooth").slideDown();
+}
+function centerOnBoothWithId(boothId) {
+    var booth = $(".booth[data-id="+boothId+"]");
+    $(".booth").removeClass("highlight");
+    $("ul.vendorBooth").slideUp();
+
+    center(booth);
+
+    booth.addClass("highlight");
+    booth.children("ul.vendorBooth").slideDown();
+}
