@@ -23,6 +23,9 @@
                 <% @maps.each do |map| %>
                     <li>
                         <%= link_to map.name, craft_map_path(map) %>
+                        | <%= link_to map, method: :delete, data: { confirm: 'Are you sure you want to delete this map?' } do %>
+                            <i class="fa fa-trash-o"></i>
+                        <% end %>
                     </li>
                 <% end %>
             </ul>
@@ -34,7 +37,7 @@
 
         <div>
             <%= link_to 'Edit', edit_convention_path(@convention), class: "greenbtn btn-lg" %>
-            <%= link_to 'Destroy', @convention, method: :delete, data: { confirm: 'Are you sure?' }, class: "redbtn btn-lg" %>
+            <%= link_to 'Destroy', @convention, method: :delete, data: { confirm: 'Are you sure you want to delete this convention?' }, class: "redbtn btn-lg" %>
         </div>
 
 

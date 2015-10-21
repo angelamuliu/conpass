@@ -89,9 +89,10 @@ class MapsController < ApplicationController
     if logged_out?
         redirect_to need_account_path
     end
+    @convention = @map.convention
     @map.destroy
     respond_to do |format|
-      format.html { redirect_to maps_url, notice: 'Map was successfully destroyed.' }
+      format.html { redirect_to quickview_convention_url(@convention), notice: 'Map was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
