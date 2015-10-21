@@ -55,6 +55,7 @@ class ConventionsController < ApplicationController
     @convention.user = current_user
 
     respond_to do |format|
+      convert_dates
       if @convention.save
         format.html { redirect_to new_map_path(convention_id: @convention.id), notice: 'Convention was successfully created.' }
         format.json { render :quickview, status: :created, location: @convention }
@@ -73,6 +74,7 @@ class ConventionsController < ApplicationController
     end
 
     respond_to do |format|
+      convert_dates
       if @convention.update(convention_params)
         format.html { redirect_to @convention, notice: 'Convention was successfully updated.' }
         format.json { render :show, status: :ok, location: @convention }
@@ -106,4 +108,11 @@ class ConventionsController < ApplicationController
     def convention_params
       params.require(:convention).permit(:name, :start_date, :end_date)
     end
+
+    def convert_dates
+        params[:convention][:start_date] = convert_to_date(params[:convention][:start_date]) unless params[:convention][:start_date].blank?
+        params[:convention][:end_date] = convert_to_date(params[:convention][:end_date]) unless params[:convention][:end_date].blank?
+    end
 end
+
+

@@ -38,6 +38,9 @@ gem 'bootstrap-sass', '~> 3.3.5'
 
 gem 'bcrypt-ruby'
 
+gem 'chronic'
+gem 'time_date_helpers'
+
 # Testing
 group :test do 
   gem 'shoulda', '~> 3.5'

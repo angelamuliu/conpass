@@ -9,7 +9,7 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require jquery.datetimepicker
+//= require jquery-ui-timepicker-addon.js
 //= require bootstrap-sprockets
 //= require_tree ./global
 //= require turbolinks

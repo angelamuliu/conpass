@@ -11,12 +11,19 @@
     </div>
   <% end %>
 
+
   <!--input type="text" id="convention_name" name="convention[name]" class="form-control" placeholder="Name" required autofocus-->
   <%= f.input :name, placeholder: "Name", label: false, input_html: { class: "form-control" } %>
-  <%= f.input :start_date %>
-  <%= f.input :end_date %>
+  <%= f.input :start_date, input_html: {id: "convention_start_date"}, as: :string %>
+  <%= f.input :end_date, input_html: {id: "convention_end_date" },as: :string %>
+
 
   <div class="actions">
         <button class="btn btn-lg btn-primary btn-block" type="submit">Save</button>
   </div>
 <% end %>
+
+<script>
+jQuery('#convention_start_date').datetimepicker();
+jQuery('#convention_end_date').datetimepicker();
+</script>
