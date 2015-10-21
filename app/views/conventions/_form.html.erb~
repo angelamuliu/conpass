@@ -13,7 +13,7 @@
   <% end %>
 
   <%= f.input :name %>
-  <strong> Start Date: </strong><input id="convention_start_date" type="text"><br>
+  <strong> Start Date: </strong><input id="convention_start_date" type="text">
   <strong> End Date: </strong><input id="convention_end_date" type="text">
 
   <div class="actions">
