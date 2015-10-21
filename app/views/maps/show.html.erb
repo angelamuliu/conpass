@@ -1,4 +1,6 @@
 
+<%= javascript_include_tag "mapViewer.js" %>
+
 <div class="container-fluid noPad">
 
 <div class="row top_index mapshow">
@@ -37,7 +39,7 @@
 
 <%# If SHOW is passed in the optional param :centerBooth_id, we can find a booth to center the map on! %>
 <% if @centeredBooth %>
-    <script>centerOnBooth(<%= @centeredBooth.x_pos %>, <%= @centeredBooth.y_pos %>, <%= @centeredBooth.width %>, <%= @centeredBooth.height %>, <%= @centeredBooth.id %>)</script>
+    <script>centerOnBoothWithId(<%= @centeredBooth.id %>)</script>
 <% end %>
 
 <%# Zoom in and out buttons %>
@@ -46,16 +48,3 @@
     <a href="javascript:;" onClick="zoomOut()" id="zoomOut" class="btn-circle"><i class="fa fa-minus"></i></a>
 </div>
 
-
-<script>
-function vendor_toggle(x) {
-	if($('[data-id=' + x + ']')[0].children[0].style.display = "none")
-	{
-		$('[data-id=' + x + ']')[0].children[0].style.display = "block";
-	}
-	else
-	{
-		$('[data-id=' + x + ']')[0].children[0].style.display = "none";
-	}
-}
-</script>

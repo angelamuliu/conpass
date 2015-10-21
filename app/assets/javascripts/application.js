@@ -48,22 +48,10 @@ $(document).ready(function() {
 
 
 
-// ------------------------------------------------
 
-// Probably should move this later
-
+// SHould move this later
 // USED ON: MAP SHOW PAGE
 // centers view on the booth and highlights it too
-function centerOnBooth() {
-    $(".booth").removeClass("highlight");
-    $("ul.vendorBooth").slideUp();
-
-    var booth = $(this);
-    center(booth);
-
-    $(this).addClass("highlight");
-    $(this).children("ul.vendorBooth").slideDown();
-}
 function center(boothEl) {
     var boothX = parseInt(boothEl.css("left"));
     var boothY = parseInt(boothEl.css("top"));
@@ -75,68 +63,24 @@ function center(boothEl) {
     $("#mapArea").css("left", left);
     $("#mapArea").css("top", top);
 }
-function closeVendorBooth(event) {
-    event.stopPropagation();
+function centerOnBooth() {
+    // debugger;
+    $(".booth").removeClass("highlight");
     $("ul.vendorBooth").slideUp();
+
+    var booth = $(this);
+    center(booth);
+
+    $(this).addClass("highlight");
+    $(this).children("ul.vendorBooth").slideDown();
 }
-$(document).ready(function() {
-    $(".booth").click(centerOnBooth);
-    // $(".booth").on("click touchstart", centerOnBooth);
+function centerOnBoothWithId(boothId) {
+    var booth = $(".booth[data-id="+boothId+"]");
+    $(".booth").removeClass("highlight");
+    $("ul.vendorBooth").slideUp();
 
-})
+    center(booth);
 
-// ------------------------------------------------
-
-// Should definitely move this elsewhere sometime
-
-// ZOOMING IN/OUT
-var zoomOptions = [0.5, 1, 2, 4];
-var zoomIndex = 1; // Refers to index in array above, 1 => 1
-
-function zoomIn() {
-    if (zoomIndex < zoomOptions.length - 1) {
-        zoomIndex++;
-        var zoomFactor = zoomOptions[zoomIndex] / zoomOptions[zoomIndex - 1];
-        zoom(zoomFactor);
-    }
+    booth.addClass("highlight");
+    booth.children("ul.vendorBooth").slideDown();
 }
-function zoomOut() {
-    if (zoomIndex > 0) {
-        zoomIndex--;
-        var zoomFactor = zoomOptions[zoomIndex] / zoomOptions[zoomIndex + 1];
-        zoom(zoomFactor);
-    }
-}
-function zoom(zoomFactor) {
-    // First zoom the map
-    var mapWidth = parseInt($("#mapArea").css("width"));
-    var mapHeight = parseInt($("#mapArea").css("height"));
-    $("#mapArea").css("width", mapWidth * zoomFactor);
-    $("#mapArea").css("height", mapHeight * zoomFactor);
-
-    // Zoom the booths
-    var booths = $(".booth");
-    for (var i = 0; i < booths.length; i++) {
-        var booth = $(booths[i]);
-        var boothX = parseInt(booth.css("left"));
-        var boothY = parseInt(booth.css("top"));
-        var boothWidth = parseInt(booth.css("width"));
-        var boothHeight = parseInt(booth.css("height"));
-
-        booth.css("left", boothX * zoomFactor);
-        booth.css("top", boothY * zoomFactor);
-        booth.css("width", boothWidth * zoomFactor);
-        booth.css("height", boothHeight * zoomFactor);
-    }
-
-    // Recenter on the highlighted booth if any
-    if ($(".booth.highlight").length > 0) {
-        center($(".booth.highlight").first());
-    }
-}
-
-
-
-
-
-
