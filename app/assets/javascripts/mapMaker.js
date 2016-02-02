@@ -7,6 +7,7 @@
 
 //= require jquery.datetimepicker
 
+//= require ./mapMaker2.js
 
 // TODO : Something that clears objs with the ".deleted" class b/c otherwise there
 // might be millions if someone works in a like 1 hour session lol
@@ -48,7 +49,7 @@ $(document).ready(function() {
     $("#workArea").css("width", gon.map.width);
     $("#workArea").css("height", gon.map.height);
 
-    mapMaker($("#workArea"), $("#toolBar"));
+    // mapMaker1($("#workArea"), $("#toolBar"));
 
 })
 
@@ -56,7 +57,7 @@ $(document).ready(function() {
 
 
 
-function mapMaker(workArea, toolBar) {
+function mapMaker1(workArea, toolBar) {
 
     $("#save").click(saveMap);
 
@@ -390,6 +391,7 @@ function mapMaker(workArea, toolBar) {
     })
 
     $(".booth").mousedown(function(e) {
+        debugger;
         switch(selectedTool) {
             case TOOLS.ERASER:
                 deleteBoothToHistory($(this), false);
@@ -585,7 +587,7 @@ function mapMaker(workArea, toolBar) {
         boothEl.keyup(function(e) {
             senseKeyUp(e);
         })
-    }
+    } // End addBoothListeners
 
     function makeBoothEl(left, top, id, width, height) {
         width = width === undefined ? 0 : width;
