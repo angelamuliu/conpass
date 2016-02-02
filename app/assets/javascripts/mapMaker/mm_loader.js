@@ -7,6 +7,7 @@ MapMaker.loadListeners = function() {
 
     MapMaker.booth.loadListeners();
     MapMaker.vendor.loadListeners();
+    MapMaker.tag.loadListeners();
 
     $('.datetimepicker').datetimepicker();
 

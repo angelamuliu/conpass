@@ -53,16 +53,8 @@ MapMaker.vendor.updateToHistory = function() {
     actionHistory.push(vendorHistory);
 }
 
-// Given a form, creates a vendor DOM element and attaches listeners
-MapMaker.vendor.makeEl = function() {
-    // Remove tooltip that appears if theres no vendors
-    $("#vendor_list li.no_models").remove();
-
-    MapMaker.lastVendorId++;
-    var name = $("input[name='vendor_name']").val();
-    var url = $("input[name='vendor_url']").val();
-    var desc = $("textarea[name='vendor_desc']").val();
-
+// Given related fields, returns a vendor DOM element
+MapMaker.vendor.makeEl = function(vendorId, name, url, desc) {
     var newVendorEl = $("<li data-id=\"t"+ MapMaker.lastVendorId + "\">" +
                         "<div class=\"vendorshow\">" + 
                             "<i class=\"fa fa-circle-o drag_assign\" draggable=\"true\"></i> " +
@@ -79,9 +71,22 @@ MapMaker.vendor.makeEl = function() {
                             "<strong>Tags: </strong><ul class=\"vendor_tags\"></ul>" + 
                         "</div>" + 
                         "</li>");
+    return newVendorEl;
+}
+
+// Given a form, creates a vendor DOM element and attaches listeners
+MapMaker.vendor.addToDom = function() {
+    // Remove tooltip that appears if theres no vendors
+    $("#vendor_list li.no_models").remove();
+
+    MapMaker.lastVendorId++;
+    var name = $("input[name='vendor_name']").val();
+    var url = $("input[name='vendor_url']").val();
+    var desc = $("textarea[name='vendor_desc']").val();
+
+    var newVendorEl = MapMaker.vendor.makeEl(MapMaker.lastVendorId, name, url, desc);
     MapMaker.vendor.addListeners(newVendorEl, true);
     $("#vendor_list ul.unordered").append(newVendorEl);
-    return newVendorEl;
 }
 
 // Given a vendor DOM element, removes it from the DOM tree
@@ -94,8 +99,7 @@ MapMaker.vendor.deleteInDom = function(vendorEl) {
     vendorEl.addClass("deleted");
     $(".vendorBooth .v"+vendorId).addClass("deleted");
 
-    // TODO
-    // deleteVendorTagsInDom(vendorId, true);
+    MapMaker.vendorTag.destoryManyInDom(vendorId, true);
 }
 
 // Given a vendor DOM element, updates it based on input in a form
@@ -107,8 +111,8 @@ MapMaker.vendor.updateInDom = function(vendorEl) {
     vendorEl.find(".vendor_name").text(name);
     vendorEl.find(".vendor_url").text(url);
     vendorEl.find(".vendor_desc").text(desc);
-    // TODO
-    // updateVendorTagNamesInDom(name, toolContext.vendorId, true);
+
+    MapMaker.vendorTag.updateNamesInDom(name, toolContext.vendorId, true);
 }
 
 // Preps the vendor form with data from the vendorEl
@@ -199,24 +203,24 @@ MapMaker.vendor.addListener_formSubmit = function() {
         var formEl = $(this).closest("form");
         if (MapMaker.vendor.validate(formEl)) {
             if (toolContext.vendorAction === ACTIONS.CREATE) { // Add vendor to DOM + log history
-                MapMaker.vendor.makeEl();
+                MapMaker.vendor.addToDom();
                 MapMaker.vendor.addToHistory();
 
                 // Add to our vendor dict so tag form has access later
                 MapMaker.addToVendorDict("t" + MapMaker.lastVendorId, $("input[name='vendor_name']").val());
 
                 toolContext.checkedAfter = MapMaker.checkedIntoSet("t" + MapMaker.lastVendorId, $("#vendor_form ul.assign_vendortags"), true);
-                //TODO
-                // addVendorTagsToHistory();
-                // addVendorTagsToDom();
+
+                MapMaker.vendorTag.addManyToHistory();
+                MapMaker.vendorTag.addManyToDom();
             } else if (toolContext.vendorAction === ACTIONS.UPDATE) { // Update vendor
                 MapMaker.vendor.updateToHistory(formEl);
                 MapMaker.vendor.updateInDom(toolContext.vendorEl);
 
                 toolContext.checkedAfter = MapMaker.checkedIntoSet(toolContext.vendorEl.data("id"), $("#vendor_form ul.assign_vendortags"), true);
-                // TODO
-                // updateVendorTagsToHistory();
-                // updateVendorTagsToDom();
+
+                MapMaker.vendorTag.updateManyToHistory();
+                MapMaker.vendorTag.updateManyInDom();
             }
             $(this).closest("div.overlay").hide();
             MapMaker.resetForm(formEl);
@@ -244,8 +248,7 @@ MapMaker.vendor.addListener_nameClick = function(vendorEl, isTemp) {
 // Clicking the add button to bring up a fresh vendor form
 MapMaker.vendor.addListener_addClick = function() {
     $("#add_vendor").click(function() {
-        // TODO
-        // loadVendortagsIntoForm($("#vendor_form"), true);
+        MapMaker.vendorTag.loadIntoForm($("#vendor_form"), true);
         $("#vendor_form").parent().toggle();
         toolContext.vendorAction = ACTIONS.CREATE;
     })
@@ -265,8 +268,7 @@ MapMaker.vendor.addListener_updateClick = function(vendorEl, isTemp) {
         toolContext.vendorId = toolContext.vendorEl.data("id");
 
         MapMaker.vendor.prepForm(toolContext.vendorEl, $("#vendor_form"));
-        // TODO
-        // loadVendortagsIntoForm($("#vendor_form"), true, toolContext.vendorEl);
+        MapMaker.vendorTag.loadIntoForm($("#vendor_form"), true, toolContext.vendorEl);
         $("#vendor_form").parent().toggle();
     })
 }
@@ -275,12 +277,11 @@ MapMaker.vendor.addListener_updateClick = function(vendorEl, isTemp) {
 MapMaker.vendor.addListener_destoryClick = function(vendorEl, isTemp) {
     if (isTemp) {
         vendorEl = vendorEl.find(".destroy_vendor");
-    } else { // Using ".destroy_vendor" for mass assignment
-        vendorEl = $(this).closest("li");
     }
+
     vendorEl.click(function() {
-        MapMaker.vendor.deleteToHistory(vendorEl, isTemp);
-        MapMaker.vendor.deleteInDom(vendorEl);
+        MapMaker.vendor.deleteToHistory($(this).closest("li"), isTemp);
+        MapMaker.vendor.deleteInDom($(this).closest("li"));
     })
 }
 

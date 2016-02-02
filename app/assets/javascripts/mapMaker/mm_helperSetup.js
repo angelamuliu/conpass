@@ -51,53 +51,6 @@ MapMaker.showVendorBoothForm = function(vendorbooth_formEl) {
     vendorbooth_formEl.parent().show();
 }
 
-// Preps tag form with data from a tag El
-MapMaker.prepTagForm = function(tagEl, formEl) {
-    var name = tagEl.find(".tag_name").text();
-    formEl.find("input[name='tag_name']").val(name);
-}
-
-// Reload the vendortag listings into either the tag or vendor form
-// id = the vendor or tag id to apply to. If new object, -1
-MapMaker.loadVendortagsIntoForm = function(formEl, isVendorForm, modelEl) {
-    var assignEl = formEl.find(".assign_vendortags");
-    assignEl.empty();
-    if (modelEl === undefined) { // NEW forms, nothing checked before
-        var id = -1;
-        toolContext.checkedBefore = new Set();
-        if (isVendorForm) { // Making new vendor
-            for (var key in this.tagDict) {
-                assignEl.append("<li><input type=\"checkbox\" data-tid="+key+" data-vid="+id+">"+this.tagDict[key]+"</li>");
-            }
-        } else { // Making new tag
-            for (var key in this.vendorDict) {
-                assignEl.append("<li><input type=\"checkbox\"data-tid="+id+" data-vid="+key+">"+this.vendorDict[key]+"</li>");
-            }
-        }
-    } else { // UPDATE forms
-        var id = modelEl.data("id");
-        if (isVendorForm) { // Updating vendor
-            toolContext.checkedBefore = checkedIntoSet(id, modelEl.find(".vendor_tags"), true);
-            for (var key in this.tagDict) {
-                var checkbox = $("<li><input type=\"checkbox\" data-tid="+key+" data-vid="+id+">"+this.tagDict[key]+"</li>");
-                if (toolContext.checkedBefore.has("vendor-" + id + "_tag-" + key)) {
-                    checkbox.children("input").prop("checked", true);
-                }
-                assignEl.append(checkbox);
-            }
-        } else { // Updating tag
-            toolContext.checkedBefore = checkedIntoSet(id, modelEl.children(".tagshow_extra"), false);
-            for (var key in this.vendorDict) {
-                var checkbox = $("<li><input type=\"checkbox\"data-tid="+id+" data-vid="+key+">"+this.vendorDict[key]+"</li>");
-                if (toolContext.checkedBefore.has("vendor-" + key + "_tag-" + id)) {
-                    checkbox.children("input").prop("checked", true);
-                }
-                assignEl.append(checkbox);
-            }
-        }
-    }
-}
-
 // Given a number between 0 - 6, converts to string that is day of week
 MapMaker.numToDayOfWeek = function(num) {
     switch(num) {

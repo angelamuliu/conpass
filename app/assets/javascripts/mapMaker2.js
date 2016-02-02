@@ -15,7 +15,9 @@
 //= require ./mapMaker/mm_starter.js
 //= require ./mapMaker/mm_helperSetup.js
 //= require ./mapMaker/mm_boothSetup.js
+//= require ./mapMaker/mm_vendorTagSetup.js
 //= require ./mapMaker/mm_vendorSetup.js
+//= require ./mapMaker/mm_tagSetup.js
 //= require ./mapMaker/mm_loader.js 
 
 $(document).ready(function() {
