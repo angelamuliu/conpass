@@ -1,6 +1,6 @@
 
     // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-////// HELPERS
+////// HELPER FUNCTIONS
     // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 // Given two sets of x, y that define the zone of a rectangle
@@ -28,27 +28,6 @@ MapMaker.resetForm = function(formEl) {
     for (var i = 0; i < inputs.length; i++) {
         $(inputs[i]).val("");
     }
-}
-
-// Given the vendorbooth form element, gets a top left corner and edits the vendorBooth form DOM object
-MapMaker.prepVendorBoothForm = function(vendorbooth_formEl, vendorBoothEl) {
-    var x = event.pageX;
-    var y = event.pageY;
-    vendorbooth_formEl.css("top", y);
-    vendorbooth_formEl.css("left", x);
-    if (vendorBoothEl !== undefined) { // UPDATE - Load in whatever was before
-        var startDate = vendorBoothEl.children(".dateRange").text().split("-")[0];
-        startDate = expandDate(startDate.substring(1, startDate.length-1));
-        var endDate = vendorBoothEl.children(".dateRange").text().split("-")[1];
-        endDate = expandDate(endDate.substring(1, endDate.length-1));
-
-        vendorbooth_formEl.find("input[name='vendorbooth_starttime']").val(startDate);
-        vendorbooth_formEl.find("input[name='vendorbooth_endtime']").val(endDate);
-    }
-}
-
-MapMaker.showVendorBoothForm = function(vendorbooth_formEl) {
-    vendorbooth_formEl.parent().show();
 }
 
 // Given a number between 0 - 6, converts to string that is day of week
@@ -89,7 +68,7 @@ MapMaker.removeBlanks = function(arr) {
 MapMaker.formatDate = function(date) {
     var month = date.getMonth() + 1; // JS date starts at 0 so add 1
     var dateDay = date.getDate();
-    var day = numToDayOfWeek(date.getDay()); // e.g. "Mon"
+    var day = MapMaker.numToDayOfWeek(date.getDay()); // e.g. "Mon"
     var hour = date.getHours() % 13;
     var period = date.getHours() > 11 ? "pm" : "am";
     var min = date.getMinutes();
@@ -99,14 +78,14 @@ MapMaker.formatDate = function(date) {
 
 // Given the shorted date form, reexpands to form like "2015/10/09 02:00"
 MapMaker.expandDate = function(datestring) {
-    var datePieces = removeBlanks(datestring.split(" "));
+    var datePieces = MapMaker.removeBlanks(datestring.split(" "));
     var month = datePieces[0].split("/")[0];
     var day = Number(datePieces[0].split("/")[1]);
     if (day < 10) {
         day = "0" + day;
     }
     var period = datePieces[2].substring(datePieces[2].length - 2);
-    var hour = Number(datePieces[2].split(":")[0]) - 1; // jQuery dateTime picker starts at 0
+    var hour = Number(datePieces[2].split(":")[0]);
     if (period === "pm") {
         hour = hour + 12;
     }

@@ -206,9 +206,9 @@ MapMaker.booth.addListener_mousedown = function(boothEl, isTemp) {
                 break;
             case TOOLS.INFOSELECT:
                 // TODO
-                // if (toolContext.vendorBooth) { toolContext.vendorBooth.hide(); }
-                // toolContext.vendorBooth = boothEl.children(".vendorBooth");
-                // toolContext.vendorBooth.show();
+                if (toolContext.vendorBooth) { toolContext.vendorBooth.hide(); }
+                toolContext.vendorBooth = boothEl.children(".vendorBooth");
+                toolContext.vendorBooth.show();
                 break;
         }
     })
@@ -254,11 +254,11 @@ MapMaker.booth.addListener_drop = function(boothEl, isTemp) {
         e.preventDefault();
         e.stopPropagation();
 
-        // TODO
         var vendorBooth_formEl = $("#vendorbooth_form");
         MapMaker.resetForm(vendorBooth_formEl);
-        // prepVendorBoothForm(vendorBooth_formEl);
-        // showVendorBoothForm(vendorBooth_formEl);
+
+        MapMaker.vendorBooth.prepForm(vendorBooth_formEl);
+        MapMaker.vendorBooth.showForm(vendorBooth_formEl);
 
         toolContext.vendorBoothAction = ACTIONS.CREATE;
         toolContext.boothId = boothEl.data("id");
@@ -266,15 +266,16 @@ MapMaker.booth.addListener_drop = function(boothEl, isTemp) {
     })
 }
 
-// TODO
 MapMaker.booth.addListener_keydown = function(boothEl, isTemp) {
-    if (!isTemp) { boothEl = $(this); }
-    // senseKeyDown(e, boothEl);
+    boothEl.keydown(function(e) {
+        MapMaker.senseKeyDown(e, $(this));
+    })
 }
 
-// TODO
 MapMaker.booth.addListener_keyup = function(boothEl) {
-    // senseKeyUp(e);
+    boothEl.keyup(function(e) {
+        MapMaker.senseKeyUp(e);
+    })
 }
 
 

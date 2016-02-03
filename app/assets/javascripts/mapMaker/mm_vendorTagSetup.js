@@ -107,7 +107,6 @@ MapMaker.vendorTag.updateNamesInDom = function(newName, id, isVendor) {
 // Reload the vendortag listings into either the tag or vendor form
 // id = the vendor or tag id to apply to. If new object, -1
 MapMaker.vendorTag.loadIntoForm = function(formEl, isVendorForm, modelEl) {
-    // debugger;
     var assignEl = formEl.find(".assign_vendortags");
     assignEl.empty();
     if (modelEl === undefined) { // NEW forms, nothing checked before

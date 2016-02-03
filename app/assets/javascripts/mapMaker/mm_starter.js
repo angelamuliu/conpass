@@ -1,6 +1,7 @@
 
 // Map Maker setup file
 // Initializes globals and map maker instance variables
+// Should be loaded first
 
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // CONSTANTS + GLOBALS
@@ -27,6 +28,10 @@ var TYPES = { // Used to store what object we'll want to use
     VENDOR_TAG : "vendor_tag",
     VENDOR_BOOTH : "vendor_booth"
 }
+
+// Keycodes and statuses used later to track which keys are being pressed together
+var KEYCODES = {CTRL : 17, V : 86, C : 67};
+var KEYSTATUS = { CTRL : false, V : false, C : false };
 
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // MAPMAKER INITIALIZATION AND VARIABLES

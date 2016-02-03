@@ -1,13 +1,15 @@
 
-// Contains listeners that attach themselves to DOM existing content
-// and calls functions from other setup files. Must be loaded last
+// Contains listeners that attach themselves to DOM existing content and calls functions
+// from other setup files. Should be loaded last
+// Also temporarily contains the keypress event listener
 
 // Calls all other listener loaders
 MapMaker.loadListeners = function() {
-
+    MapMaker.map.loadListeners();
     MapMaker.booth.loadListeners();
     MapMaker.vendor.loadListeners();
     MapMaker.tag.loadListeners();
+    MapMaker.vendorBooth.loadListeners();
 
     $('.datetimepicker').datetimepicker();
 
@@ -85,3 +87,33 @@ MapMaker.loadBaseListeners = function() {
         e.stopPropagation();
     })
 }
+
+// Since key press events could relate to any model, placing the
+// event handlers here for now. May move in future
+MapMaker.senseKeyDown = function(e, domEl) {
+    if (e.keyCode === KEYCODES.CTRL) {
+        KEYSTATUS.CTRL = true;
+    }
+    if (KEYSTATUS.CTRL && e.keyCode === KEYCODES.C) { // CTRL + C
+    switch(MapMaker.selectedTool) {
+        case TOOLS.SELECT:
+            MapMaker.booth.copy(domEl);
+            break;
+        }
+    }
+    if (KEYSTATUS.CTRL && e.keyCode === KEYCODES.V) { // CTRL + V
+        switch(MapMaker.selectedTool) {
+        case TOOLS.SELECT:
+            MapMaker.booth.paste();
+            break;
+        }
+    }
+}
+
+MapMaker.senseKeyUp = function(e) {
+    if (e.keyCode === KEYCODES.CTRL) {
+        KEYSTATUS.CTRL = false;
+    }
+}
+
+
