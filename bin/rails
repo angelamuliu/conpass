@@ -1,4 +1,9 @@
 #!/usr/bin/env ruby
+
+# Require ssl setup file -> http://underthehood.carwow.co.uk/httpsssl-in-your-local-rails-4-1-development-environment/
+
+require_relative '../config/ssl'
+
 begin
   load File.expand_path("../spring", __FILE__)
 rescue LoadError

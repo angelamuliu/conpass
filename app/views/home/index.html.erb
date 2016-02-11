@@ -1,98 +1,33 @@
 
-<%# Logged in - Convention Map Maker %>
-<% if logged_in? %>
-    <div class="row">
-        <section>
-        <% if @conventions.active.size < 1 %>
-            <h3>Welcome to Beacon, <%= current_user.username %>!</h3>
-            <p>
-                Ready to make an interactive map for your convention, fair, or other fun activity?
-                <br />
-                Click <%= link_to "here", new_convention_path %> or on the "New Convention" button below to get started!
-            </p>
-            <p>
-                If you’re new to Beacon, check out this <%= link_to "faq", faq_path %> to help you get started. <br />
-                For your convenience, we've made a sample convention for you to use as reference.
-            </p>
-        <% else %>
-            <h3>Hello, <%= current_user.username %></h3>
-        <% end %>
-            <%= link_to new_convention_path, class: 'greenbtn btn btn-lg' do %>
-                <i class="fa fa-plus"></i> New Convention
-            <% end %>
-            <%= link_to faq_path, class: 'btn' do %>
-                <i class="fa fa-question-circle"></i> FAQ
-            <% end %>
-        </section>
-    </div>
-    <div class="row">
-        <section>
-        <h3>Your Conventions</h3>
-        <ul class="unordered convention_cards">
-            <% @conventions.each do |convention| %>
-                <li>
-                    <%= link_to quickview_convention_path(convention) do %>
-                        <h4><%= convention.name %></h4>
-                    <% end %>
-                    <p>
-                        <% if convention.active %>
-                            <strong>Active</strong>, visible to public | <%= link_to "View public page", convention %>)
-                            <%= button_to toggle_active_path(convention), data: { confirm: "Are you sure you want to deactive this convention? This will prevent attendees from viewing the maps."},class: "active_toggle" do %>
-                                <i class="fa fa-eye active"></i>
-                            <% end %>
-                        <% else %>
-                            <strong>Private</strong>, only visible to you | <%= link_to "Preview", convention %>
-                            <%= button_to toggle_active_path(convention), data: { confirm: "Are you certain the convention #{convention.name} and its maps are ready to be shared with the public?"}, class: "active_toggle" do %>
-                                <i class="fa fa-eye"></i>
-                            <% end %>
-                        <% end %>
-
-                        <strong>Maps: </strong>
-                        <% if convention.maps.size < 1 %>
-                            This convention doesn't have any maps yet! <%= link_to "Click here to add one.", new_map_path(convention_id: convention.id) %>
-                        <% else %>
-                            <% convention.maps.each do |map| %>
-                                <%= link_to map.name, craft_map_path(map) %><% if map != convention.maps.last() %>,<% end %>
-                            <% end %>
-                            <br /><%= link_to "Add another map", new_map_path(convention_id: convention.id) %>
-                        <% end %>
-                    </p>
-                </li>
-            <% end %>
-        </ul>
-        </section>
-    </div>
 
 <%# Not logged in - Attendee %>
-<% else %>
-    <span id="homeContainer">
-    <!-- First section - Home -->
-    <div id="home">
-      <%= link_to "login", login_path, :class => "login"%>
-      <div class="text-vcenter">
-        <%= image_tag("beacon_logo_m.png", :class => "logo") %>
-        <h1>Beacon</h1>
-        <p>Find your way through a crowd</p>
-        <%= link_to "Browse conventions", conventions_path, class: 'btn btn-lg' %><br />
-        <%= link_to "Make your own", signup_path, class: 'btn btn-lg' %>
+<span id="homeContainer">
+<!-- First section - Home -->
+<div id="home">
+  <%= link_to "login", login_path, :class => "login"%>
+  <div class="text-vcenter">
+    <%= image_tag("beacon_logo_m.png", :class => "logo") %>
+    <h1>Beacon</h1>
+    <p>Find your way through a crowd</p>
+    <%= link_to "Browse conventions", conventions_path, class: 'btn btn-lg' %><br />
+    <%= link_to "Make your own", signup_path, class: 'btn btn-lg' %>
+  </div>
+</div>
+
+<!-- Second section - About -->
+<div id="about">
+  <div class="container">
+    <h2 class="text-center">What can Beacon do for you?</h2>
+    <div class="row text-center">
+      <div class="col-sm-5">
+        <h4 class="description-header">As an attendee...</h4>
+        <p>No longer will you have to wander aimlessly amongst a crowded convention. With Beacon®, you can see the entire layout on a mobile-friendly map. See what vendors and companies are there, where they are located, and pull up information about each on the go. Plan your route ahead of time, or even look at the action live! With our help, you can beat the crowds and keep track of where you've already visited.</p>
+      </div>
+      <div class="col-sm-2"></div>
+      <div class="col-sm-5">
+        <h4 class="description-header">Organizers, rejoice!</h4>
+        <p>Plan the layout of your convention all through our quick and easy map creation tool. Organize the floorplan of a busy room or even design the blueprints for your outdoor festival. With our help you can quickly draw up what the convention will look like and assign vendors to specific locations, and designate times for when they are stationed there. The attendees as your next event will be blown away by your preparation!</p>
       </div>
     </div>
-
-    <!-- Second section - About -->
-    <div id="about">
-      <div class="container">
-        <h2 class="text-center">What can Beacon do for you?</h2>
-        <div class="row text-center">
-          <div class="col-sm-5">
-            <h4 class="description-header">As an attendee...</h4>
-            <p>No longer will you have to wander aimlessly amongst a crowded convention. With Beacon®, you can see the entire layout on a mobile-friendly map. See what vendors and companies are there, where they are located, and pull up information about each on the go. Plan your route ahead of time, or even look at the action live! With our help, you can beat the crowds and keep track of where you've already visited.</p>
-          </div>
-          <div class="col-sm-2"></div>
-          <div class="col-sm-5">
-            <h4 class="description-header">Organizers, rejoice!</h4>
-            <p>Plan the layout of your convention all through our quick and easy map creation tool. Organize the floorplan of a busy room or even design the blueprints for your outdoor festival. With our help you can quickly draw up what the convention will look like and assign vendors to specific locations, and designate times for when they are stationed there. The attendees as your next event will be blown away by your preparation!</p>
-          </div>
-        </div>
-    </div>
-    </span>
-<% end %>
+</div>
+</span>

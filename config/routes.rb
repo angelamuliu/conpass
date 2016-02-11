@@ -4,6 +4,7 @@ Rails.application.routes.draw do
 
   # Static pages
   get 'home' => 'home#index', :as => :home
+  get 'dashboard' => 'home#dashboard', :as => :dashboard
   get 'about' => 'home#about', :as => :about
   get 'faq' => 'home#faq', :as => :faq
   get 'index_sam' => 'home#index_sam', :as => :index_sam
@@ -13,11 +14,8 @@ Rails.application.routes.draw do
   root :to => 'home#index'
 
   resources :vendor_tags
-
   resources :tags
-
   resources :booths
-
   resources :vendors
 
   resources :maps do
