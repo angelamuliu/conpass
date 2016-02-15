@@ -20,6 +20,7 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
+
 ul.unordered {
     list-style: none;
     margin: 0;
@@ -32,7 +33,6 @@ ul.unordered {
 
 body { // Don't want bootstrap nav bar obscuring top 50px of content lol
     margin:0;
-    padding-top: 50px;
     overflow-x:hidden;
     background-color: #041B28 !important;
 }

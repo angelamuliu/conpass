@@ -1,0 +1,16 @@
+    // ------------------------------------------------------------
+////// NAV BAR
+    // ------------------------------------------------------------
+.nav {
+    min-height: 50px !important;
+    background: white;
+}
+#navlogo img {
+    height: 40px;
+    margin-top: 5px;
+}
+.nav ul {
+    float: right;
+    margin-top: 15px;
+}
+.nav li { display: inline-block; }

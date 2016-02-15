@@ -1,0 +1,23 @@
+
+// =====================================================
+// Shared colors, fonts, resources used throughout the app
+// To use, add "@import "shared_variables"; " to top of file
+// =====================================================
+
+
+// Used in buttons
+$tan: #eae2d0;
+$gold: #de9733;
+
+// Buttons, header, and more
+$pink: #e7424b;
+
+// EM measurements of width breakpoints used in responsive aspects
+$mediumPoint: 60em;
+$smallPoint: 45em;
+
+
+@font-face {
+    font-family: ChapparalPro-Regular;
+    src: url(../fonts/ChaparralPro-Regular.otf);
+}

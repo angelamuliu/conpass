@@ -1,0 +1,81 @@
+
+@import "shared_variables";
+
+// =====================================================
+// Button styles found throughout the app
+// =====================================================
+
+.tanbtn {
+    padding: 10px;
+    background: $tan;
+    border-radius: 4px;
+    color: black;
+}
+
+
+.back_button {
+    float: left;
+    color: $gold;
+    margin-top: 15px;
+    margin-left: 10px;
+    margin-right: 5px;
+}
+.back_button:hover { color: $gold;}
+
+    // ------------------------------------------------------------
+////// RESUABLE BUTTON STYLES
+    // ------------------------------------------------------------
+
+
+
+
+
+.greenbtn {
+    font-family: sans-serif;
+    border: 0;
+    background-color: #64b52c;
+    border-bottom: 3px solid #2a7a00;
+    color: white;
+}
+a.greenbtn { color: white; }
+.greenbtn:hover { 
+    background-color: #5aa227;
+    color: white;
+}
+.greenbtn:active { background-color: #467e1e; }
+.greenbtn:focus { color: white; }
+
+.redbtn {
+    font-family: sans-serif;
+    border: 0;
+    background-color: #b63737;
+    border-bottom: 3px solid #850c0c;
+    color: white;
+}
+.redbtn:hover {
+    background-color: #770a0a;
+    color: white;
+}
+.redbtn:active { background-color: #5d0808; }
+.redbtn:focus { color: white;}
+a.redbtn { color: white;}
+
+
+a.btn-circle, .btn-circle {
+    display: block;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+
+    // Center text inside vertically by setting line-height to height of button
+    text-align: center;
+    vertical-align: middle;
+    line-height: 50px;
+
+    color: white;
+    background-color: #e43046;
+    margin:10px;
+    border-bottom: 2px solid #6d0000;
+}
+
+

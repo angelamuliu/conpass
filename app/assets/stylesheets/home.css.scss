@@ -1,18 +1,63 @@
+@import "shared_variables";
 
-/*
-  --red: #e43036;
-  --darkBlue: #000f27;
-*/
+    // ------------------------------------------------------------
+////// Index - Intro banner styles
+    // ------------------------------------------------------------
+
+@media only screen and (max-width: $smallPoint) { .introContainer { height: 30vh; } }
+@media only screen and (min-width: $smallPoint) { .introContainer { height: 300px; } }
+.introContainer {
+    padding: 10px;
+    width: 100vw;
+}
+
+#introBanner {
+    background-color: $tan;
+}
+
+#introBanner h1 {
+    color: $pink;
+    margin: 0;
+    display: inline-block;
+}
+#introBanner em {
+    font-size: 36px;
+    display: inline-block;
+    color: $pink;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 html, body {
   width: 100%;
   height: 100%;
-}
-
-.logo {
-  padding-top: 10px;
-  width: 100px;
-  height: auto;
 }
 
 .text-vcenter {
@@ -21,24 +66,24 @@ html, body {
   vertical-align: middle;
 }
 
-#home { // SPLASH HOME
-  background-color: #000f27;
-  background-image:
-      linear-gradient(
-      to bottom left, 
-      #000f27, #23182C
-  );
-  display: table;
-  position: relative;
-  width: 100%;
-  color: #fff;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-  margin-top:-60px; // We hide the nav on the splash so need to take up that space
-  z-index: 20000; // Covering up the default nav for splash LOL
-}
+// #home { // SPLASH HOME
+//   background-color: #000f27;
+//   background-image:
+//       linear-gradient(
+//       to bottom left, 
+//       #000f27, #23182C
+//   );
+//   display: table;
+//   position: relative;
+//   width: 100%;
+//   color: #fff;
+//   -webkit-background-size: cover;
+//   -moz-background-size: cover;
+//   -o-background-size: cover;
+//   background-size: cover;
+//   margin-top:-60px; // We hide the nav on the splash so need to take up that space
+//   z-index: 20000; // Covering up the default nav for splash LOL
+// }
 
 #home .login {
     position: absolute;
@@ -99,72 +144,6 @@ html, body {
 
 #about p {
   text-align: justify;
-}
-
-    // ------------------------------------------------------------
-////// NAV BAR
-    // ------------------------------------------------------------
-
-
-/* Navbar opacity changes */
-.navbar {
-  -webkit-transition: all 0.4s ease-out;
-  -moz-transition:    all 0.4s ease-out;
-  -ms-transition:     all 0.4s ease-out;
-  -o-transition:      all 0.4s ease-out;
-  transition:         all 0.4s ease-out;
-}
-
-.navbar.scrolled {
-  background: rgb(5, 41, 61); // IE
-  background: rgba(5, 41, 61, 0.78); // nonIE
-}
-
-.navbar.scrolled .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus {
-  opacity: 0.6 !important;
-}
-
-.navbar.scrolled .navbar-nav .open .dropdown-menu > .active > a, .navbar-default .navbar-nav .open .dropdown-menu > .active > a:hover, .navbar-default .navbar-nav .open .dropdown-menu > .active > a:focus {
-  opacity: 0.6 !important;
-}
-
-nav {
-  margin-bottom: 70px;
-  border: 0 !important;
-}
-nav.navbar {
-    background-color: #031925;
-    border:none;
-    box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.3);
-    overflow: hidden;
-    height: 50px;
-    margin: 0;
-}
-#navlogo img {
-    height: 75px;
-    margin-top: 5px;
-}
-nav.navbar ul {
-    float:right;
-    display: block;
-    margin-top: 15px;
-}
-.back_button {
-    margin-top: 15px;
-}
-nav.navbar a { color: white; }
-nav.navbar a:hover {
-    color: #1073a9;
-    text-decoration: none;
-}
-nav.navbar li {
-    display: inline;
-    color: #b1b1b1;
-    padding-right:10px;
-    margin-left:5px;
-}
-nav #yourConventions:hover {
-    background-color: #09496c;
 }
 
 

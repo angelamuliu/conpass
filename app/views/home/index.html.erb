@@ -1,18 +1,18 @@
+<div class="container-fluid">
+    <div class="row" id="introBanner">
+        <div class="col-xs-12">
+            <div class="introContainer text-vcenter">
+                Find your way around<br />
+                <h1></h1><em>|</em>
+            </div>
+        </div>
+    </div>
 
-
-<%# Not logged in - Attendee %>
-<span id="homeContainer">
-<!-- First section - Home -->
-<div id="home">
-  <%= link_to "login", login_path, :class => "login"%>
-  <div class="text-vcenter">
-    <%= image_tag("beacon_logo_m.png", :class => "logo") %>
-    <h1>Beacon</h1>
-    <p>Find your way through a crowd</p>
-    <%= link_to "Browse conventions", conventions_path, class: 'btn btn-lg' %><br />
-    <%= link_to "Make your own", signup_path, class: 'btn btn-lg' %>
-  </div>
+    <div class="row">
+    </div>
 </div>
+
+
 
 <!-- Second section - About -->
 <div id="about">
@@ -31,3 +31,5 @@
     </div>
 </div>
 </span>
+<%= link_to "Browse conventions", conventions_path, class: 'btn btn-lg' %>
+<%= link_to "Make your own", signup_path, class: 'btn btn-lg' %>
