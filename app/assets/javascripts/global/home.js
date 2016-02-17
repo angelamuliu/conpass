@@ -40,7 +40,7 @@ $(document).ready(function() {
         } else {
             currWord = (currWord + 1) % words.length;
             flashLineListener = setInterval(flashLine, 600);
-            setTimeout(changeWord, 3000);
+            setTimeout(changeWord, 4000);
         }
     }
 
