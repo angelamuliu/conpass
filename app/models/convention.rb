@@ -18,6 +18,10 @@ class Convention < ActiveRecord::Base
     scope :active, -> {where('active = ?', true)}
     scope :inactive, -> {where('active = ?', false)}
 
+    # Image Uploaders
+    mount_uploader :logo, ImageUploader
+    mount_uploader :banner, ImageUploader
+
 
     # Methods
 

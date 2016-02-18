@@ -106,7 +106,7 @@ class ConventionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def convention_params
-      params.require(:convention).permit(:name, :start_date, :end_date)
+      params.require(:convention).permit(:name, :start_date, :end_date, :logo, :banner, :remove_logo, :remove_banner)
     end
 
     def convert_dates

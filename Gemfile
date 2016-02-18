@@ -41,6 +41,9 @@ gem 'bcrypt-ruby'
 gem 'chronic'
 gem 'time_date_helpers'
 
+gem 'rmagick', '~> 2.15.4'
+gem 'carrierwave', '~> 0.10.0'
+
 # Testing
 group :test do 
   gem 'shoulda', '~> 3.5'

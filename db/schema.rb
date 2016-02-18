@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151016035654) do
+ActiveRecord::Schema.define(version: 20160218170649) do
 
   create_table "booths", force: true do |t|
     t.integer  "x_pos"
@@ -31,6 +31,8 @@ ActiveRecord::Schema.define(version: 20151016035654) do
     t.datetime "updated_at"
     t.integer  "user_id"
     t.boolean  "active",     default: false
+    t.string   "logo"
+    t.string   "banner"
   end
 
   create_table "maps", force: true do |t|

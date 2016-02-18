@@ -1,20 +1,42 @@
 
 <div class="container-fluid">
 
+    <%# Top area - Convention image, banner, and subnav %>
+    <div class="row">
+        <div class="col-xs-12">
+
+            <div class="convention_banner_container">
+                <% if @convention.banner? %>
+                    <%= image_tag @convention.banner_url() %>
+                <% else %>
+                    <%# PLACEHOLDER BANNER IMAGE %>
+                <% end %>
+            </div>
+
+            <div class="convention_logo_container">
+                <% if @convention.logo? %>
+                    <%= image_tag @convention.logo_url() %>
+                <% else %>
+                    <%# PLACEHOLDER LOGO IMAGE, POSSIBLY ACRONYM? %>
+                <% end %>
+            </div>
+
+            <%# Primary convention subnav that toggles between three views - About, Maps, Vendor List  %>
+            <div id="sub_header">
+                <a href="javascript:;" class="tab selected" data-toggle="convention_vendors"><i class="fa fa-balance-scale"></i> Vendor List</a>
+                <a href="javascript:;" class="tab" data-toggle="convention_maps"><i class="fa fa-map"></i> Maps</a>
+            </div>
+
+
+        </div>
+    </div>
+
     <%# Topmost nav for convention%>
     <div class="row con_info">
         <div id="title" class="col-xs-12">
             <h3><%= @convention.name %></h3>
             <span><%= @convention.dateRange() %></span>
         </div>
-    </div>
-
-
-    <%# Subnav with toggle and filter options %>
-    <div id="sub_header" class="row">
-        <a href="javascript:;" class="tab selected" data-toggle="convention_vendors"><i class="fa fa-balance-scale"></i> Vendors</a>
-
-        <a href="javascript:;" class="tab" data-toggle="convention_maps"><i class="fa fa-map"></i> Maps</a>
     </div>
 
     <%# Data shown, tab toggles control which is in view %>

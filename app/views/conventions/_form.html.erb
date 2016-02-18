@@ -17,6 +17,27 @@
   <%= f.input :start_date, input_html: {id: "convention_start_date"}, as: :string %>
   <%= f.input :end_date, input_html: {id: "convention_end_date" },as: :string %>
 
+  <p>
+    <label>LOGO TEST</label>
+    <%= image_tag(@convention.logo_url) if @convention.logo? %>
+    <%= f.file_field :logo %>
+    <%= f.hidden_field :logo_cache %>
+    <label>
+      <%= f.check_box :remove_logo %>
+        Remove logo
+    </label>
+  </p>
+
+  <p>
+    <label>BANNER TEST</label>
+    <%= image_tag(@convention.banner_url) if @convention.banner? %>
+    <%= f.file_field :banner %>
+    <%= f.hidden_field :banner_cache %>
+    <label>
+      <%= f.check_box :remove_banner %>
+        Remove banner
+    </label>
+  </p>
 
   <div class="actions">
         <button class="btn btn-lg btn-primary btn-block" type="submit">Save</button>

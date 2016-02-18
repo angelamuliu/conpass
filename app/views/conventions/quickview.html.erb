@@ -9,6 +9,8 @@
         </div>
     </div>
 
+        <%= image_tag @convention.logo_url() if @convention.logo? %>
+
     <section>
         <p>
             <strong>Date:</strong> <%= @convention.dateRange() %>

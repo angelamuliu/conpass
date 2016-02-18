@@ -39,6 +39,11 @@ GEM
       sass (>= 3.2.19)
     builder (3.2.2)
     byebug (6.0.2)
+    carrierwave (0.10.0)
+      activemodel (>= 3.2.0)
+      activesupport (>= 3.2.0)
+      json (>= 1.7)
+      mime-types (>= 1.16)
     chronic (0.10.2)
     coffee-rails (4.0.1)
       coffee-script (>= 2.2.0)
@@ -101,6 +106,7 @@ GEM
     rake (10.4.2)
     rdoc (4.2.0)
     request_store (1.2.0)
+    rmagick (2.15.4)
     sass (3.2.19)
     sass-rails (4.0.5)
       railties (>= 4.0.0, < 5.0)
@@ -150,6 +156,7 @@ DEPENDENCIES
   bcrypt-ruby
   bootstrap-sass (~> 3.3.5)
   byebug (~> 6.0.2)
+  carrierwave (~> 0.10.0)
   chronic
   coffee-rails (~> 4.0.0)
   factory_girl_rails (~> 4.0)
@@ -162,6 +169,7 @@ DEPENDENCIES
   jquery-turbolinks
   json
   rails (= 4.1.9)
+  rmagick (~> 2.15.4)
   sass-rails (~> 4.0.3)
   sdoc (~> 0.4.0)
   shoulda (~> 3.5)
