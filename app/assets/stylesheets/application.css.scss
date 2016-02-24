@@ -21,16 +21,6 @@
 @import "bootstrap";
 
 
-ul.unordered {
-    list-style: none;
-    margin: 0;
-    padding:0;
-}
-
-.noPad {
-    padding:0;
-}
-
 body { // Don't want bootstrap nav bar obscuring top 50px of content lol
     margin:0;
     overflow-x:hidden;
@@ -38,7 +28,7 @@ body { // Don't want bootstrap nav bar obscuring top 50px of content lol
 }
 
 .main {
-    background:#f8f5f2;
+    background-color: white;
     min-height: 600px;
 }
 .main a {
@@ -55,27 +45,11 @@ textarea {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
 }
 
-hr {
-    border-bottom: 1px solid #0069d3;
-}
-
 // IF YOU WANT YOUR THING TO HAVE PADDING, put it in a <section></section> tag!
 section {
     padding:10px;
 }
 
-    // ------------------------------------------------------------
-////// HEADER TEXTS
-    // ------------------------------------------------------------
-
-h3 {
-    font-size: 18px;
-    text-shadow: initial;
-}
-h4 {
-    font-weight: 200;
-    font-size: 16px;
-}
 
     // ------------------------------------------------------------
 ////// RESUABLE BUTTON STYLES

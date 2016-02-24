@@ -1,0 +1,53 @@
+@import "shared_variables";
+
+// =====================================================
+// General file that sets styles for base elements such as H1, el, em, etc...
+// Font styling for headers, body, emphasis, etc throughout
+// =====================================================
+
+    // ------------------------------------------------------------
+////// HEADER TEXTS
+    // ------------------------------------------------------------
+
+h1 {
+    // add font style, size
+}
+
+h3 {
+    font-size: 18px;
+    text-shadow: initial;
+}
+h4 {
+    font-weight: 200;
+    font-size: 16px;
+}
+
+
+    // ------------------------------------------------------------
+////// OTHER
+    // ------------------------------------------------------------
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding:0;
+}
+
+hr {
+    border-bottom: 1px solid #0069d3;
+}
+
+
+    // ------------------------------------------------------------
+////// UTILITY
+    // ------------------------------------------------------------
+
+.noPad {
+    padding:0;
+}
+
+ul.unordered {
+    list-style: none;
+    margin: 0;
+    padding:0;
+}

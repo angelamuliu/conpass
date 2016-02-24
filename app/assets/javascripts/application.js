@@ -22,10 +22,10 @@ $(document).ready(function() {
     // Tab data containers get class "tab_data" and id matches with the header
     $("a.tab").on('click touchstart', function() {
         $(".tab").removeClass("selected");
-        $(".tab_data").hide();
+        $(".tab_data").removeClass("selected");
 
         var tabDataId_toShow = $(this).data("toggle");
-        $("#" + tabDataId_toShow).show();
+        $("#" + tabDataId_toShow).addClass("selected");
         $(this).addClass("selected");
     })
 

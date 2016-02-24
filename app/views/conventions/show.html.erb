@@ -2,9 +2,7 @@
 <div class="container-fluid">
 
     <%# Top area - Convention image, banner, and subnav %>
-    <div class="row">
-        <div class="col-xs-12">
-
+    <div class="row" style="position: relative;">
             <div class="convention_banner_container">
                 <% if @convention.banner? %>
                     <%= image_tag @convention.banner_url() %>
@@ -13,39 +11,39 @@
                 <% end %>
             </div>
 
-            <div class="convention_logo_container">
-                <% if @convention.logo? %>
-                    <%= image_tag @convention.logo_url() %>
-                <% else %>
-                    <%# PLACEHOLDER LOGO IMAGE, POSSIBLY ACRONYM? %>
-                <% end %>
+
+            <div style="position: absolute;">
+            <%# Needed to get this dumb thing not to stretch the overall row height %>
+                <div class="convention_logo_container">
+                    <% if @convention.logo? %>
+                        <%= image_tag @convention.logo_url() %>
+                    <% else %>
+                        <%# PLACEHOLDER LOGO IMAGE, POSSIBLY ACRONYM? %>
+                    <% end %>
+                </div>
             </div>
 
             <%# Primary convention subnav that toggles between three views - About, Maps, Vendor List  %>
             <div id="sub_header">
-                <a href="javascript:;" class="tab selected" data-toggle="convention_vendors"><i class="fa fa-balance-scale"></i> Vendor List</a>
-                <a href="javascript:;" class="tab" data-toggle="convention_maps"><i class="fa fa-map"></i> Maps</a>
+                <a href="javascript:;" class="tanbtn tab selected" data-toggle="convention_about">About</a>
+                <a href="javascript:;" class="tanbtn tab" data-toggle="convention_maps">Maps</a>
+                <a href="javascript:;" class="tanbtn tab" data-toggle="convention_vendors">Vendor List</a>
             </div>
-
-
-        </div>
     </div>
 
-    <%# Topmost nav for convention%>
-    <div class="row con_info">
-        <div id="title" class="col-xs-12">
-            <h3><%= @convention.name %></h3>
-            <span><%= @convention.dateRange() %></span>
-        </div>
-    </div>
 
     <%# Data shown, tab toggles control which is in view %>
     <div id="con_results" class="row">
-        <div class="tab_data" id="convention_vendors">
-            <%= render :partial => "convention_vendors", locals: {vendors: @vendors, tags: @tags} %>
-        </div>
-        <div class="tab_data" id="convention_maps">
-            <%= render :partial => "convention_maps", locals: {maps: @maps } %>
+        <div class="col-xs-12">
+            <div class="tab_data selected" id="convention_about">
+                <%= render :partial => "convention_about" %>
+            </div>
+            <div class="tab_data" id="convention_vendors">
+                <%= render :partial => "convention_vendors", locals: {vendors: @vendors, tags: @tags} %>
+            </div>
+            <div class="tab_data" id="convention_maps">
+                <%= render :partial => "convention_maps", locals: {maps: @maps } %>
+            </div>
         </div>
     </div>
 
