@@ -66,85 +66,11 @@ html, body {
   vertical-align: middle;
 }
 
-// #home { // SPLASH HOME
-//   background-color: #000f27;
-//   background-image:
-//       linear-gradient(
-//       to bottom left, 
-//       #000f27, #23182C
-//   );
-//   display: table;
-//   position: relative;
-//   width: 100%;
-//   color: #fff;
-//   -webkit-background-size: cover;
-//   -moz-background-size: cover;
-//   -o-background-size: cover;
-//   background-size: cover;
-//   margin-top:-60px; // We hide the nav on the splash so need to take up that space
-//   z-index: 20000; // Covering up the default nav for splash LOL
-// }
 
-#home .login {
-    position: absolute;
-    color: white;
-    right:0;
-    padding: 10px;
-    padding-top: 20px;
-    padding-right: 30px;
-}
-#home .login:hover { 
-    color: #1073a9;
-    text-decoration: none;
-}
 
-#home h1, h3 {
-  text-shadow: 2px 0px 15px rgba(0, 0, 0, 0.7);
-}
 
-#home img {
-    margin-top: 50px;
-    max-width:100px;
-}
-#home p {
-    margin-bottom: 30px;
-}
-#signup input {
-    max-width:400px;
-}
 
-#home .btn {
-  margin-bottom: 10px;
-  width: 200px;
-  background: none;
-  color: #188BFF;
-  border: 1px solid #188BFF;
-  font-size: 16px;
-}
-#home .btn:hover {
-    // background-color: rgba(0, 105, 211, 0.1);
-    background-color: rgba(219, 18, 212, 0.05)
-}
-#home .btn:last-child {
-    margin-bottom: 30px;
-}
 
-#about {
-  background-color: #f8f5f2 !important;
-  padding-bottom: 20px;
-}
-
-#about h4 {
-  color: #e43036;
-}
-
-#about h2 {
-  color: #e43036;
-}
-
-#about p {
-  text-align: justify;
-}
 
 
     // ------------------------------------------------------------
@@ -163,49 +89,5 @@ html, body {
 }
 
 
-    // ------------------------------------------------------------
-////// SAM'S HOME STYLES
-    // ------------------------------------------------------------
 
-.top-button {
-    position:absolute;
-    width: 50%;
-    left:25%;
-    background:#0069D3;
-    color:white;
-    border:1px none;
-    border-radius:2px;
-    height:25px;
-    font-size:11px
-}
-.description-header {
-    margin-left: 10%; 
-    width: 80%; 
-    line-height: 2.3; 
-    border-bottom: 1px solid rgb(219, 0, 26); 
-    color: rgb(219, 0, 26); 
-    font-weight: 500;
-}
-.description {
-    margin-bottom: 20px;
-    margin-left:10%;
-    width: 80%;
-    line-height:1;
-    color: #232F3E
-}
 
-div#about{
-    min-height:200px;
-}
-
-#attendee_about {
-    background:#F8F5F2;
-}
-
-#organizer_about {
-    background: #F0ece7;
-}
-
-footer p {
-  margin-bottom: 0px;
-}

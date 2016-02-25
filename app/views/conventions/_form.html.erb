@@ -1,47 +1,66 @@
 <%= simple_form_for @convention, :html => { class: "convention-form" } do |f| %>
-  <% if @convention.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@convention.errors.count, "error") %> prohibited this convention from being saved:</h2>
 
-      <ul>
-      <% @convention.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+    <% if @convention.errors.any? %>
+        <div id="error_explanation">
+            <h2><%= pluralize(@convention.errors.count, "error") %> prohibited this convention from being saved:</h2>
+            <ul>
+                <% @convention.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+                <% end %>
+            </ul>
+        </div>
+    <% end %>
 
+    <section>
+        <h3>Step 1. The Basics</h3>
+        <%= f.input :name, placeholder: "What's the name of your convention, conference, festival, or fair?", label: "Convention name", input_html: { class: "form-control" } %>
+        <%= f.input :description, placeholder: "What's your event about? What do you want attendees to know?" %>
+    </section>
 
-  <!--input type="text" id="convention_name" name="convention[name]" class="form-control" placeholder="Name" required autofocus-->
-  <%= f.input :name, placeholder: "Name", label: false, input_html: { class: "form-control" } %>
-  <%= f.input :start_date, input_html: {id: "convention_start_date"}, as: :string %>
-  <%= f.input :end_date, input_html: {id: "convention_end_date" },as: :string %>
+    <section>
+        <h3>Step 2. When and Where</h3>
+        <%= f.input :start_date, input_html: {id: "convention_start_date"}, as: :string %>
+        <%= f.input :end_date, input_html: {id: "convention_end_date" },as: :string %>
+        <%= f.simple_fields_for :location do |l| %>
+            <%= l.input :address_1, label: "Address Line 1", placeholder: "Ex: 5000 Forbes Avenue" %>
+            <%= l.input :address_2, label: "Address Line 2", placeholder: "Ex: Apt 1" %>
+            <%= l.input :city, placeholder: "Ex: Pittsburgh" %>
+            <%= l.input :state, :collection => Location::STATES_LIST, :include_blank => true %>
+            <%= l.input :zip, placeholder: "Ex: 15213" %>
+            <%= l.hidden_field :latitude %>
+            <%= l.hidden_field :longitude %>
+        <% end %>
+    </section>
 
-  <p>
-    <label>LOGO TEST</label>
-    <%= image_tag(@convention.logo_url) if @convention.logo? %>
-    <%= f.file_field :logo %>
-    <%= f.hidden_field :logo_cache %>
-    <label>
-      <%= f.check_box :remove_logo %>
+    <section>
+        <h3>Step 3. Customize</h3>
+
+        <p>
+        <label>LOGO TEST</label>
+        <%= image_tag(@convention.logo_url) if @convention.logo? %>
+        <%= f.file_field :logo %>
+        <%= f.hidden_field :logo_cache %>
+        <label>
+        <%= f.check_box :remove_logo %>
         Remove logo
-    </label>
-  </p>
+        </label>
+        </p>
 
-  <p>
-    <label>BANNER TEST</label>
-    <%= image_tag(@convention.banner_url) if @convention.banner? %>
-    <%= f.file_field :banner %>
-    <%= f.hidden_field :banner_cache %>
-    <label>
-      <%= f.check_box :remove_banner %>
+        <p>
+        <label>BANNER TEST</label>
+        <%= image_tag(@convention.banner_url) if @convention.banner? %>
+        <%= f.file_field :banner %>
+        <%= f.hidden_field :banner_cache %>
+        <label>
+        <%= f.check_box :remove_banner %>
         Remove banner
-    </label>
-  </p>
+        </label>
+        </p>
+    </section>
 
-  <div class="actions">
+    <div class="actions">
         <button class="btn btn-lg btn-primary btn-block" type="submit">Save</button>
-  </div>
+    </div>
 <% end %>
 
 <script>

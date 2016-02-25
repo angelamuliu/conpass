@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160218170649) do
+ActiveRecord::Schema.define(version: 20160225050137) do
 
   create_table "booths", force: true do |t|
     t.integer  "x_pos"
@@ -30,9 +30,24 @@ ActiveRecord::Schema.define(version: 20160218170649) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "user_id"
-    t.boolean  "active",     default: false
+    t.boolean  "active",      default: false
     t.string   "logo"
     t.string   "banner"
+    t.text     "description"
+  end
+
+  create_table "locations", force: true do |t|
+    t.integer  "convention_id"
+    t.string   "address_1"
+    t.string   "address_2"
+    t.string   "city"
+    t.string   "state"
+    t.string   "zip"
+    t.string   "country"
+    t.float    "latitude"
+    t.float    "longitude"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "maps", force: true do |t|

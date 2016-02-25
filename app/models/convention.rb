@@ -1,10 +1,13 @@
 class Convention < ActiveRecord::Base
     # Relationships
     belongs_to :user
-    has_many :maps
+    has_many :maps, :dependent => :destroy
+    has_one :location, :dependent => :destroy
     has_many :vendors, :dependent => :destroy
     has_many :tags, :dependent => :destroy
     has_many :vendor_tags, :through => :tags
+
+    accepts_nested_attributes_for :location
 
     # Validations
     validates_presence_of :user

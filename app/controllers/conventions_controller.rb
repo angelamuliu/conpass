@@ -36,6 +36,7 @@ class ConventionsController < ApplicationController
         redirect_to need_account_path
     end
     @convention = Convention.new
+    @convention.location = Location.new
   end
 
   # GET /conventions/1/edit
@@ -106,7 +107,8 @@ class ConventionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def convention_params
-      params.require(:convention).permit(:name, :start_date, :end_date, :logo, :banner, :remove_logo, :remove_banner)
+      params.require(:convention).permit(:name, :start_date, :end_date, :logo, :banner, :remove_logo, :remove_banner, :description,
+                                         location_attributes: [:id, :address_1, :address_2, :city, :state, :zip, :latitude, :longitude])
     end
 
     def convert_dates
