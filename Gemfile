@@ -44,6 +44,9 @@ gem 'time_date_helpers'
 gem 'rmagick', '~> 2.15.4'
 gem 'carrierwave', '~> 0.10.0'
 
+gem 'geokit', '~> 1.10.0'
+gem 'geokit-rails', '~> 2.1.0', github: 'geokit/geokit-rails'
+
 # Testing
 group :test do 
   gem 'shoulda', '~> 3.5'

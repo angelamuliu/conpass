@@ -1,7 +1,6 @@
 
 <%# Contains convention title, description, address, contacts %>
 
-
 <div class="row">
     <div class="col-sm-12 col-md-6 col-md-offset-1" style="background-color: tan;">
         <h3><%= @convention.name %></h3>
@@ -18,8 +17,8 @@
             <%= @convention.location.address_1 %> <%= @convention.location.address_2.empty? ? "" : "," + @convention.location.address_2  %><br />
             <%= @convention.location.city %> <%= @convention.location.state.empty? ? "" : ", " + @convention.location.state %> <%= @convention.location.zip %> <%= @convention.location.country %>
             <br />
-            <% if @convention.location.valid? %>
-                RENDER A GOODGLLE MAPZ
+            <% if !@convention.location.latitude.blank? && !@convention.location.longitude.blank? %>
+                <div id="google_map" style="height:500px; width: 500px;"></div>
             <% end %>
         </p>
     </div>
@@ -32,3 +31,22 @@
     </div>
 
 </div>
+
+
+<script src="http://maps.googleapis.com/maps/api/js"></script>
+
+<script>
+function initialize() {
+  var mapProp = {
+    center:new google.maps.LatLng(<%= @convention.location.latitude %>, <%= @convention.location.longitude %>),
+    zoom:5,
+    mapTypeId:google.maps.MapTypeId.ROADMAP
+  };
+  var map=new google.maps.Map(document.getElementById("google_map"),mapProp);
+}
+
+google.maps.event.addDomListener(window, 'load', initialize);
+</script>
+
+
+

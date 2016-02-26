@@ -27,8 +27,6 @@
             <%= l.input :city, placeholder: "Ex: Pittsburgh" %>
             <%= l.input :state, :collection => Location::STATES_LIST, :include_blank => true %>
             <%= l.input :zip, placeholder: "Ex: 15213" %>
-            <%= l.hidden_field :latitude %>
-            <%= l.hidden_field :longitude %>
         <% end %>
     </section>
 
@@ -64,6 +62,6 @@
 <% end %>
 
 <script>
-jQuery('#convention_start_date').datetimepicker();
-jQuery('#convention_end_date').datetimepicker();
+$('#convention_start_date').datetimepicker();
+$('#convention_end_date').datetimepicker();
 </script>
