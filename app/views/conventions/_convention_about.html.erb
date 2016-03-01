@@ -18,7 +18,7 @@
             <%= @convention.location.city %> <%= @convention.location.state.empty? ? "" : ", " + @convention.location.state %> <%= @convention.location.zip %> <%= @convention.location.country %>
             <br />
             <% if !@convention.location.latitude.blank? && !@convention.location.longitude.blank? %>
-                <div id="google_map" style="height:500px; width: 500px;"></div>
+                <div id="con_google_map"></div>
             <% end %>
         </p>
     </div>
@@ -37,14 +37,19 @@
 
 <script>
 function initialize() {
-  var mapProp = {
-    center:new google.maps.LatLng(<%= @convention.location.latitude %>, <%= @convention.location.longitude %>),
-    zoom:5,
-    mapTypeId:google.maps.MapTypeId.ROADMAP
-  };
-  var map=new google.maps.Map(document.getElementById("google_map"),mapProp);
-}
+    var mapProp = {
+        center:new google.maps.LatLng(<%= @convention.location.latitude %>, <%= @convention.location.longitude %>),
+        zoom:15,
+        mapTypeId:google.maps.MapTypeId.ROADMAP
+    };
+    var map=new google.maps.Map(document.getElementById("con_google_map"),mapProp);
 
+    var myLatLng = {lat: <%= @convention.location.latitude %>, lng: <%= @convention.location.longitude %>};
+    var marker = new google.maps.Marker({
+        position: myLatLng,
+        map: map
+    });
+}
 google.maps.event.addDomListener(window, 'load', initialize);
 </script>
 
