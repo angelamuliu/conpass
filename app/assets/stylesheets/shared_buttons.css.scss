@@ -11,7 +11,17 @@
     border-radius: 4px;
     color: black;
 }
-
+.tanbtn:hover, .tanbtn:focus {
+    text-decoration: initial;
+    background: darken( $tan, 10% );
+    color: black;
+}
+.tanbtn:focus {
+    background: darken( $tan, 15% );
+    -moz-box-shadow:    inset 0 0 5px darken( $tan, 20% );
+    -webkit-box-shadow: inset 0 0 5px darken( $tan, 20% );
+    box-shadow:         inset 0 0 5px darken( $tan, 20% );
+}
 
 .back_button {
     float: left;
@@ -36,6 +46,7 @@
     background-color: #64b52c;
     border-bottom: 3px solid #2a7a00;
     color: white;
+    border-radius: 3px;
 }
 a.greenbtn { color: white; }
 .greenbtn:hover { 

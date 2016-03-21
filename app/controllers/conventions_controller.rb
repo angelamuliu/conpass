@@ -99,6 +99,13 @@ class ConventionsController < ApplicationController
     end
   end
 
+  def search
+    # byebug
+    # params["search"]["user_location"]
+    # params["search"]["search_distance"]
+    # params["search"]["type"]
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_convention

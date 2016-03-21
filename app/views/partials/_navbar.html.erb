@@ -13,7 +13,7 @@
                     <li><%= current_user.username %></li>
                     <li><%= link_to "logout", logout_path, class: "tanbtn"%></li>
                 <% else %>
-                    <li><%= link_to "login", login_path %></li>
+                    <li><%= link_to "login", login_path, class: "tanbtn" %></li>
                   <% end %>
                 </ul>
 

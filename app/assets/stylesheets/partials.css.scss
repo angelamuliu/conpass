@@ -1,3 +1,5 @@
+@import "shared_variables";
+
     // ------------------------------------------------------------
 ////// NAV BAR
     // ------------------------------------------------------------
@@ -14,3 +16,44 @@
     margin-top: 15px;
 }
 .nav li { display: inline-block; }
+
+
+    // ------------------------------------------------------------
+////// FOOTER
+    // ------------------------------------------------------------
+
+#footer {
+    min-height:50px;
+    background: $charcoal;
+    padding: 20px;
+    color: $smoke;
+    text-align: center;
+}
+// #backToTop {
+//     color: white;
+//     border-right: 1px solid white;
+//     height: 20px;
+//     font-size: 10.5px;
+//     top: 15%;
+// }
+// #backToTop p {
+//     width: 100px;
+//     color: white;
+// }
+// #backToTop a {
+//     color: white;
+// }
+// #backToTop a:hover {
+//     background-color: #09496c;
+//     text-decoration: none;
+// }
+// #footer_into {
+//     color: white;
+//     font-size: 9px;
+//     top:10%
+// }
+// #footer_info p {
+//     line-height: 14px;
+//     color: white;
+// }
+

@@ -13,8 +13,27 @@
 
 #introBanner {
     background-color: $tan;
+    overflow: hidden;
+    position: relative;
 }
-
+#introBanner img { // Vertically and horizontally centered
+    position: absolute;
+    margin: auto;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+#introBanner .overlay { // Retooled overlay, but always visible and white
+    display: block;
+    position: absolute;
+    background-color: rgba(255, 255, 255, 0.85);
+    z-index: 1;
+}
+.introContainer {
+    position: relative;
+    z-index: 5;
+}
 #introBanner h1 {
     color: $pink;
     margin: 0;
@@ -28,6 +47,34 @@
 
 
 
+.darken h3 {
+    color: white;
+}
+.float_inputs {
+    width: 80%;
+    float: left;
+}
+form.search input { // Search on front page
+    width: 100%;
+    margin-bottom: 5px;
+    border: none;
+    padding: 10px;
+    border-radius: 3px;
+}
+form.search button[type="submit"] {
+    width: 10%;
+    min-width: 40px;
+    margin-left: 5px;
+}
+#search_form button {
+    height: 130px;
+    font-size: 50px;
+    border-bottom: 5px solid #2a7a00;
+}
+#code_search button {
+    height: 40px;
+    font-size: 25px;
+}
 
 
 
@@ -35,11 +82,12 @@
 
 
 
-
-
-
-
-
+#attendee_explain {
+    padding-top: 20px;
+}
+#organizer_explain {
+    padding-bottom: 20px;
+}
 
 
 

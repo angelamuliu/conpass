@@ -43,6 +43,19 @@ $(document).ready(function() {
         e.stopPropagation();
     })
 
+
+
+
+    // MOVE THIS LATER
+    // GEOLOCATION ON FIRST PAGE - to get user's location to autofill a field
+    // check for Geolocation support
+    if (navigator.geolocation) {
+      console.log('Geolocation is supported!');
+    }
+    else {
+      console.log('Geolocation is not supported for this Browser/OS version yet.');
+    }
+
 })
 
 

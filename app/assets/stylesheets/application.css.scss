@@ -10,21 +10,34 @@
  * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
  * file per style scope.
  *
- *= require_tree .
  *= require_self
  *= require font-awesome
  *= require jquery.datetimepicker
  */
 
+// Importing the "sass" way for bootstrap and controlled load order
+
 @import "font-awesome";
 @import "bootstrap-sprockets";
 @import "bootstrap";
+
+@import "shared_variables";
+@import "shared_general";
+@import "shared_buttons";
+@import "home";
+@import "partials";
+
+@import "conventions";
+@import "booths";
+@import "maps";
+@import "tags";
+@import "vendors";
+@import "mapMaker";
 
 
 body { // Don't want bootstrap nav bar obscuring top 50px of content lol
     margin:0;
     overflow-x:hidden;
-    background-color: #041B28 !important;
 }
 
 .main {
@@ -99,43 +112,6 @@ a.btn-circle, .btn-circle {
 }
 
 
-
-    // ------------------------------------------------------------
-////// FOOTER
-    // ------------------------------------------------------------
-
-#footer {
-    min-height:50px;
-    background:#041B28;
-    padding: 20px;
-}
-#backToTop {
-    color: white;
-    border-right: 1px solid white;
-    height: 20px;
-    font-size: 10.5px;
-    top: 15%;
-}
-#backToTop p {
-    width: 100px;
-    color: white;
-}
-#backToTop a {
-    color: white;
-}
-#backToTop a:hover {
-    background-color: #09496c;
-    text-decoration: none;
-}
-#footer_into {
-    color: white;
-    font-size: 9px;
-    top:10%
-}
-#footer_info p {
-    line-height: 14px;
-    color: white;
-}
 
     // ------------------------------------------------------------
 ////// TAB STYLING

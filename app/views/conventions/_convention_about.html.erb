@@ -10,20 +10,18 @@
             <p><%= @convention.description %></p>
         <% end %>
 
-        <h5>When and Where?</h5>
-        <p>
-            <%= @convention.dateRange() %><br />
-            
-            <%= @convention.location.address_1 %> <%= @convention.location.address_2.empty? ? "" : "," + @convention.location.address_2  %><br />
-            <%= @convention.location.city %> <%= @convention.location.state.empty? ? "" : ", " + @convention.location.state %> <%= @convention.location.zip %> <%= @convention.location.country %>
-            <br />
-            <% if !@convention.location.latitude.blank? && !@convention.location.longitude.blank? %>
-                <div id="con_google_map"></div>
-            <% end %>
-        </p>
     </div>
 
     <div class="col-sm-12 col-md-3 col-md-offset-1" style="background-color: pink;">
+        <% if !@convention.location.latitude.blank? && !@convention.location.longitude.blank? %>
+                <div id="con_google_map"></div>
+        <% end %>
+        <%= @convention.location.address_1 %> <%= @convention.location.address_2.empty? ? "" : "," + @convention.location.address_2  %><br />
+        <%= @convention.location.city %> <%= @convention.location.state.empty? ? "" : ", " + @convention.location.state %> <%= @convention.location.zip %> <%= @convention.location.country %>
+
+        <h5>Hours</h5>
+        <%= @convention.dateRange() %><br />
+
         <h5>Contact Us</h5>
         <p>
             TO DO LATER
