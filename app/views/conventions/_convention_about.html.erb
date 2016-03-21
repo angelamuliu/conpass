@@ -2,7 +2,7 @@
 <%# Contains convention title, description, address, contacts %>
 
 <div class="row">
-    <div class="col-sm-12 col-md-6 col-md-offset-1" style="background-color: tan;">
+    <div class="col-sm-12 col-md-6 col-md-offset-1" id="core_info">
         <h3><%= @convention.name %></h3>
 
         <h5>About the Event</h5>
@@ -12,7 +12,7 @@
 
     </div>
 
-    <div class="col-sm-12 col-md-3 col-md-offset-1" style="background-color: pink;">
+    <div class="col-sm-12 col-md-4" id="additional_info">
         <% if !@convention.location.latitude.blank? && !@convention.location.longitude.blank? %>
                 <div id="con_google_map"></div>
         <% end %>

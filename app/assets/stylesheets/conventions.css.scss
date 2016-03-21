@@ -262,8 +262,6 @@ ul.maps li:nth-child(even) {
     background-color: #f8f5f2;
 }
 
-
-
 // ------------------------------------------------------------
 ////// SHOW PARTIAL > _CONVENTION_VENDORS
 // ------------------------------------------------------------
@@ -310,6 +308,18 @@ ul.maps li:nth-child(even) {
 .vendor_names {
   width:50%;
   color:#E43046;
+}
+
+// ------------------------------------------------------------
+////// SHOW PARTIAL > _CONVENTION_ABOUT
+// ------------------------------------------------------------
+#additional_info {
+    background-color: $paper;
+    padding-top: 15px;
+    border-top: 1px solid $gold;
+}
+#additional_info h5 {
+    margin-bottom: 0;
 }
 
 
