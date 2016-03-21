@@ -5,7 +5,7 @@
     // ------------------------------------------------------------
 
 @media only screen and (max-width: $smallPoint) { .introContainer { height: 30vh; } }
-@media only screen and (min-width: $smallPoint) { .introContainer { height: 300px; } }
+@media only screen and (min-width: $smallPoint) { .introContainer { height: 400px; } }
 .introContainer {
     padding: 10px;
     width: 100vw;
@@ -27,7 +27,7 @@
 #introBanner .overlay { // Retooled overlay, but always visible and white
     display: block;
     position: absolute;
-    background-color: rgba(255, 255, 255, 0.85);
+    background-color: rgba(255, 255, 255, 0.75);
     z-index: 1;
 }
 .introContainer {
@@ -45,11 +45,10 @@
     color: $pink;
 }
 
+    // ------------------------------------------------------------
+////// Index - Oher section parts
+    // ------------------------------------------------------------
 
-
-.darken h3 {
-    color: white;
-}
 .float_inputs {
     width: 80%;
     float: left;
@@ -75,20 +74,21 @@ form.search button[type="submit"] {
     height: 40px;
     font-size: 25px;
 }
-
-
-
-
-
-
-
-#attendee_explain {
-    padding-top: 20px;
-}
-#organizer_explain {
-    padding-bottom: 20px;
+#home_index_explain {
+    padding-top: 50px;
+    padding-bottom: 50px;
 }
 
+    // ------------------------------------------------------------
+////// DASHBOARD
+    // ------------------------------------------------------------
+
+#dashboard_welcome {
+    background-color: $paper;
+    padding-bottom: 30px;
+    padding-top: 30px;
+}
+@media only screen and (min-width: $smallPoint) { #dashboard_welcome .left { border-right: 1px solid $gold; } }
 
 
 
@@ -108,11 +108,6 @@ html, body {
   height: 100%;
 }
 
-.text-vcenter {
-  display: table-cell;
-  text-align: center;
-  vertical-align: middle;
-}
 
 
 

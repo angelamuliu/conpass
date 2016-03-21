@@ -53,6 +53,10 @@ section {
 .darken {
     background-color: $charcoal;
 }
+.darken h3 {
+    color: white;
+    font-weight: 200;
+}
 
     // ------------------------------------------------------------
 ////// FORMS
@@ -71,4 +75,10 @@ ul.unordered {
     list-style: none;
     margin: 0;
     padding:0;
+}
+
+.text-vcenter {
+  display: table-cell;
+  text-align: center;
+  vertical-align: middle;
 }
