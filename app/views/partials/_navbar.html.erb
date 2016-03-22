@@ -2,20 +2,27 @@
     <div class="row">
         <div class="col-xs-12 nav">
             <nav>
-
+                <%# Left side %>
                 <%= link_to ('javascript:history.go(-1);'), :class => 'button back_button'  do %>
                     <i class="fa fa-chevron-left hidden-md hidden-lg"></i>
                 <% end %>
                 <a id="navlogo" href="/"><%= image_tag('conpass_logo.png')%></a>
 
-                <ul>
+                <%# Right side %>
+                <div class="pull-right">
                 <% if logged_in? %>
-                    <li><%= current_user.username %></li>
-                    <li><%= link_to "logout", logout_path, class: "tanbtn"%></li>
+                    <a id="hamburger-nav" href="javascript:;"><i class="fa fa-bars"></i></a>
+                    <div id="hamburger-nav-items">
+                        <div class="triangle arrow-up"></div>
+                        <ul>
+                            <li><%= link_to "Dashboard", dashboard_path %></li>
+                            <li><%= link_to "Logout", logout_path%></li>
+                        </ul>
+                    </div>
                 <% else %>
-                    <li><%= link_to "login", login_path, class: "tanbtn" %></li>
+                    <%= link_to "login", login_path, class: "tanbtn" %>
                   <% end %>
-                </ul>
+                </div>
 
             </nav>
         </div>

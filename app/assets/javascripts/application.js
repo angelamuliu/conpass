@@ -12,8 +12,6 @@
 //= require jquery.datetimepicker
 //= require bootstrap-sprockets
 //= require_tree ./global
-//= require turbolinks
-//= require jquery.turbolinks
 
 $(document).ready(function() {
 
