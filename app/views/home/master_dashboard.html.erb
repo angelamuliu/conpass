@@ -1,0 +1,15 @@
+
+<%# A MASTER DASHBOARD - only site admins, like me, can view. From here I can make major changes to the site like edit convention types, add new images that ALL conventions can use, have dashboards on subscriptions, and more. It's for me to manage - definitely not for a event organizer or attendee. They have their own dashboard %>
+
+<%# Logged in - Convention Map Maker %>
+<% if logged_in? %>
+    <div class="row">
+        <div class="col-xs-12 col-sm-6 col-sm-offset-1 left">
+            <%= link_to "Types", types_path %>
+        </div>
+        <div class="col-xs-12 col-sm-4 right">
+        </div>
+    </div>
+<% else %>
+    <p> You need to login to view this page </p>
+<% end %>

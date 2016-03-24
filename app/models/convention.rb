@@ -1,6 +1,7 @@
 class Convention < ActiveRecord::Base
     # Relationships
     belongs_to :user
+    belongs_to :type
     has_many :maps, :dependent => :destroy
     has_one :location, :dependent => :destroy
     has_many :vendors, :dependent => :destroy
@@ -10,7 +11,7 @@ class Convention < ActiveRecord::Base
     accepts_nested_attributes_for :location
 
     # Validations
-    validates_presence_of :user
+    validates_presence_of :user, :type
 
     # Scopes 
     scope :alphabetical, -> {order('name')}

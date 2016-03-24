@@ -1,0 +1,33 @@
+
+<div class="row">
+    <div class="col-xs-12 col-sm-8 col-sm-offset-2">
+        <h3>Listing Types</h3>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Description</th>
+              <th>Default Logo</th>
+              <th>Default Banner</th>
+              <th></th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <% @types.each do |type| %>
+                <tr>
+                    <td><%= type.name %></td>
+                    <td><%= type.description %></td>
+                    <td><%= link_to "Default Logo", type.default_logo %></td>
+                    <td><%= link_to "Default Banner", type.default_banner %></td>
+                    <td><%= link_to 'Edit', edit_type_path(type) %></td>
+                    <%= link_to 'Destroy', type, method: :delete, data: {confirm: 'Are you sure?' } %></td>
+                </tr>
+            <% end %>
+          </tbody>
+        </table>
+
+        <%= link_to 'New Type', new_type_path %>
+    </div>
+</div>

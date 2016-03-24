@@ -1,0 +1,21 @@
+<%= simple_form_for @type do |f| %>
+    
+
+    <%= f.input :name %>
+    <%= f.input :description %>
+
+    <%= image_tag(@type.default_logo_url) if @type.default_logo? %>
+    <%= f.file_field :default_logo %>
+        <%= f.hidden_field :default_logo_cache %>
+
+    <%= image_tag(@type.default_banner_url) if @type.default_banner? %>
+    <%= f.file_field :default_banner %>
+        <%= f.hidden_field :default_banner_cache %>
+
+
+    <div class="actions">
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Save</button>
+    </div>
+
+
+<% end %>

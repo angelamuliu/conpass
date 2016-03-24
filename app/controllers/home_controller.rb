@@ -12,13 +12,13 @@ class HomeController < ApplicationController
         end
     end
 
+    def master_dashboard
+    end
+
     def about
     end
 
     def faq
-    end
-
-    def index_sam
     end
 
 end

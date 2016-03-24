@@ -5,9 +5,9 @@ Rails.application.routes.draw do
   # Static pages
   get 'home' => 'home#index', :as => :home
   get 'dashboard' => 'home#dashboard', :as => :dashboard
+  get 'master_dashboard' => 'home#master_dashboard', :as => :master_dashboard
   get 'about' => 'home#about', :as => :about
   get 'faq' => 'home#faq', :as => :faq
-  get 'index_sam' => 'home#index_sam', :as => :index_sam
   get 'need_account' => 'home#need_account', :as => :need_account
 
   #Root url
@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   resources :tags
   resources :booths
   resources :vendors
+  resources :types
 
   resources :maps do
     get 'craft', :on => :member # Main map crafting drag and drop screen
