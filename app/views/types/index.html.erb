@@ -2,8 +2,9 @@
 <div class="row">
     <div class="col-xs-12 col-sm-8 col-sm-offset-2">
         <h3>Listing Types</h3>
+        <%= link_to 'New Type', new_type_path %>
 
-        <table>
+        <table class="table table-striped">
           <thead>
             <tr>
               <th>Name</th>
@@ -19,15 +20,14 @@
                 <tr>
                     <td><%= type.name %></td>
                     <td><%= type.description %></td>
-                    <td><%= link_to "Default Logo", type.default_logo %></td>
-                    <td><%= link_to "Default Banner", type.default_banner %></td>
-                    <td><%= link_to 'Edit', edit_type_path(type) %></td>
+                    <td><%= link_to "Default logo", type.default_logo.url %></td>
+                    <td><%= link_to "Default Banner", type.default_banner.url %></td>
+                    <td><%= link_to 'Edit', edit_type_path(type) %>
                     <%= link_to 'Destroy', type, method: :delete, data: {confirm: 'Are you sure?' } %></td>
                 </tr>
             <% end %>
           </tbody>
         </table>
 
-        <%= link_to 'New Type', new_type_path %>
     </div>
 </div>

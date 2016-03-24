@@ -1,4 +1,5 @@
 class TypesController < ApplicationController
+    before_action :set_type, only: [:edit, :update, :destroy]
 
     def index
         @types = Type.all
@@ -15,8 +16,7 @@ class TypesController < ApplicationController
         @type = Type.new(type_params)
         respond_to do |format|
             if @type.save
-                format.html { redirect_to @type, notice: 'Type was successfully created.' }
-                format.json { render :show, status: :created, location: @type }
+                format.html { redirect_to types_url, notice: 'Type was successfully created.' }
             else
                 format.html { render :new }
                 format.json { render json: @type.errors, status: :unprocessable_entity }
@@ -27,8 +27,7 @@ class TypesController < ApplicationController
     def update
         respond_to do |format|
             if @type.update(type_params)
-                format.html { redirect_to @type, notice: 'Type was successfully updated.'}
-                format.json { render :show, status: :ok, location: @type }
+                format.html { redirect_to types_url, notice: 'Type was successfully updated.' }
             else
                 format.html { render :edit }
                 format.json { render json: @type.errors, status: :unprocessable_entity }
@@ -52,7 +51,7 @@ class TypesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def type_params
-      params.require(:type).permit(:type_id, :name, :default_logo, :default_banner, :remove_default_logo, :remove_default_banner)
+      params.require(:type).permit(:type_id, :name, :description, :default_logo, :default_banner, :remove_default_logo, :remove_default_banner)
     end
 
 end

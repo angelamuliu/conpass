@@ -1,0 +1,10 @@
+<% if model_obj.errors.any? %>
+    <div class="form_error">
+        <h4><%= pluralize(model_obj.errors.count, "error") %> prohibited this from being saved:</h4>
+        <ul>
+            <% model_obj.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+            <% end %>
+        </ul>
+    </div>
+<% end %>

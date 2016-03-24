@@ -1,20 +1,14 @@
 <%= simple_form_for @convention, :html => { class: "convention-form" } do |f| %>
 
-    <% if @convention.errors.any? %>
-        <div id="error_explanation">
-            <h2><%= pluralize(@convention.errors.count, "error") %> prohibited this convention from being saved:</h2>
-            <ul>
-                <% @convention.errors.full_messages.each do |message| %>
-                <li><%= message %></li>
-                <% end %>
-            </ul>
-        </div>
-    <% end %>
+    <%= render partial: "partials/form_errors", locals: {model_obj: @convention} %>
 
     <section>
         <h3>Step 1. The Basics</h3>
         <%= f.input :name, placeholder: "What's the name of your convention, conference, festival, or fair?", label: "Convention name", input_html: { class: "form-control" } %>
         <%= f.input :description, placeholder: "What's your event about? What do you want attendees to know?" %>
+        
+        <%= f.association :type, :label => "Type of Convention", :prompt => 'Choose' %>
+        <div>TODO: A place that displays a description of each type of convention??? OR ACTUALLY WHAT IF WE SPLIT THIS FORM INTO MULTIPLE PAGES AND USE ICONS ...</div>
     </section>
 
     <section>
