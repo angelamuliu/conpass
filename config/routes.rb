@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  resources :associates
+
   resources :vendor_booths
 
   # Static pages
