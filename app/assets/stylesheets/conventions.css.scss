@@ -4,17 +4,6 @@
 
 @import "shared_variables";
 
-/* Forms */
-.convention-form input {
-  width: 100%;
-  margin-bottom: 10px;
-}
-
-.convention-form button {
-  margin-top: 10px;
-}
-
-
 ////// Convention Index
 .top_index {
     background: white;
@@ -32,6 +21,28 @@
     padding-bottom: 10px;
     padding-top:10px;
 }
+
+// ------------------------------------------------------------
+////// FORM
+// ------------------------------------------------------------
+
+.convention-form input {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.convention-form button {
+  margin-top: 10px;
+}
+
+.convention_type_preview {
+    display: none;
+    max-width: 400px;
+    background-color: $tan;
+    padding: 10px;
+    margin-top: 10px;
+}
+
 
 
 // ------------------------------------------------------------

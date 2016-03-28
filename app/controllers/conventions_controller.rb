@@ -32,6 +32,7 @@ class ConventionsController < ApplicationController
 
   # GET /conventions/new
   def new
+    @allTypes = Type.all
     if logged_out?
         redirect_to need_account_path
     end
@@ -41,6 +42,7 @@ class ConventionsController < ApplicationController
 
   # GET /conventions/1/edit
   def edit
+    @allTypes = Type.all
     if logged_out?
         redirect_to need_account_path
     end

@@ -5,11 +5,23 @@
     <section>
         <h3>Step 1. The Basics</h3>
         <%= f.input :name, placeholder: "What's the name of your convention, conference, festival, or fair?", label: "Convention name", input_html: { class: "form-control" } %>
-        <%= f.input :description, placeholder: "What's your event about? What do you want attendees to know?" %>
+
+        <%= f.label :description %>
+        <%= f.input :description, placeholder: "What's your event about? What do you want attendees to know?", label: false, input_html: { class: "form-control" } %>
         
-        <%= f.association :type, :label => "Type of Convention", :prompt => 'Choose' %>
-        <div>TODO: A place that displays a description of each type of convention??? OR ACTUALLY WHAT IF WE SPLIT THIS FORM INTO MULTIPLE PAGES AND USE ICONS ...</div>
+        <%= f.label :type, label: "Type of Convention" %>
+        <%= f.association :type, label: false, :prompt => 'Choose'%>
+
+        <% @allTypes.each do |type| %>
+            <div class="convention_type_preview" id="convention_type_<%= type.id %>">
+                <strong><%= type.name %></strong>
+                <p><%= type.description %></p>
+            </div>
+        <% end %>
+
     </section>
+
+    <hr />
 
     <section>
         <h3>Step 2. When and Where</h3>
@@ -24,29 +36,27 @@
         <% end %>
     </section>
 
+    <hr />
+
     <section>
         <h3>Step 3. Customize</h3>
 
         <p>
-        <label>LOGO TEST</label>
-        <%= image_tag(@convention.logo_url) if @convention.logo? %>
-        <%= f.file_field :logo %>
-        <%= f.hidden_field :logo_cache %>
-        <label>
-        <%= f.check_box :remove_logo %>
-        Remove logo
-        </label>
+            <%= f.label :logo, label: "Upload a logo" %>
+            <%= image_tag(@convention.logo_url) if @convention.logo? %>
+            <%= f.file_field :logo %>
+            <%= f.hidden_field :logo_cache %>
+            <%= f.label :remove_logo, label: "Check to remove logo" %>
+            <%= f.check_box :remove_logo%>
         </p>
 
         <p>
-        <label>BANNER TEST</label>
-        <%= image_tag(@convention.banner_url) if @convention.banner? %>
-        <%= f.file_field :banner %>
-        <%= f.hidden_field :banner_cache %>
-        <label>
-        <%= f.check_box :remove_banner %>
-        Remove banner
-        </label>
+            <%= f.label :banner, label: "Upload a banner" %>
+            <%= image_tag(@convention.banner_url) if @convention.banner? %>
+            <%= f.file_field :banner %>
+            <%= f.hidden_field :banner_cache %>
+            <%= f.label :remove_banner, label: "Check to remove banner" %>
+            <%= f.check_box :remove_banner %>
         </p>
     </section>
 
@@ -58,4 +68,11 @@
 <script>
 $('#convention_start_date').datetimepicker();
 $('#convention_end_date').datetimepicker();
+
+<%# In the future, an interaction that displays types and on hover, shows the description would be nicer. For now, we have this janky thing. Remove in the future! %>
+$("#convention_type_id").change(function() {
+    var selected = $("#convention_type_id").val();
+    $(".convention_type_preview").hide();
+    $("#convention_type_"+selected).show();
+})
 </script>
