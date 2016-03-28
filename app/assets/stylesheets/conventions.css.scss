@@ -35,6 +35,10 @@
   margin-top: 10px;
 }
 
+.convention-form section {
+    
+}
+
 .convention_type_preview {
     display: none;
     max-width: 400px;
@@ -191,6 +195,7 @@ div#popupSort{
     left: -9999px;
     right: -9999px;
     margin: auto;
+    width: 100%;
 }
 
 @media only screen and (max-width: $smallPoint) { .convention_logo_container { height: 100px; width:150px; top: -50px; } }

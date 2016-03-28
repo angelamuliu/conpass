@@ -63,6 +63,7 @@ class ConventionsController < ApplicationController
         format.html { redirect_to new_map_path(convention_id: @convention.id), notice: 'Convention was successfully created.' }
         format.json { render :quickview, status: :created, location: @convention }
       else
+        @allTypes = Type.all
         format.html { render :new }
         format.json { render json: @convention.errors, status: :unprocessable_entity }
       end
@@ -82,6 +83,7 @@ class ConventionsController < ApplicationController
         format.html { redirect_to @convention, notice: 'Convention was successfully updated.' }
         format.json { render :show, status: :ok, location: @convention }
       else
+        @allTypes = Type.all
         format.html { render :edit }
         format.json { render json: @convention.errors, status: :unprocessable_entity }
       end
@@ -96,7 +98,7 @@ class ConventionsController < ApplicationController
     end
     @convention.destroy
     respond_to do |format|
-      format.html { redirect_to home_url, notice: 'Convention was successfully destroyed.' }
+      format.html { redirect_to dashboard_url, notice: 'Convention was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -116,7 +118,7 @@ class ConventionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def convention_params
-      params.require(:convention).permit(:name, :start_date, :end_date, :logo, :banner, :remove_logo, :remove_banner, :description,
+      params.require(:convention).permit(:name, :start_date, :end_date, :logo, :banner, :remove_logo, :remove_banner, :description, :type_id,
                                          location_attributes: [:id, :address_1, :address_2, :city, :state, :zip, :latitude, :longitude])
     end
 
