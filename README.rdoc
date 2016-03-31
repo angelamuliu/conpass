@@ -5,3 +5,4 @@ Initially made for 67475 Innovation in Information Systems @ CMU.
 
 * Ruby version: 2.3.0
 * Rails version: 4.1.9
+* Postgres 9.4.1

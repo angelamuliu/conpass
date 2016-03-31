@@ -7,6 +7,11 @@ require 'carrierwave'
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
+# Moving configuration settings to a separate hash available throughout the application
+KEYS = YAML.load(File.read(File.expand_path('../keys.yml', __FILE__)))
+KEYS.merge! KEYS.fetch(Rails.env, {})
+KEYS.symbolize_keys!
+
 module BeaconCreator
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.

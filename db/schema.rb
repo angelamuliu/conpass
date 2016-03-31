@@ -11,7 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160328034846) do
+ActiveRecord::Schema.define(version: 20160331161043) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "associates", force: true do |t|
     t.integer  "vendor_id"
@@ -89,6 +92,7 @@ ActiveRecord::Schema.define(version: 20160328034846) do
     t.string   "password_digest"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "role",            default: 1
   end
 
   create_table "vendor_booths", force: true do |t|

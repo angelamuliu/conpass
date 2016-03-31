@@ -33,3 +33,7 @@ bower.json
 
 # Ignore pow environment settings
 .powenv
+
+# Don't let people know about the database haha
+config/database.yml
+config/keys.yml
