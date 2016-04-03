@@ -281,27 +281,37 @@ ul.maps li:nth-child(even) {
 // ------------------------------------------------------------
 ////// SHOW PARTIAL > _CONVENTION_VENDORS
 // ------------------------------------------------------------
+li.convention_vendor {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+ul.convention_vendors a.star {
+    font-size: 18px;
 
-#convention_vendors {
-  margin-bottom:0px;
+}
+@media only screen and (min-width: $smallPoint) {
+    ul.convention_vendors { max-width: 1100px;}
+    li.convention_vendor {
+        width: 50%;
+        padding-left: 10px;
+    }
+    li.convention_vendor:nth-child(odd) { float: left;}
+    li.convention_vendor:nth-child(even) { float: right; padding-left: 25px; }
+}
+@media only screen and (max-width: $smallPoint) {
+    li.convention_vendor {
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
 }
 
-#convention_vendors li:nth-child(odd) {
-  background-color: #f0ece7;
-}
-#convention_vendors li:nth-child(even) {
-  background-color: #f8f5f2;
-}
 
 
-#convention_vendors li.row a.star {
-	float:right;
-}
-#convention_vendors li.row {
-    padding:5px;
-    padding-left: 10px;
-    padding-right: 10px;
-}
+
+
+
+
 
 // Vendor filter modal
 #filter_modal {

@@ -5,6 +5,7 @@ class Vendor < ActiveRecord::Base
     has_many :tags, :through => :vendor_tags
     has_many :vendor_booths, :dependent => :destroy
     has_many :booths,  :through => :vendor_booths
+    has_many :associates
     
     # Validations 
 

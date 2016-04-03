@@ -19,6 +19,11 @@ class ApplicationController < ActionController::Base
     return !current_user
   end
   helper_method :logged_out?
+
+  def admin?
+    return current_user && current_user.role == "admin"
+  end
+  helper_method :admin?
   
   def check_login
     redirect_to login_url, alert: "You need to log in to view this page." if current_user.nil?

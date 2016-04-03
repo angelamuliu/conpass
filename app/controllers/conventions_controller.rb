@@ -110,6 +110,12 @@ class ConventionsController < ApplicationController
     # params["search"]["type"]
   end
 
+  # AJAX - Used to search through vendors on the show page
+  def vendor_search
+    convention = Convention.find(params["id"])
+    @search_results = convention.convention_vendor_search(params["search"])
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_convention

@@ -5,6 +5,7 @@ class Convention < ActiveRecord::Base
     has_many :maps, :dependent => :destroy
     has_one :location, :dependent => :destroy
     has_many :vendors, :dependent => :destroy
+    has_many :associates, :through => :vendors
     has_many :tags, :dependent => :destroy
     has_many :vendor_tags, :through => :tags
 
@@ -37,7 +38,31 @@ class Convention < ActiveRecord::Base
         end
     end
 
+    def dateRange()
+        return start_date.strftime('%m/%d %l:%M %p') + " - " + end_date.strftime('%m/%d %l:%M %p')
+    end
 
+    # Given a search term and the sorting scheme currently applied. Can be called on a certain convention, 
+    # and will search through the vendors + associates connected to said convention. 
+    # Returns array of unique matching vendors
+    def convention_vendor_search(search, sort="ABC")
+        # First: Search for associates in case search = a name of an associate
+        # lower is used to make it a case insensitive search
+        associate_matches = associates.where("lower(first_name) LIKE ? OR lower(last_name) LIKE ?", 
+                                                 "%#{search.downcase}%", "%#{search.downcase}%")
+        vendorIDarr = associate_matches.map{|a| a.vendor_id}
+
+        # Now we cover vendor name, as well as grabbing any vendors which matched associate earlier
+        matches = vendors.where("lower(name) LIKE ? OR id IN (?)", "%#{search.downcase}%", vendorIDarr)
+        case sort
+        when "ABC"
+            return matches.alphabetical
+        else
+            return matches
+        end
+    end
+
+    # Class Methods
 
     # Creates a default convention for a user to look at for reference
     def self.makeDefault(user)
@@ -70,7 +95,4 @@ class Convention < ActiveRecord::Base
         vt4 = VendorTag.create({vendor: vendor2, tag: tag3})
     end
 
-    def dateRange()
-        return start_date.strftime('%m/%d %l:%M %p') + " - " + end_date.strftime('%m/%d %l:%M %p')
-    end
 end

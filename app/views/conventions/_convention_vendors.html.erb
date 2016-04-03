@@ -10,16 +10,13 @@
     </div>
 </div>
 
-<ul class="convention_vendors">
-    <% vendors.each do |vendor| %>
-    <li class="row convention_vendor <%= vendor.cssTagClasses() %>">
-        <%= link_to vendor.name, vendor %>
-        <a id="star<%=vendor.id%>" onclick="star(<%= vendor.id%>)" class="star" href="javascript:;">
-            <i class="fa fa-star-o"></i>
-        </a>
-    </li>
-  <% end %>
-</ul>
+<%# Search %>
+<%= form_for(convention, remote: true, url: vendorSearch_convention_path, method: :post) do |f| %>
+    <%= text_field_tag("search", nil, placeholder: "Search by paper name or author") %>
+    <%# TODO: On clicking to a different filter, change a hidden input here that will pass that to our search method so that the sort is maintained %>
+    <%= submit_tag "Search", :onclick => "searching_vendors();" %>
+<% end %>
+
 
 <%# Filter modal %>
 <div class="overlay">
@@ -43,3 +40,9 @@
         </div>
     </form>
 </div>
+
+<%# Convention vendor listing - gets updated/replaced on search %>
+<div id="convention_vendor_listing">
+    <%= render :partial => 'convention_vendor_listing', locals: { vendors: vendors } %>
+</div>
+

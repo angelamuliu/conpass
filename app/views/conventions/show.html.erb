@@ -8,7 +8,6 @@
                     <%= image_tag @convention.banner_url() %>
                 <% else %>
                     <%= image_tag @convention.type.default_banner_url() %>
-                    <%# PLACEHOLDER BANNER IMAGE %>
                 <% end %>
             </div>
 
@@ -20,7 +19,6 @@
                         <%= image_tag @convention.logo_url() %>
                     <% else %>
                         <%= image_tag @convention.type.default_logo_url() %>
-                        <%# PLACEHOLDER LOGO IMAGE, POSSIBLY ACRONYM? %>
                     <% end %>
                 </div>
             </div>
@@ -41,7 +39,7 @@
                 <%= render :partial => "convention_about" %>
             </div>
             <div class="tab_data" id="convention_vendors">
-                <%= render :partial => "convention_vendors", locals: {vendors: @vendors, tags: @tags} %>
+                <%= render :partial => "convention_vendors", locals: {convention:@convention, vendors: @vendors, tags: @tags} %>
             </div>
             <div class="tab_data" id="convention_maps">
                 <%= render :partial => "convention_maps", locals: {maps: @maps } %>

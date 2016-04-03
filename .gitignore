@@ -37,3 +37,6 @@ bower.json
 # Don't let people know about the database haha
 config/database.yml
 config/keys.yml
+
+# Don't clog up the github with stuff we uploaded via carrierwave
+/public/uploads

@@ -15,6 +15,9 @@
                     <div id="hamburger-nav-items">
                         <div class="triangle arrow-up"></div>
                         <ul>
+                            <% if admin? %>
+                                <li><%= link_to "Admin", master_dashboard_path %></li>
+                            <% end %>
                             <li><%= link_to "Dashboard", dashboard_path %></li>
                             <li><%= link_to "Logout", logout_path%></li>
                         </ul>

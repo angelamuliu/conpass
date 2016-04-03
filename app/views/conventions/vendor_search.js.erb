@@ -1,0 +1,3 @@
+
+$("#convention_vendor_listing").empty();
+$("#convention_vendor_listing").append("<%= j render(:partial => 'conventions/convention_vendor_listing', :locals => {vendors: @search_results}) %>");

@@ -1,0 +1,10 @@
+<ul class="convention_vendors">
+    <% vendors.each do |vendor| %>
+    <li class="convention_vendor <%= vendor.cssTagClasses() %>">
+        <a id="star<%=vendor.id%>" onclick="star(<%= vendor.id%>)" class="star" href="javascript:;">
+            <i class="fa fa-star-o"></i>
+        </a>
+        <%= link_to vendor.name, vendor %>
+    </li>
+  <% end %>
+</ul>

@@ -29,7 +29,8 @@ Rails.application.routes.draw do
 
   resources :conventions do
     get 'quickview', :on => :member, as: :quickview # For map makers, offers administrative glance at convention
-    get 'search', :on => :collection, as: :search
+    post 'vendor_search', :on => :member, as: :vendorSearch # Vendor search on show
+    get 'search', :on => :collection, as: :search # Searching conventions on home
   end
     
     post 'toggle_active/:id' => 'conventions#toggle_active', as: :toggle_active
