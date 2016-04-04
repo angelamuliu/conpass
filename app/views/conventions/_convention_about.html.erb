@@ -13,11 +13,13 @@
     </div>
 
     <div class="col-sm-12 col-md-4" id="additional_info">
-        <% if !@convention.location.latitude.blank? && !@convention.location.longitude.blank? %>
-                <div id="con_google_map"></div>
+        <% if @convention.location %>
+            <% if !@convention.location.latitude.blank? && !@convention.location.longitude.blank? %>
+                    <div id="con_google_map"></div>
+            <% end %>
+            <%= @convention.location.address_1 %> <%= @convention.location.address_2.empty? ? "" : "," + @convention.location.address_2  %><br />
+            <%= @convention.location.city %> <%= @convention.location.state.empty? ? "" : ", " + @convention.location.state %> <%= @convention.location.zip %> <%= @convention.location.country %>
         <% end %>
-        <%= @convention.location.address_1 %> <%= @convention.location.address_2.empty? ? "" : "," + @convention.location.address_2  %><br />
-        <%= @convention.location.city %> <%= @convention.location.state.empty? ? "" : ", " + @convention.location.state %> <%= @convention.location.zip %> <%= @convention.location.country %>
 
         <h5>Hours</h5>
         <%= @convention.dateRange() %><br />
@@ -35,18 +37,20 @@
 
 <script>
 function initialize() {
-    var mapProp = {
-        center:new google.maps.LatLng(<%= @convention.location.latitude %>, <%= @convention.location.longitude %>),
-        zoom:15,
-        mapTypeId:google.maps.MapTypeId.ROADMAP
-    };
-    var map=new google.maps.Map(document.getElementById("con_google_map"),mapProp);
+    <% if @convention.location %>
+        var mapProp = {
+            center:new google.maps.LatLng(<%= @convention.location.latitude %>, <%= @convention.location.longitude %>),
+            zoom:15,
+            mapTypeId:google.maps.MapTypeId.ROADMAP
+        };
+        var map=new google.maps.Map(document.getElementById("con_google_map"),mapProp);
 
-    var myLatLng = {lat: <%= @convention.location.latitude %>, lng: <%= @convention.location.longitude %>};
-    var marker = new google.maps.Marker({
-        position: myLatLng,
-        map: map
-    });
+        var myLatLng = {lat: <%= @convention.location.latitude %>, lng: <%= @convention.location.longitude %>};
+        var marker = new google.maps.Marker({
+            position: myLatLng,
+            map: map
+        });
+    <% end %>
 }
 google.maps.event.addDomListener(window, 'load', initialize);
 </script>

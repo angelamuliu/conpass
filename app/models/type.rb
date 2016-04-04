@@ -6,4 +6,5 @@ class Type < ActiveRecord::Base
     # Image Uploaders
     mount_uploader :default_logo, ImageUploader
     mount_uploader :default_banner, ImageUploader
+
 end

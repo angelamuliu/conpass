@@ -66,8 +66,11 @@ class Convention < ActiveRecord::Base
 
     # Creates a default convention for a user to look at for reference
     def self.makeDefault(user)
+        byebug
+
+        sandboxType = ::Type.find_by_name("Sandbox")
         con1 = Convention.create({name: "Example: Spicy Food Festival", start_date: Date.today, end_date: Date.tomorrow, 
-                    user: user, active: false})
+                    user: user, active: false, type: sandboxType})
         map1 = Map.create({name: "Flagstaff Hill", convention: con1, width: 1000, height: 1000})
         map2 = Map.create({name: "Schenley Park", convention: con1})
 
