@@ -34,9 +34,6 @@ gem 'gon', '~> 6.0.1' # Allows passing variables from controllers into JS as JSO
 gem 'simple_form'
 gem 'json' # To parse JSON to ruby HASH, vice versa
 
-gem 'byebug', '~> 6.0.2' # Breakpoint debugging in rails
-# GEN USE: type 'byebug' to start debugging. s > step, n > next, c > stop debugging
-
 gem 'bootstrap-sass', '~> 3.3.5'
 
 gem 'bcrypt-ruby'
@@ -50,11 +47,17 @@ gem 'carrierwave', '~> 0.10.0'
 gem 'geokit', '~> 1.10.0'
 gem 'geokit-rails', '~> 2.1.0', github: 'geokit/geokit-rails'
 
-# Testing
-group :test do 
-  gem 'shoulda', '~> 3.5'
-  gem 'factory_girl_rails', '~> 4.0'
-  gem 'hirb'
+# Testing + Development gems
+group :test, :development do 
+
+    gem 'byebug', '~> 6.0.2' # Breakpoint debugging in rails
+    # GEM USE: type 'byebug' to start debugging. s > step, n > next, c > stop debugging
+
+    gem 'shoulda', '~> 3.5'
+    gem 'factory_girl_rails', '~> 4.0'
+    gem 'hirb'
+
+    gem 'capistrano'
 end
 
 # --------------------------------------------------

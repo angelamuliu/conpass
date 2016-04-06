@@ -47,6 +47,12 @@ GEM
       sass (>= 3.2.19)
     builder (3.2.2)
     byebug (6.0.2)
+    capistrano (2.15.6)
+      highline
+      net-scp (>= 1.0.0)
+      net-sftp (>= 2.0.0)
+      net-ssh (>= 2.0.14)
+      net-ssh-gateway (>= 1.1.0)
     carrierwave (0.10.0)
       activemodel (>= 3.2.0)
       activesupport (>= 3.2.0)
@@ -75,6 +81,7 @@ GEM
       json
       multi_json
       request_store (>= 1.0)
+    highline (1.7.8)
     hike (1.2.3)
     hirb (0.7.2)
     i18n (0.7.0)
@@ -91,6 +98,13 @@ GEM
     mime-types (2.6.2)
     minitest (5.8.0)
     multi_json (1.11.2)
+    net-scp (1.2.1)
+      net-ssh (>= 2.6.5)
+    net-sftp (2.1.2)
+      net-ssh (>= 2.6.5)
+    net-ssh (3.0.1)
+    net-ssh-gateway (1.2.0)
+      net-ssh (>= 2.6.5)
     pg (0.18.4)
     rack (1.5.5)
     rack-test (0.6.3)
@@ -161,6 +175,7 @@ DEPENDENCIES
   bcrypt-ruby
   bootstrap-sass (~> 3.3.5)
   byebug (~> 6.0.2)
+  capistrano
   carrierwave (~> 0.10.0)
   chronic
   coffee-rails (~> 4.0.0)
