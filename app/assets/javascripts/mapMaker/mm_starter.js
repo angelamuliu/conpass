@@ -8,6 +8,7 @@
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 var TOOLS = {
+    NONE: "none",
     RECTANGLE : "rectangle",
     ERASER : "eraser",
     SELECT: "select",
@@ -41,7 +42,7 @@ var MapMaker = {};
 var actionHistory = []; // Store create, update action objs in here in order of occurance
 var toolContext = {}; // Store information about interactions as needed
 
-MapMaker.selectedTool = TOOLS.SELECT; // Which tool is the user currently using, default is SELECT
+MapMaker.selectedTool = TOOLS.NONE; // Which tool is the user currently using
 MapMaker.transform = { // Store information about transformations to ensure data is saved correctly
     "zoom" : 1 // 100%
 };

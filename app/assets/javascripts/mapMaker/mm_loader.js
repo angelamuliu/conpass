@@ -53,10 +53,16 @@ MapMaker.loadWorkAreaListeners = function() {
 MapMaker.loadBaseListeners = function() {
     $("#save").click(MapMaker.saveMap);
 
-    $(".tool").click(function(e) { // Swap tool when tool button pressed
-        $(".tool").removeClass("selectedTool");
-        MapMaker.selectedTool = this.dataset.type;
-        $(this).addClass("selectedTool");
+    // Swap tool when tool button pressed. Clear tool if pressed a tool already selected
+    $(".tool").click(function(e) {
+        if ($(this).hasClass("selectedTool")) {
+            $(this).removeClass("selectedTool");
+            MapMaker.selectedTool = TOOLS.NONE;
+        } else {
+            $(".tool").removeClass("selectedTool");
+            MapMaker.selectedTool = this.dataset.type;
+            $(this).addClass("selectedTool");
+        }
     })
 
     $(".overlay").click(function() {

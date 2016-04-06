@@ -1,0 +1,38 @@
+
+<%# Main working area for the map, booth, etc for craft.html.erb %>
+
+<div id="workArea_container" class="row">
+    <div id="workArea">
+        <% booths.each do |booth| %>
+            <%= content_tag :div, "", class: "booth #{booth.cssVendorClasses}", style: "left:#{booth.x_pos}px; top:#{booth.y_pos}px; width:#{booth.width}px; height:#{booth.height}px", "data-id": "#{booth.id}", "tabindex":1 do %>
+            <div class="booth_label">
+                <span>
+                    <% if booth.name.blank? %>
+                        <%= booth.id %>
+                    <% else %>
+                        <%= booth.name %>
+                    <% end %>
+                </span>
+                <a href="javascript:;" class="edit_booth_name"><i class="fa fa-pencil"></i></a>
+            </div>
+            <ul class="unordered vendorBooth">
+                <li>Vendors assigned to this booth<a href="javascript:;" class="close_vendorBooth"><i class="fa fa-times"></i></a></li>
+                <% if booth.vendor_booths.size > 0 %>
+                    <% booth.vendor_booths.each do |vendor_booth| %>
+                        <li class="vendorBooth v<%= vendor_booth.vendor.id %>" data-id="<%= vendor_booth.id %>">
+                            <%= vendor_booth.vendor.name %>
+                            <div class="options">
+                                <a href="javascript:;" class="update_vendorBooth"><i class="fa fa-pencil"></i></a><a href="javascript:;" class="destroy_vendorBooth"><i class="fa fa-trash"></i></a>
+                            </div>
+                            <span class="dateRange">(<%= vendor_booth.timeRange %>)</span>
+                        </li>
+                    <% end %>
+                <% else %>
+                    <li class="no_vendorBooths">No vendors assigned</li>
+                <% end %>
+
+            </ul>
+            <% end %>
+        <% end %>
+    </div>
+</div>
