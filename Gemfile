@@ -2,14 +2,14 @@ source 'https://rubygems.org'
 
 
 gem 'rails', '4.1.9'
-gem 'sqlite3'
+# gem 'sqlite3'
 gem 'sass-rails', '~> 4.0.3'
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.0.0'
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer',  platforms: :ruby
 
-gem 'jquery-rails'
+gem 'jquery-rails', '~> 3.1.4'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 # gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
@@ -26,19 +26,19 @@ gem 'spring',        group: :development
 # Database - Postgres
 gem 'pg', '~> 0.18.4'
 
-gem 'font-awesome-rails'
+gem 'font-awesome-rails', '~> 4.4.0.0'
 gem 'jquery-datetimepicker-rails', '~> 2.4.1.0'
 # gem 'jquery-turbolinks'
 
 gem 'gon', '~> 6.0.1' # Allows passing variables from controllers into JS as JSON
-gem 'simple_form'
+gem 'simple_form', '~> 3.1.1'
 gem 'json' # To parse JSON to ruby HASH, vice versa
 
 gem 'bootstrap-sass', '~> 3.3.5'
 
 gem 'bcrypt-ruby'
 
-gem 'chronic'
+gem 'chronic', '~> 0.10.2'
 gem 'time_date_helpers'
 
 gem 'rmagick', '~> 2.15.4'

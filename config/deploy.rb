@@ -7,7 +7,7 @@
 require "bundler/capistrano"
 
 # these next two lines apply to the server and database associated with the server
-server "conpass.space", :app, :web, :db, :primary => true #updated as of Mar 22, 2015
+server "conpass.space", :app, :web, :db, :primary => true
 
 # set the name of the application that you want to be deployed to the server
 set :application, "conpass"
@@ -57,7 +57,7 @@ namespace :deploy do
     run "#{try_sudo} touch #{File.join(current_path,'tmp','restart.txt')}"
   end
   task :symlink_shared do
-    run "ln -s /home/deploy/apps/conpass/shared/keys.yml /home/deploy/apps/FT_2014/releases/#{release_name}/config/"
+    run "ln -s /home/deploy/apps/conpass/shared/keys.yml /home/deploy/apps/conpass/releases/#{release_name}/config/"
   end
 end
 
