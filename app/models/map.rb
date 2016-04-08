@@ -142,7 +142,7 @@ class Map < ActiveRecord::Base
                 tempToPerm["tag"][idKey] = tag.id
             when "booth"
                 booth = Booth.create({x_pos: createAction["x"].to_i, y_pos: createAction["y"].to_i, 
-                    width: createAction["width"].to_i, height: createAction["height"].to_i, map_id: self.id})
+                    width: createAction["width"].to_i, height: createAction["height"].to_i, name: createAction["name"], map_id: self.id})
                 tempToPerm["booth"][idKey] = booth.id
             when "vendor_booth"
                 VendorBooth.create({vendor_id: translateTempToPermId(createAction["vendor_id"], "vendor", tempToPerm), 
@@ -168,7 +168,7 @@ class Map < ActiveRecord::Base
                 Tag.update(updateAction["id"], name: updateAction["name"])
             when "booth"
                 Booth.update(updateAction["id"], x_pos: updateAction["x"].to_i, y_pos: updateAction["y"].to_i,
-                    width: updateAction["width"].to_i, height: updateAction["height"].to_i)
+                    width: updateAction["width"].to_i, height: updateAction["height"].to_i, name: updateAction["name"])
             when "vendor_booth"
                 VendorBooth.update(updateAction["id"], vendor_id: updateAction["vendor_id"], booth_id: updateAction["booth_id"],
                     start_time: DateTime.parse(updateAction["start_time"]), end_time: DateTime.parse(updateAction["end_time"]))

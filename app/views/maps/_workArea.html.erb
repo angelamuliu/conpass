@@ -6,13 +6,7 @@
         <% booths.each do |booth| %>
             <%= content_tag :div, "", class: "booth #{booth.cssVendorClasses}", style: "left:#{booth.x_pos}px; top:#{booth.y_pos}px; width:#{booth.width}px; height:#{booth.height}px", "data-id": "#{booth.id}", "tabindex":1 do %>
             <div class="booth_label">
-                <span>
-                    <% if booth.name.blank? %>
-                        <%= booth.id %>
-                    <% else %>
-                        <%= booth.name %>
-                    <% end %>
-                </span>
+                <div class="booth_name"><%= booth.name %></div>
                 <a href="javascript:;" class="edit_booth_name"><i class="fa fa-pencil"></i></a>
             </div>
             <ul class="unordered vendorBooth">

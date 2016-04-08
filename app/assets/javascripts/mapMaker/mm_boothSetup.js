@@ -17,6 +17,7 @@ MapMaker.booth.addToHistory = function(boothEl) {
         "y" : top,
         "width" : width,
         "height" : height,
+        "name" : "",
         "isTemp" : true
     }
     actionHistory.push(boothHistory);
@@ -35,14 +36,13 @@ MapMaker.booth.deleteToHistory = function(boothEl, isTemp) {
     actionHistory.push(boothHistory);
 }
 
-// TODO - Add name when we get the form finished
 // Log updating a booth into our history array
 MapMaker.booth.updateToHistory = function (boothEl, isTemp) {
     var left = parseInt(boothEl.css("left"));
     var top = parseInt(boothEl.css("top"));
     var width = parseInt(boothEl.css("width"));
     var height = parseInt(boothEl.css("height"));
-    // var name = boothEl.children(".booth_label").html();
+    var name = boothEl.find("div.booth_name").html().trim();
     var boothHistory = {
         "action" : ACTIONS.UPDATE,
         "type" : TYPES.BOOTH,
@@ -50,8 +50,8 @@ MapMaker.booth.updateToHistory = function (boothEl, isTemp) {
         "x" : left,
         "y" : top,
         "width" : width,
-        "height" : height
-        // "name" : name
+        "height" : height,
+        "name" : name
     }
     if (isTemp) { // Deleted temp obj that was never saved. Keep track of this
         boothHistory["isTemp"] = true;
@@ -65,7 +65,10 @@ MapMaker.booth.makeEl = function(left, top, id, width, height) {
     height = height === undefined ? 0 : height;
     return $("<div class=\"booth\" style=\"left:"+left+"px; top:"+top+"px; width:"+width+"px; height:"+height+"px;\""+
              "data-id=\"t"+id+"\" tabindex=1>" + 
-                "<div class=\"booth_label\" onclick=\"\"></div>" +
+                "<div class=\"booth_label\" onclick=\"\">" +
+                    "<div class=\"booth_name\"></div>" + 
+                    "<a href=\"javascript:;\" class=\"edit_booth_name\"><i class=\"fa fa-pencil\"></i></a>" +
+                "</div>" +
                 "<ul class=\"unordered vendorBooth\">" + 
                     "<li>Vendors assigned to this booth<a href=\"javascript:;\" class=\"close_vendorBooth\">" + 
                         "<i class=\"fa fa-times\"></i></a>"+
@@ -191,7 +194,6 @@ MapMaker.booth.addListeners = function(boothEl, isTemp) {
     // TODO: Investigate why this one is handled differently from temp to perm
     boothEl.find(".close_vendorBooth").click(function() {
         $(this).closest("ul").hide()
-
     })
 }
 
@@ -218,16 +220,18 @@ MapMaker.booth.addListener_mousedown = function(boothEl, isTemp) {
         }
     })
 
-    // WIP
     boothEl.find(".edit_booth_name").mousedown(function(e) {
-        if (!isTemp) { boothEl = $(this); }
-        debugger;
-        // Move the form to where person just clicked
+        if (!isTemp) { // Need to store the boothEl so that later when name form is submitted we can get back and pass it in for updat
+            toolContext.boothEl = $(this).closest(".booth");
+        } else { toolContext.boothEl = boothEl; }
+
+        // Move the form to where person just clicked, slide it in view
         $("form#boothName_Form").css("left",  e.pageX);
         $("form#boothName_Form").css("top", e.pageY - 25);
+        $("form#boothName_Form").slideDown(200);
 
         // Prefill the existing value into the form
-        var currName = boothEl.parent().find("span").html().trim();
+        var currName = toolContext.boothEl.find("div.booth_name").html().trim();
         $("form#boothName_Form input").first().val(currName);
 
     })
@@ -301,8 +305,12 @@ MapMaker.booth.addListener_keyup = function(boothEl) {
 ////// BOOTH MISC FUNCTIONS
     // ------------------------------------------------------------
 
-MapMaker.booth.dismiss_name_form = function() {
-    debugger;
+// Deals with the single field name form
+MapMaker.booth.dismiss_name_form = function() { $("#boothName_Form").slideUp(200); }
+MapMaker.booth.submit_name_form = function() {
+    var name = $("form#boothName_Form input").first().val();
+    toolContext.boothEl.find("div.booth_name").html(name);
+    MapMaker.booth.updateToHistory(toolContext.boothEl, MapMaker.isTemp(toolContext.boothEl));
+    $("#boothName_Form").slideUp(200);
 }
-
 

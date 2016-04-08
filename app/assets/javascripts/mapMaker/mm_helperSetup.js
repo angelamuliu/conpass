@@ -95,7 +95,14 @@ MapMaker.expandDate = function(datestring) {
     var minute = datePieces[2].split(":")[1].substring(0,2);
     var year = new Date().getFullYear();
     return year + "/" + month + "/" + day + " " + hour + ":" + minute;
+}
 
+// Given some DOM element, returns true if its a temp object and false if not
+// Searches for a "t" in the data-id field to identify
+MapMaker.isTemp = function(domEl) {
+    if ((typeof(domEl.data("id")) === "string") && (domEl.data("id").charAt(0) === "t")) {
+        return true;
+    } return false;
 }
 
 // Given a DOM element, extracts the vendor ID through the class ("v19" -> vendor ID = 19)
