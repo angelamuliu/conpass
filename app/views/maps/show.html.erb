@@ -15,7 +15,11 @@
         <% @booths.each do |booth| %>
             <%= content_tag :div, "", class: "booth #{booth.cssVendorClasses}",
              style: "left:#{booth.x_pos}px; top:#{booth.y_pos}px; width:#{booth.width}px; height:#{booth.height}px", "data-id": "#{booth.id}" do %>
-            <div class="booth_label"><%= booth.id %></div>
+
+            <div class="booth_label">
+                <div class="booth_name"><%= booth.name %></div>
+            </div>
+
             <ul class="unordered vendorBooth" onclick="closeVendorBooth(event)">
                 <li>Vendors assigned to this booth
                     <a href="javascript:;" class="close_vendorBooth" ><i class="fa fa-times"></i></a>
