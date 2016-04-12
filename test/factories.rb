@@ -1,4 +1,11 @@
-FactoryGirl.define do
+FactoryGirl.define do  factory :image do
+    image "MyString"
+map_id 1
+layer 1
+x_pos 1
+y_pos 1
+  end
+
   factory :convention do
     name "ToC"
     start_date 1.year.ago
