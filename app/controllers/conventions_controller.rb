@@ -27,7 +27,7 @@ class ConventionsController < ApplicationController
   def toggle_active
     @convention = Convention.find(params[:id])
     @convention.toggleActive()
-    redirect_to home_path
+    redirect_to dashboard_path
   end
 
   # GET /conventions/new
