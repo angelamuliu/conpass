@@ -1,4 +1,8 @@
-FactoryGirl.define do  factory :image do
+FactoryGirl.define do  factory :cast do
+    integer ""
+string ""
+  end
+  factory :image do
     image "MyString"
 map_id 1
 layer 1

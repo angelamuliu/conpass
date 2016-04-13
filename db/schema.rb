@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160412203041) do
+ActiveRecord::Schema.define(version: 20160413030335) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,6 +35,13 @@ ActiveRecord::Schema.define(version: 20160412203041) do
     t.string   "name"
   end
 
+  create_table "casts", force: true do |t|
+    t.integer  "convention_id"
+    t.string   "upload"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "conventions", force: true do |t|
     t.string   "name"
     t.datetime "start_date"
@@ -50,13 +57,11 @@ ActiveRecord::Schema.define(version: 20160412203041) do
   end
 
   create_table "images", force: true do |t|
-    t.string   "image"
-    t.integer  "map_id"
-    t.integer  "layer"
-    t.integer  "x_pos"
-    t.integer  "y_pos"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.integer "layer"
+    t.integer "x_pos"
+    t.integer "y_pos"
+    t.integer "cast_id"
+    t.integer "map_id"
   end
 
   create_table "locations", force: true do |t|

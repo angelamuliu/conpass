@@ -5,6 +5,7 @@ class Map < ActiveRecord::Base
     belongs_to :convention
     has_many :booths, :dependent => :destroy
     has_many :vendor_booths, :through => :booths
+    has_many :images, :dependent => :destroy
 
     # Validations
     validates_presence_of :convention, :name
