@@ -1,4 +1,7 @@
 class Image < ActiveRecord::Base
+
+    enum layer: [:background, :below_booth, :above_booth, :top]
+
     # Relationships
     belongs_to :cast
     belongs_to :map
@@ -6,6 +9,9 @@ class Image < ActiveRecord::Base
     # Validations
     validates_presence_of :cast, :map
 
-    # TODO: Add layer enum which determines z-index layering
+    # Returns a CSS z-index for the image based on which layer it is placed on
+    def z_index
+        
+    end
 
 end

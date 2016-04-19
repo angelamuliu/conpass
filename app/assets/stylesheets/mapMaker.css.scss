@@ -2,6 +2,8 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+@import "shared_variables";
+
 #workArea_container {
     padding: 5px;
     background-color: #4c4c4c;
@@ -54,7 +56,7 @@
     height: 100%;
     top: 0;
     left: 0;
-    z-index: 2000; // Overlay on top of navbar
+    z-index: $z_overlay; // Overlay on top of navbar
     background-color: rgba(0,0,0,0.3);
 }
 
@@ -80,13 +82,13 @@
 
 
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-// Map options flaggy thing
+// Map options thing that is next to the Toolbar
 
 #map_options {
     display: inline-block;
     margin-left: 25px;
     position: relative;
-    z-index: 50;
+    z-index: $z_overWorkArea;
     background: red;
     padding: 10px;
     padding-bottom: 15px;
@@ -180,7 +182,7 @@ button.jsAdd:hover {
 .jsForm {
     padding: 0;
     position: relative;
-    z-index: 100;
+    // z-index: 100;
     background-color: #f0ece7;
     margin: auto;
     max-width: 600px;
@@ -310,7 +312,7 @@ button.jsAdd:hover {
 // Booth CSS
 
 form#boothName_Form {
-    z-index: 200;
+    z-index: $z_overBooth;
     position: absolute;
     padding: 5px;
     box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.3);
@@ -354,7 +356,7 @@ form#boothName_Form {
     width: inherit;
     position: absolute;
     background-color: #f8f5f2;
-    z-index: 45;
+    z-index: $z_overWorkArea;
     height: 100vh;
     overflow-y: scroll;
     box-shadow: 0px 0px 10px 3px rgba(0, 0, 0,.3);
@@ -420,7 +422,7 @@ ul.vendorBooth {
     display: none;
     position: absolute;
     background-color: #f0ece7;
-    z-index: 40;
+    z-index: $z_overBooth;
     min-width: 300px;
     box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.3);
 }
@@ -462,7 +464,7 @@ ul.vendorBooth span.dateRange {
     position: absolute;
     display: inline-block;
     background-color: #f0ece7;
-    z-index: 200;
+    // z-index: $z_overBooth;
     box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.3);
 }
 #vendorbooth_form ul {

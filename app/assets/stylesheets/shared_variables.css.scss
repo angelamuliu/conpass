@@ -29,3 +29,8 @@ $smallPoint: 45em;
     font-family: ChapparalPro-Regular;
     src: url(../fonts/ChaparralPro-Regular.otf);
 }
+
+// Z-indexes
+$z_overWorkArea: 45; // Appears over the main "work bench" area
+$z_overBooth: 200; // Appears over booth elements
+$z_overlay: 2000; // Appears over almost everything
