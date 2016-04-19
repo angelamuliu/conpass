@@ -1,6 +1,8 @@
 class User < ActiveRecord::Base
 
     enum role: [ :admin, :registered, :premium ]
+
+    # Relationships
     has_many :conventions, :dependent => :destroy
 
     has_secure_password

@@ -8,6 +8,7 @@ class Convention < ActiveRecord::Base
     has_many :associates, :through => :vendors
     has_many :tags, :dependent => :destroy
     has_many :vendor_tags, :through => :tags
+    has_many :casts
 
     accepts_nested_attributes_for :location
 
