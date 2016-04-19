@@ -6,4 +6,6 @@ class Image < ActiveRecord::Base
     # Validations
     validates_presence_of :cast, :map
 
+    # TODO: Add layer enum which determines z-index layering
+
 end
