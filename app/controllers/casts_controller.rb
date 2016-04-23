@@ -16,6 +16,7 @@ class CastsController < ApplicationController
     def destroy
         @cast.destroy
         respond_to do |format|
+            @convention = @cast.convention
             format.js {}
         end
     end

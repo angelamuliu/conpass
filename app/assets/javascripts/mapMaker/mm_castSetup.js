@@ -25,14 +25,25 @@ MapMaker.cast.upload = function() {
       contentType: false,
       processData: false,
       type: 'POST',
-      dataType: 'script'
+      dataType: 'script',
+      beforeSend: function() {
+
+      }
     });
     return false;
 
 }
 
 // Handles sending a DELETE AJAX request to the server
-MapMaker.cast.destroy = function() {
+MapMaker.cast.destroy = function(castId) {
+    $.ajax({
+        url: '/casts/'+castId,
+        type: 'DELETE',
+        beforeSend: function() {
+            
+        }
+    })
+    return false;
 
 }
 
@@ -43,6 +54,7 @@ MapMaker.cast.loadListeners = function() {
         MapMaker.cast.upload();
     })
 
+    // Hooking up toggle display of bin button
     $("#cast_bin_toggle").click(function() {
         if ($("#cast_bin").hasClass("offscreen")) { // Scroll into view
             $("#cast_bin").animate({"bottom": "0px" }, 150);
@@ -52,6 +64,7 @@ MapMaker.cast.loadListeners = function() {
             $("#cast_bin").addClass("offscreen");
        }
     })
+
 }
 
 

@@ -46,5 +46,15 @@ input#cast_uploader { // Removes the name that appears next to file uploader
 li.cast {
     display: inline-block;
     width: 100px;
+    position: relative;
 }
 li.cast img { width: 100%; }
+a.destroy_cast {
+    background: transparentize(black, 0.4);
+    top: 0;
+    position: absolute;
+    right: 0;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+}

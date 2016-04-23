@@ -5,6 +5,7 @@
     <% convention.casts.each do |cast| %>
         <li class="cast">
             <%= image_tag cast.upload_url() %>
+            <a href="javascript:;" onclick="MapMaker.cast.destroy(<%= cast.id %>)" class="destroy_cast"><i class="fa fa-times"></i></a>
         </li>
     <% end %>
 </ul>
