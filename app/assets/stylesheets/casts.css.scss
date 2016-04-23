@@ -11,7 +11,6 @@
     background: $singed-charcoal;
     color: $paper;
     height: 140px;
-    padding: 10px;
 }
 
 #cast_bin_toggle {
@@ -26,12 +25,26 @@
     background: darken( $singed_charcoal, 10% );
 }
 
+// CASTS - AKA Custom images
+
 input#cast_uploader { // Removes the name that appears next to file uploader
     color:transparent;
 }
 
-li.cast { // TODO: FIXT!!!
-    width: 20px;
-    height: 20px;
-    overflow: hidden;
+#convention_casts {
+    padding: 10px;
+    width: 100%;
+    height: 100%;
+    position:relative;
+    overflow-x: scroll;
 }
+#convention_casts ul {
+    display: block;
+    width: 100%;
+    white-space: nowrap;
+}
+li.cast {
+    display: inline-block;
+    width: 100px;
+}
+li.cast img { width: 100%; }

@@ -5,6 +5,8 @@
 <div id="cast_bin" class="offscreen">
     <a href="javascript:;" id="cast_bin_toggle" class="btn">Image Library</a>
 
+
+    <input id="cast_uploader" name="cast[upload]" type="file">
     <div id="convention_casts">
     <% if convention.casts.empty? %>
         Start adding in your own images into the map! Just drag and drop, or press the big "upload" button to get started.
@@ -12,9 +14,6 @@
         <%= render partial: 'casts/conventionCasts', locals: {convention: convention} %>
     <% end %>
     </div>
-
-
-    <input id="cast_uploader" name="cast[upload]" type="file">
 
     <%#= render partial: 'drag_drop_uploader', locals: {thing: @thing }%>
 </div>
