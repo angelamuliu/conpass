@@ -6,11 +6,24 @@
 #cast_bin {
     z-index: $z_overWorkArea;
     position: fixed;
-    bottom: 0;
+    bottom: -140px; // Initially offscreen
     width: 100%;
     background: $singed-charcoal;
     color: $paper;
-    height: 100px;
+    height: 140px;
+    padding: 10px;
+}
+
+#cast_bin_toggle {
+    z-index: $z_overWorkArea;
+    position: absolute;
+    top: -30px;
+    background: $singed-charcoal;
+    color: white;
+}
+#cast_bin_toggle:hover {
+    color: darken( white, 10% );
+    background: darken( $singed_charcoal, 10% );
 }
 
 input#cast_uploader { // Removes the name that appears next to file uploader

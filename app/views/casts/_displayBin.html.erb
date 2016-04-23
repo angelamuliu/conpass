@@ -1,7 +1,10 @@
 
 <%# Given a convention, displays convention's existing casts, brings together partials that enable other interations like drag and drop %>
 
-<div id="cast_bin">
+
+<div id="cast_bin" class="offscreen">
+    <a href="javascript:;" id="cast_bin_toggle" class="btn">Image Library</a>
+
     <div id="convention_casts">
     <% if convention.casts.empty? %>
         Start adding in your own images into the map! Just drag and drop, or press the big "upload" button to get started.

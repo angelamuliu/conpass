@@ -42,6 +42,16 @@ MapMaker.cast.loadListeners = function() {
         // Start upload when user has selected something to upload
         MapMaker.cast.upload();
     })
+
+    $("#cast_bin_toggle").click(function() {
+        if ($("#cast_bin").hasClass("offscreen")) { // Scroll into view
+            $("#cast_bin").animate({"bottom": "0px" }, 150);
+            $("#cast_bin").removeClass("offscreen");
+       } else { // Scroll down out of view
+            $("#cast_bin").animate({"bottom": "-140px" }, 150);
+            $("#cast_bin").addClass("offscreen");
+       }
+    })
 }
 
 
