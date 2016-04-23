@@ -1,0 +1,24 @@
+
+@import "shared_variables";
+
+// Element that contains in all elements related to cast
+// interaction on the map maker craft page
+#cast_bin {
+    z-index: $z_overWorkArea;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background: $singed-charcoal;
+    color: $paper;
+    height: 100px;
+}
+
+input#cast_uploader { // Removes the name that appears next to file uploader
+    color:transparent;
+}
+
+li.cast { // TODO: FIXT!!!
+    width: 20px;
+    height: 20px;
+    overflow: hidden;
+}

@@ -20,6 +20,8 @@
 //= require ./mapMaker/mm_vendorBoothSetup.js
 //= require ./mapMaker/mm_vendorSetup.js
 //= require ./mapMaker/mm_tagSetup.js
+//= require ./mapMaker/mm_castSetup.js
+//= require ./mapMaker/mm_imageSetup.js
 //= require ./mapMaker/mm_loader.js 
 
 $(document).ready(function() {

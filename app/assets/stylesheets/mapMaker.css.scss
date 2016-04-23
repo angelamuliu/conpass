@@ -92,7 +92,7 @@
     background: red;
     padding: 10px;
     padding-bottom: 15px;
-    background-color: #2f2f2f;
+    background-color: $singed-charcoal;
     box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.3);
     color: white;
 }
@@ -139,7 +139,7 @@
 #mouseTools {
     margin-left: 25px;
     display: inline-block;
-    background-color: #2f2f2f;
+    background-color: $singed-charcoal;
     padding: 10px;
     position: absolute;
     z-index: 45;
@@ -250,7 +250,7 @@ button.jsAdd:hover {
     margin-right: 2%;
 }
 
-#fakeMapForm h3, #map_form h3 { background-color: #2f2f2f; }
+#fakeMapForm h3, #map_form h3 { background-color: $singed-charcoal; }
 #vendor_form h3 { background-color: #0069d3; }
 #vendor_form a.close_overlay:hover { color: #cce1f6; }
 #tag_form h3 { background-color: #e43046; }

@@ -1,0 +1,10 @@
+
+<%# Shows available casts to a convention and each DOM element will have drag drop and other listeners attached to them %>
+
+<ul class="unordered">
+    <% convention.casts.each do |cast| %>
+        <li class="cast">
+            <%= image_tag cast.upload_url() %>
+        </li>
+    <% end %>
+</ul>

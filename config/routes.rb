@@ -21,6 +21,10 @@ Rails.application.routes.draw do
   resources :vendors
   resources :types
 
+  # Casts and images don't require as many paths
+  post '/casts', to: 'casts#create'
+  delete '/casts/:id', to: 'casts#destroy'
+
   resources :maps do
     get 'craft', :on => :member # Main map crafting drag and drop screen
     post 'save', :on => :member # Saving map and related from the craft screen

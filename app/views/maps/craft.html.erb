@@ -27,6 +27,7 @@
 
 <%= render partial: 'workArea', locals: {booths: @booths} %>
 
+<%= render partial: 'casts/displayBin', locals: {convention: @map.convention} %>
 
 <%= javascript_include_tag "mapMaker.js" %>
 

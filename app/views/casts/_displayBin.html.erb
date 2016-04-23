@@ -2,10 +2,16 @@
 <%# Given a convention, displays convention's existing casts, brings together partials that enable other interations like drag and drop %>
 
 <div id="cast_bin">
+    <div id="convention_casts">
     <% if convention.casts.empty? %>
         Start adding in your own images into the map! Just drag and drop, or press the big "upload" button to get started.
     <% else %>
+        <%= render partial: 'casts/conventionCasts', locals: {convention: convention} %>
     <% end %>
+    </div>
+
+
+    <input id="cast_uploader" name="cast[upload]" type="file">
 
     <%#= render partial: 'drag_drop_uploader', locals: {thing: @thing }%>
 </div>
