@@ -289,11 +289,13 @@ MapMaker.vendor.addListener_dragstart = function(vendorEl, isTemp) {
     if (isTemp) {
         vendorEl.find(".drag_assign").on("dragstart", function(e) {
             toolContext.vendorId = vendorEl.data("id");
+            toolContext.draggingType = TYPES.VENDOR;
         })
     } else { // Mass assignment using ".drag_assign" directly
         vendorEl.on("dragstart", function(e) {
             var vendorId = $(this).closest("li").data("id");
             toolContext.vendorId = vendorId;
+            toolContext.draggingType = TYPES.VENDOR;
         })
     }
 }

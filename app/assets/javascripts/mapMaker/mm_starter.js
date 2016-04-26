@@ -21,13 +21,16 @@ var ACTIONS = { // Used to store action for history
     DELETE : "delete"
 }
 
-var TYPES = { // Used to store what object we'll want to use
+// Used to store what object we'll want to use
+// Also for drag/drop identification (toolContext.draggingType)
+var TYPES = {
     MAP : "map",
     TAG : "tag",
     VENDOR : "vendor",
     BOOTH : "booth",
     VENDOR_TAG : "vendor_tag",
-    VENDOR_BOOTH : "vendor_booth"
+    VENDOR_BOOTH : "vendor_booth",
+    CAST : "cast"
 }
 
 // Keycodes and statuses used later to track which keys are being pressed together

@@ -1,6 +1,6 @@
 
 // Cast and Image listeners, event handlers, functions for MapMaker
-// Handler of ajax, uploading, deletion, and more of custom user images
+// Handler of ajax, uploading, deletion, and more of casts (uploaded user images)
 // Accessing  => MapMaker.cast.<functionName>
 
 MapMaker.cast = {};
@@ -31,7 +31,6 @@ MapMaker.cast.upload = function() {
       }
     });
     return false;
-
 }
 
 // Handles sending a DELETE AJAX request to the server
@@ -40,11 +39,10 @@ MapMaker.cast.destroy = function(castId) {
         url: '/casts/'+castId,
         type: 'DELETE',
         beforeSend: function() {
-            
+
         }
     })
     return false;
-
 }
 
 // Loads all event handlers for existing DOM objects that are casts
@@ -64,8 +62,64 @@ MapMaker.cast.loadListeners = function() {
             $("#cast_bin").addClass("offscreen");
        }
     })
-
+    MapMaker.cast.addListeners_DnD();
+    MapMaker.cast.addListeners($("li.cast"));
 }
 
+// Given a DOM element that is a cast, attaches the drag and drop listeners
+MapMaker.cast.addListeners = function(castEl) {
+    MapMaker.cast.addListener_dragstart(castEl);
+}
 
+MapMaker.cast.addListener_dragstart = function(castEl) {
+    castEl.on("dragstart", function(e) {
+        var castId = $(this).data("id");
+        toolContext.castId = castId;
+        toolContext.draggingType = TYPES.CAST;
+    })
+}
 
+// Attaches drag and drop listeners to the dropzone ("#workArea")
+MapMaker.cast.addListeners_DnD = function() {
+    MapMaker.cast.addListener_dragenter();
+    MapMaker.cast.addListener_dragleave();
+    MapMaker.cast.addListener_dragover();
+    MapMaker.cast.addListener_drop();
+}
+
+MapMaker.cast.addListener_dragenter = function() {
+    $("#workArea").on("dragenter", function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+    })
+}
+
+MapMaker.cast.addListener_dragleave = function(boothEl) {
+    $("#workArea").on("dragleave", function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+    })
+}
+
+MapMaker.cast.addListener_dragover = function(boothEl) {
+    $("#workArea").on("dragover", function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+    })
+}
+
+// Attaches a listener to the workarea to listen for cast drops
+MapMaker.cast.addListener_drop = function() {
+    $("#workArea").on("drop", function(e, ui) {
+        if (toolContext.draggingType === TYPES.CAST) {
+            debugger;
+
+            // event.clientX
+            // event.clientY
+
+            e.preventDefault();
+            e.stopPropagation();
+        }
+    })
+}

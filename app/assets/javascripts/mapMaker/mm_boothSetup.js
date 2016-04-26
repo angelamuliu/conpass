@@ -272,20 +272,22 @@ MapMaker.booth.addListener_dragover = function(boothEl) {
 
 MapMaker.booth.addListener_drop = function(boothEl, isTemp) {
     boothEl.on("drop", function(e, ui) {
-        if (!isTemp) { boothEl = $(this); }
+        if (toolContext.draggingType === TYPES.VENDOR) {
+            if (!isTemp) { boothEl = $(this); }
 
-        e.preventDefault();
-        e.stopPropagation();
+            e.preventDefault();
+            e.stopPropagation();
 
-        var vendorBooth_formEl = $("#vendorbooth_form");
-        MapMaker.resetForm(vendorBooth_formEl);
+            var vendorBooth_formEl = $("#vendorbooth_form");
+            MapMaker.resetForm(vendorBooth_formEl);
 
-        MapMaker.vendorBooth.prepForm(vendorBooth_formEl);
-        MapMaker.vendorBooth.showForm(vendorBooth_formEl);
+            MapMaker.vendorBooth.prepForm(vendorBooth_formEl);
+            MapMaker.vendorBooth.showForm(vendorBooth_formEl);
 
-        toolContext.vendorBoothAction = ACTIONS.CREATE;
-        toolContext.boothId = boothEl.data("id");
-        toolContext.boothEl = boothEl;
+            toolContext.vendorBoothAction = ACTIONS.CREATE;
+            toolContext.boothId = boothEl.data("id");
+            toolContext.boothEl = boothEl;
+        }
     })
 }
 
