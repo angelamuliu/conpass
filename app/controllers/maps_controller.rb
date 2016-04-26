@@ -110,6 +110,7 @@ class MapsController < ApplicationController
     @booths = @map.booths
     @vendorBooths = @map.vendor_booths
     @vendorTags = @map.convention.vendor_tags
+    @images = @map.images
 
     # Pass these variables into the JS as well
     gon.map = @map
@@ -118,6 +119,7 @@ class MapsController < ApplicationController
     gon.booths = @booths
     gon.vendorBooths = @vendorBooths
     gon.vendorTags = @vendorTags
+    gon.images = @images
   end
 
   # Saving map after making changes

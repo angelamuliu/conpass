@@ -1,0 +1,11 @@
+
+@import "shared_variables";
+
+// Not images generally. Cast images!
+
+.cimage {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: red;
+}

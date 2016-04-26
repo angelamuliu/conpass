@@ -30,8 +30,12 @@ var TYPES = {
     BOOTH : "booth",
     VENDOR_TAG : "vendor_tag",
     VENDOR_BOOTH : "vendor_booth",
-    CAST : "cast"
+    CAST : "cast",
+    IMAGE: "image"
 }
+
+// Layers used in drawing of images
+var LAYERS = {"BACKGROUND" : 0, "BELOW_BOOTH" : 1, "ABOVE_BOOTH" : 2, "TOP" : 3};
 
 // Keycodes and statuses used later to track which keys are being pressed together
 var KEYCODES = {CTRL : 17, V : 86, C : 67};
@@ -61,3 +65,4 @@ MapMaker.lastTagId = 0;
 MapMaker.lastBoothId = 0;
 MapMaker.lastVendorBoothId = 0;
 MapMaker.lastVendorTagId = 0;
+MapMaker.lastImageId = 0;

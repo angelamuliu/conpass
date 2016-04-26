@@ -5,9 +5,20 @@
 
 MapMaker.image = {};
 
-MapMaker.image.addToHistory = function() {
-
+MapMaker.image.addToHistory = function(x, y, cast_id) {
+    var imageHistory = {
+        "action" : ACTIONS.CREATE,
+        "type" : TYPES.IMAGE,
+        "id" : "t" + MapMaker.lastImageId,
+        "x" : x,
+        "y" : y,
+        "layer" : LAYERS.BELOW_BOOTH, // TODO: Change default
+        "cast_id" : cast_id
+    }
+    actionHistory.push(imageHistory);
 }
+
+
 
 MapMaker.image.deleteToHistory = function() {
 
@@ -17,38 +28,10 @@ MapMaker.image.updateToHistory = function() {
 
 }
 
-MapMaker.image.makeEl = function() {
-
-}
-
-
-    // ------------------------------------------------------------
-////// IMAGES
-    // ------------------------------------------------------------
-    // Images are instances of casts that can be placed
-
-MapMaker.image.addToHistory = function() {
-
-}
-
-MapMaker.image.deleteToHistory = function() {
-
-}
-
-MapMaker.image.updateToHistory = function() {
-
-}
-
-MapMaker.image.makeEl = function() {
-
-}
-
-MapMaker.image.startMove = function() {
-
-}
-
-MapMaker.image.endMove = function() {
-
+// Creates a image DOM element
+MapMaker.image.makeEl = function(x, y, cast_id, url) {
+        return $("<div class=\"cimage\" style=\"left:"+x+"px; top: "+y+"px; \"></div>");
+    // return $("<img src=\""+url+"\" class=\"cimage\" style=\"left:"+x+"px; top: "+y+"px; \">");
 }
 
 
@@ -61,5 +44,9 @@ MapMaker.image.loadListeners = function() {
 
 }
 
+// Given a newly created temp image DOM object or existing, adds the listeners onto it
+MapMaker.image.addListeners = function(imageEl, isTemp) {
+
+}
 
 

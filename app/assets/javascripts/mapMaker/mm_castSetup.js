@@ -45,6 +45,10 @@ MapMaker.cast.destroy = function(castId) {
     return false;
 }
 
+    // ------------------------------------------------------------
+////// CAST LISTENERS/EVENT HANDLERS
+    // ------------------------------------------------------------
+
 // Loads all event handlers for existing DOM objects that are casts
 MapMaker.cast.loadListeners = function() {
     $("#cast_uploader").change(function() {
@@ -73,8 +77,8 @@ MapMaker.cast.addListeners = function(castEl) {
 
 MapMaker.cast.addListener_dragstart = function(castEl) {
     castEl.on("dragstart", function(e) {
-        var castId = $(this).data("id");
-        toolContext.castId = castId;
+        toolContext.castId = $(this).data("id");
+        toolContext.castURL = $(this).children("img").attr("src");
         toolContext.draggingType = TYPES.CAST;
     })
 }
@@ -88,21 +92,21 @@ MapMaker.cast.addListeners_DnD = function() {
 }
 
 MapMaker.cast.addListener_dragenter = function() {
-    $("#workArea").on("dragenter", function(e) {
+    MapMaker.workArea.on("dragenter", function(e) {
         e.preventDefault();
         e.stopPropagation();
     })
 }
 
 MapMaker.cast.addListener_dragleave = function(boothEl) {
-    $("#workArea").on("dragleave", function(e) {
+    MapMaker.workArea.on("dragleave", function(e) {
         e.preventDefault();
         e.stopPropagation();
     })
 }
 
 MapMaker.cast.addListener_dragover = function(boothEl) {
-    $("#workArea").on("dragover", function(e) {
+    MapMaker.workArea.on("dragover", function(e) {
         e.preventDefault();
         e.stopPropagation();
         return false;
@@ -111,15 +115,20 @@ MapMaker.cast.addListener_dragover = function(boothEl) {
 
 // Attaches a listener to the workarea to listen for cast drops
 MapMaker.cast.addListener_drop = function() {
-    $("#workArea").on("drop", function(e, ui) {
+    MapMaker.workArea.on("drop", function(e, ui) {
         if (toolContext.draggingType === TYPES.CAST) {
             debugger;
-
-            // event.clientX
-            // event.clientY
-
             e.preventDefault();
             e.stopPropagation();
+
+            var offset = MapMaker.workArea.offset();
+            var downX = event.clientX - offset.left;
+            var downY = event.clientY - offset.top;
+
+            // MapMaker.image.addToHistory(event.clientX, event.clientY, toolContext.castId);
+            var imageEl = MapMaker.image.makeEl(downX, downY, toolContext.castId, toolContext.castURL);
+            // MOVE LATER
+            MapMaker.workArea.append(imageEl);
         }
     })
 }
