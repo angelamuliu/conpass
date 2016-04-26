@@ -30,8 +30,7 @@ MapMaker.image.updateToHistory = function() {
 
 // Creates a image DOM element
 MapMaker.image.makeEl = function(x, y, cast_id, url) {
-        return $("<div class=\"cimage\" style=\"left:"+x+"px; top: "+y+"px; \"></div>");
-    // return $("<img src=\""+url+"\" class=\"cimage\" style=\"left:"+x+"px; top: "+y+"px; \">");
+    return $("<img src=\""+url+"\" class=\"cimage\" style=\"left:"+x+"px; top: "+y+"px; \">");
 }
 
 

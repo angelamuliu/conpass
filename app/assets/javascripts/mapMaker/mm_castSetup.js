@@ -80,6 +80,11 @@ MapMaker.cast.addListener_dragstart = function(castEl) {
         toolContext.castId = $(this).data("id");
         toolContext.castURL = $(this).children("img").attr("src");
         toolContext.draggingType = TYPES.CAST;
+
+        // Set the drag image to the FULL size cast image
+        var dragImg = document.createElement("img");
+        dragImg.src = toolContext.castURL;
+        e.originalEvent.dataTransfer.setDragImage(dragImg, 0, 0);
     })
 }
 
@@ -117,7 +122,6 @@ MapMaker.cast.addListener_dragover = function(boothEl) {
 MapMaker.cast.addListener_drop = function() {
     MapMaker.workArea.on("drop", function(e, ui) {
         if (toolContext.draggingType === TYPES.CAST) {
-            debugger;
             e.preventDefault();
             e.stopPropagation();
 
@@ -125,9 +129,9 @@ MapMaker.cast.addListener_drop = function() {
             var downX = event.clientX - offset.left;
             var downY = event.clientY - offset.top;
 
-            // MapMaker.image.addToHistory(event.clientX, event.clientY, toolContext.castId);
+            // MapMaker.image.addToHistory(downX, downY, toolContext.castId);
+
             var imageEl = MapMaker.image.makeEl(downX, downY, toolContext.castId, toolContext.castURL);
-            // MOVE LATER
             MapMaker.workArea.append(imageEl);
         }
     })
