@@ -129,7 +129,7 @@ MapMaker.cast.addListener_drop = function() {
             var downX = event.clientX - offset.left;
             var downY = event.clientY - offset.top;
 
-            // MapMaker.image.addToHistory(downX, downY, toolContext.castId);
+            MapMaker.image.addToHistory(downX, downY, toolContext.castId);
 
             var imageEl = MapMaker.image.makeEl(downX, downY, toolContext.castId, toolContext.castURL);
             MapMaker.workArea.append(imageEl);

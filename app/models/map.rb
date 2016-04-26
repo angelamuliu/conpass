@@ -35,7 +35,7 @@ class Map < ActiveRecord::Base
 
         # Store new obj saved new IDs for vendorbooth, vendortag
         # EX STRUCTURE: {"booth" : {"t1" : 10, "t2" : actualID, ... }, "vendor" : {... } }
-        tempToPerm = {"booth" => {}, "vendor" => {}, "tag" => {}}
+        tempToPerm = {"booth" => {}, "vendor" => {}, "tag" => {}, "image" => {}}
 
         saveForModel("map", categorizedHistory, tempToPerm)
         saveForModel("vendor", categorizedHistory, tempToPerm)
@@ -43,6 +43,7 @@ class Map < ActiveRecord::Base
         saveForModel("booth", categorizedHistory, tempToPerm)
         bulkSaveForVendorTag(categorizedHistory, tempToPerm)
         saveForModel("vendor_booth", categorizedHistory, tempToPerm)
+        saveForModel("image", categorizedHistory, tempToPerm)
 
         self.convention.touch # Refresh updated date for convention
     end
@@ -149,6 +150,9 @@ class Map < ActiveRecord::Base
                 VendorBooth.create({vendor_id: translateTempToPermId(createAction["vendor_id"], "vendor", tempToPerm), 
                     booth_id: translateTempToPermId(createAction["booth_id"], "booth", tempToPerm),
                     start_time: DateTime.parse(createAction["start_time"]), end_time: DateTime.parse(createAction["end_time"])})
+            when "image"
+                Image.create({x_pos: createAction["x"].to_i, y_pos: createAction["y"].to_i, layer: createAction["layer"].to_i, 
+                    cast_id: createAction["cast_id"], map_id: self.id})
             end
         end
     end

@@ -3,6 +3,8 @@
 
 <div id="workArea_container" class="row">
     <div id="workArea">
+
+        <%# Booths %>
         <% booths.each do |booth| %>
             <%= content_tag :div, "", class: "booth #{booth.cssVendorClasses}", style: "left:#{booth.x_pos}px; top:#{booth.y_pos}px; width:#{booth.width}px; height:#{booth.height}px", "data-id": "#{booth.id}", "tabindex":1 do %>
             <div class="booth_label">
@@ -28,5 +30,13 @@
             </ul>
             <% end %>
         <% end %>
+
+        <%# Images %>
+        <% images.each do |image| %>
+            <%= image_tag image.cast.upload_url(), class: "cimage", style: "left:#{image.x_pos}px; top:#{image.y_pos}px", "data-id": "#{image.id}" %>
+        <% end %>
+
+
+
     </div>
 </div>
