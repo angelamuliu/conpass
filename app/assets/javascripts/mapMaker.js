@@ -28,6 +28,7 @@ $(document).ready(function() {
 
     $("#workArea").css("width", gon.map.width);
     $("#workArea").css("height", gon.map.height);
+    $("body").css("overflow-y", "hidden"); // Prevent double scrollbars
 
     MapMaker.workArea = $("#workArea");
     MapMaker.toolBar = $("#toolBar");
