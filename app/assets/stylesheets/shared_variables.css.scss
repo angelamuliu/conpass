@@ -33,5 +33,12 @@ $smallPoint: 45em;
 
 // Z-indexes
 $z_overWorkArea: 45; // Appears over the main "work bench" area
+$z_booth: 30;
 $z_overBooth: 200; // Appears over booth elements
 $z_overlay: 2000; // Appears over almost everything
+
+// Z-indexes for image layering
+$z_background: 15;
+$z_below_booth: 20;
+$z_above_booth: 35;
+$z_top: 40;

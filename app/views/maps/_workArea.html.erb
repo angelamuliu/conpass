@@ -33,7 +33,7 @@
 
         <%# Images %>
         <% images.each do |image| %>
-            <%= content_tag :div, "", class: "cimage", style: "left:#{image.x_pos}px; top:#{image.y_pos}px", "data-id": "#{image.id}", "data-castid": "#{image.cast_id}" do %>
+            <%= content_tag :div, "", class: "cimage", style: "left:#{image.x_pos}px; top:#{image.y_pos}px; z-index:#{image.z_index};", "data-id": "#{image.id}", "data-castid": "#{image.cast_id}" do %>
                 <%= image_tag image.cast.upload_url()%>
                 <a href="javascript:;" class="destroy_image">
                     <i class="fa fa-times"></i>

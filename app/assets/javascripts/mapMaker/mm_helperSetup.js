@@ -3,6 +3,22 @@
 ////// HELPER FUNCTIONS
     // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
+// Returns the z index value depending on current selected layer
+MapMaker.getLayerZ = function() {
+    switch(MapMaker.currentLayer) {
+        case LAYERS.BACKGROUND:
+            return 15;
+        case LAYERS.BELOW_BOOTH:
+            return 20;
+        case LAYERS.ABOVE_BOOTH:
+            return 35;
+        case LAYERS.TOP:
+            return 40;
+        default:
+            return 1
+    }
+}
+
 // Given two sets of x, y that define the zone of a rectangle
 // returns topleft coords as [x,y]
 MapMaker.findTopLeft = function(x1, y1, x2, y2) {

@@ -38,7 +38,7 @@ MapMaker.image.updateToHistory = function() {
 
 // Creates a image DOM element
 MapMaker.image.makeEl = function(x, y, cast_id, url) {
-    var imageEl = $("<div class=\"cimage\" style=\"left:"+x+"px; top: "+y+"px;\""+
+    var imageEl = $("<div class=\"cimage\" style=\"left:"+x+"px; top: "+y+"px;\"; z-index: \""+MapMaker.getLayerZ()+"\""+
                         " data-id=\"t"+ MapMaker.lastImageId +"\" data-castid=\""+cast_id+"\">"+
                         "<img src=\""+url+"\">"+
                         "<a href=\"javascript:;\" class=\"destroy_image\">"+

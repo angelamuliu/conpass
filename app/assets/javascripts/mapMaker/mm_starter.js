@@ -53,6 +53,7 @@ MapMaker.selectedTool = TOOLS.NONE; // Which tool is the user currently using
 MapMaker.transform = { // Store information about transformations to ensure data is saved correctly
     "zoom" : 1 // 100%
 };
+MapMaker.currentLayer = LAYERS.BACKGROUND;
 
 MapMaker.vendorDict = {}; // {"vendor ID" : vendor name}; Updated and used in vendor tag creation
 MapMaker.tagDict = {}; // {"tag ID" : tag name}; Updated and used in vendor tag creation

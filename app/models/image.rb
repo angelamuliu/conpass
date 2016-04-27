@@ -11,8 +11,17 @@ class Image < ActiveRecord::Base
 
     # Returns a CSS z-index for the image based on which layer it is placed on
     def z_index
-        byebug
-        # TODO: TEST HOW TO MATCH LAYER AGAINST AN ENUM?
+        case layer
+            when "background"
+                return 15
+            when "below_booth"
+                return 20
+            when "above_booth"
+                return 35
+            when "top"
+                return 40
+        end
+        return 1
     end
 
 end
