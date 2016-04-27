@@ -138,8 +138,10 @@ MapMaker.cast.addListener_drop = function() {
 
             MapMaker.image.addToHistory(downX, downY, toolContext.castId);
 
+            // Create image DOM el and attach listeners
             var imageEl = MapMaker.image.makeEl(downX, downY, toolContext.castId, toolContext.castURL);
             MapMaker.workArea.append(imageEl);
+            MapMaker.image.addListeners(imageEl, true);
         }
     })
 }

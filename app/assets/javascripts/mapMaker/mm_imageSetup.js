@@ -20,8 +20,6 @@ MapMaker.image.addToHistory = function(x, y, cast_id) {
 
 // Adds a delete image action to the history array
 MapMaker.image.deleteToHistory = function(imageEl, isTemp) {
-    // TODO : CHECK IF ID GETTING IS OK, ALSO NEED TO ADD DELETE CLASS!!!
-    debugger;
     var imageHistory = {
         "action" : ACTIONS.DELETE,
         "type" : TYPES.IMAGE,
@@ -41,7 +39,7 @@ MapMaker.image.updateToHistory = function() {
 // Creates a image DOM element
 MapMaker.image.makeEl = function(x, y, cast_id, url) {
     var imageEl = $("<div class=\"cimage\" style=\"left:"+x+"px; top: "+y+"px;\""+
-                        " data-id=\""+ MapMaker.lastImageId +"\" data-castid=\""+cast_id+"\">"+
+                        " data-id=\"t"+ MapMaker.lastImageId +"\" data-castid=\""+cast_id+"\">"+
                         "<img src=\""+url+"\">"+
                         "<a href=\"javascript:;\" class=\"destroy_image\">"+
                             "<i class=\"fa fa-times\"></i>"+
