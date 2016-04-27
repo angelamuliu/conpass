@@ -6,3 +6,13 @@
 .cimage {
     position: absolute;
 }
+
+a.destroy_image {
+    background: transparentize(black, 0.4);
+    top: 0;
+    position: absolute;
+    right: 0;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+}

@@ -196,6 +196,8 @@ class Map < ActiveRecord::Base
                 Booth.find(deleteAction["id"]).destroy
             when "vendor_booth"
                 VendorBooth.find(deleteAction["id"]).destroy
+            when "image"
+                Image.find(deleteAction["id"]).destroy
             end
         end
     end

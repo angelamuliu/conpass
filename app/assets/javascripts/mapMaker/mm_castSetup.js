@@ -73,6 +73,7 @@ MapMaker.cast.loadListeners = function() {
 // Given a DOM element that is a cast, attaches the drag and drop listeners
 MapMaker.cast.addListeners = function(castEl) {
     MapMaker.cast.addListener_dragstart(castEl);
+    MapMaker.cast.addListener_dragend(castEl);
 }
 
 MapMaker.cast.addListener_dragstart = function(castEl) {
@@ -85,6 +86,12 @@ MapMaker.cast.addListener_dragstart = function(castEl) {
         var dragImg = document.createElement("img");
         dragImg.src = toolContext.castURL;
         e.originalEvent.dataTransfer.setDragImage(dragImg, 0, 0);
+    })
+}
+
+MapMaker.cast.addListener_dragend = function(castEl) {
+    castEl.on("dragend", function(e) {
+        toolContext.draggingType = null; // Clear to prevent all drags from causing image creation
     })
 }
 
