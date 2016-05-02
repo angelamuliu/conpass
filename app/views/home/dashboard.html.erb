@@ -57,6 +57,8 @@
                                 <% end %>
                                 <br /><%= link_to "Add another map", new_map_path(convention_id: convention.id) %>
                             <% end %>
+
+                            <br /><%= link_to "View associates", associates_convention_path(convention) %>
                         </p>
                     </li>
                 <% end %>
