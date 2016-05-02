@@ -62,15 +62,19 @@ $(document).ready(function() {
 // USED ON: MAP SHOW PAGE
 // centers view on the booth and highlights it too
 function center(boothEl) {
-    var boothX = parseInt(boothEl.css("left"));
-    var boothY = parseInt(boothEl.css("top"));
-    var boothWidth = parseInt(boothEl.css("width"));
+    // TODO: ADD BACK IN ONCE YOU CAN SCROLL OR NAVIGATE MAP,
+    // right now it locks it so that if you center, you can't see booths above
 
-    var left = -boothX - 0.5 * boothWidth + 0.5 * (window.innerWidth);
-    var top = -boothY;
 
-    $("#mapArea").css("left", left);
-    $("#mapArea").css("top", top);
+    // var boothX = parseInt(boothEl.css("left"));
+    // var boothY = parseInt(boothEl.css("top"));
+    // var boothWidth = parseInt(boothEl.css("width"));
+
+    // var left = -boothX - 0.5 * boothWidth + 0.5 * (window.innerWidth);
+    // var top = -boothY;
+
+    // $("#mapArea").css("left", left);
+    // $("#mapArea").css("top", top);
 }
 function centerOnBooth() {
     $(".booth").removeClass("highlight");
