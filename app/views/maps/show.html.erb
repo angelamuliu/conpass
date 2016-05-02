@@ -38,6 +38,14 @@
             </ul>
             <% end %>
         <% end %>
+
+        <%# Images %>
+        <% @images.each do |image| %>
+            <%= content_tag :div, "", class: "cimage", style: "left:#{image.x_pos}px; top:#{image.y_pos}px; z-index:#{image.z_index};", "data-id": "#{image.id}", "data-castid": "#{image.cast_id}" do %>
+                <%= image_tag image.cast.upload_url()%>
+            <% end %>
+        <% end %>
+
     </div>
 </div>
 
@@ -47,8 +55,9 @@
 <% end %>
 
 <%# Zoom in and out buttons %>
-<div id="zoomButtons">
+<%# Removed until images can also zoom in and out %>
+<!-- <div id="zoomButtons">
     <a href="javascript:;" onClick="zoomIn()" id="zoomIn" class="btn-circle"><i class="fa fa-plus"></i></a>
     <a href="javascript:;" onClick="zoomOut()" id="zoomOut" class="btn-circle"><i class="fa fa-minus"></i></a>
-</div>
+</div> -->
 

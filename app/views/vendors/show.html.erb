@@ -1,54 +1,53 @@
 
 <div class="row top_index">
-    <div class="col-xs-12">
-        <h3><%= @vendor.name %></h3>
-        <a href="javascript:;" class="star"><i class="fa fa-star-o"></i></a>
+    <div class="col-sm-12 col-md-6 col-md-offset-1">
+        <h3><a href="javascript:;" class="star"><i class="fa fa-star-o"></i></a> <%= @vendor.name %></h3>
         <span><%= link_to @vendor.convention.name, @vendor.convention %></span>
     </div>
 </div>
 
-<section>
+<div class="row">
+    <div class="col-sm-12 col-md-6 col-md-offset-1">
 
-    <strong>Times:</strong>
-    <% if @vendorBooths.size < 1 %>
-    <p><%= @vendor.name %> has not been assigned to a booth yet.</p>
-    <% else %>
-        <ul>
-        <% @vendorBooths.each do |vendorBooth| %>
+            <strong>Times:</strong>
+            <% if @vendorBooths.size < 1 %>
+            <p><%= @vendor.name %> has not been assigned to a booth yet.</p>
+            <% else %>
+                <ul>
+                <% @vendorBooths.each do |vendorBooth| %>
 
-            <li>
-                <%= link_to map_path(vendorBooth.booth.map, :centerbooth_id => vendorBooth.booth.id, :vendorbooth_id => vendorBooth.id) do %>
-                    <i class="fa fa-map"></i> <%= vendorBooth.booth.map.name %>, booth <%= vendorBooth.booth.id %>
+                    <li>
+                        <%= link_to map_path(vendorBooth.booth.map, :centerbooth_id => vendorBooth.booth.id, :vendorbooth_id => vendorBooth.id) do %>
+                            <i class="fa fa-map"></i> <%= vendorBooth.booth.map.name %>, <%= vendorBooth.booth.name %>
+                        <% end %>
+                        (<%= vendorBooth.timeRange() %>)
+                    </li>
                 <% end %>
-                (<%= vendorBooth.timeRange() %>)
-            </li>
+                </ul>
+            <% end %>
+
+            <p>
+                <strong>Website:</strong>
+                <% if !@vendor.website_url.present?  %>
+                    None provided
+                <% else %>
+                    <%= link_to @vendor.website_url, "http://#{@vendor.website_url}" %>
+                <% end %>
+            </p>
+
+            <p>
+                <strong>Description:</strong><br />
+                <% if @vendor.description.present? %>
+                    <%= @vendor.description %>
+                <% else %>
+                    N/A
+                <% end %>
+            </p>
+
+
+        <% if logged_in? %>
+            <%= link_to 'Edit', edit_vendor_path(@vendor) %>
         <% end %>
-        </ul>
-    <% end %>
 
-    <p>
-        <strong>Website:</strong>
-        <% if !@vendor.website_url.present?  %>
-            None provided
-        <% else %>
-            <%= link_to @vendor.website_url, "http://#{@vendor.website_url}" %>
-        <% end %>
-    </p>
-
-    <p>
-        <strong>Description:</strong><br />
-        <% if @vendor.description.present? %>
-            <%= @vendor.description %>
-        <% else %>
-            N/A
-        <% end %>
-    </p>
-
-
-<% if logged_in? %>
-    <%= link_to 'Edit', edit_vendor_path(@vendor) %> |
-    <%= link_to 'Back', vendors_path %>
-<% end %>
-
-
-</section>
+    </div>
+</div>

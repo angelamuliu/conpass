@@ -11,6 +11,7 @@ class MapsController < ApplicationController
   # GET /maps/1.json
   def show
     @map = Map.find(params[:id])
+    @images = @map.images
     @booths = @map.booths
     if params[:centerbooth_id]
         @centeredBooth = Booth.find(params[:centerbooth_id])

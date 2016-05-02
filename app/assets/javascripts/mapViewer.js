@@ -6,7 +6,8 @@ $(document).ready(function() {
 
 function closeVendorBooth(event) {
     event.stopPropagation();
-    $("ul.vendorBooth").slideUp();
+    // TODO: Find better way of showing nearby vendor information
+    // $("ul.vendorBooth").slideUp();
 }
 
 // ------------------------------------------------
@@ -15,7 +16,7 @@ function closeVendorBooth(event) {
 
 // ZOOMING IN/OUT
 var zoomOptions = [0.5, 1, 2, 4];
-var zoomIndex = 1; // Refers to index in array above, 1 => 1
+var zoomIndex = 0; // Refers to index in array above, 1 => 1
 
 function zoomIn() {
     if (zoomIndex < zoomOptions.length - 1) {

@@ -58,9 +58,7 @@ $(document).ready(function() {
 
 
 
-
-
-// SHould move this later
+// MOVE LATER
 // USED ON: MAP SHOW PAGE
 // centers view on the booth and highlights it too
 function center(boothEl) {
@@ -75,23 +73,30 @@ function center(boothEl) {
     $("#mapArea").css("top", top);
 }
 function centerOnBooth() {
-    // debugger;
     $(".booth").removeClass("highlight");
-    $("ul.vendorBooth").slideUp();
+
+    // TODO: Find better way of showing nearby vendor information
+    // $("ul.vendorBooth").slideUp();
 
     var booth = $(this);
     center(booth);
 
     $(this).addClass("highlight");
-    $(this).children("ul.vendorBooth").slideDown();
+
+    // TODO: Find better way of showing nearby vendor information
+    // $(this).children("ul.vendorBooth").slideDown();
 }
 function centerOnBoothWithId(boothId) {
     var booth = $(".booth[data-id="+boothId+"]");
     $(".booth").removeClass("highlight");
-    $("ul.vendorBooth").slideUp();
+
+    // TODO: Find better way of showing nearby vendor information
+    // $("ul.vendorBooth").slideUp();
 
     center(booth);
 
     booth.addClass("highlight");
-    booth.children("ul.vendorBooth").slideDown();
+
+    // TODO: Find better way of showing nearby vendor information
+    // booth.children("ul.vendorBooth").slideDown();
 }
