@@ -294,6 +294,7 @@ ul.convention_vendors a.star {
     li.convention_vendor {
         width: 50%;
         padding-left: 10px;
+        padding-bottom: 15px;
     }
     li.convention_vendor:nth-child(odd) { float: left;}
     li.convention_vendor:nth-child(even) { float: right; padding-left: 25px; }
@@ -359,6 +360,7 @@ ul.vendor_associates {
     background-color: $paper;
     padding-top: 15px;
     border-top: 1px solid $gold;
+    min-height: 150px;
 }
 #additional_info h5 {
     margin-bottom: 0;
