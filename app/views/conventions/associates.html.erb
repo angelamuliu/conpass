@@ -1,0 +1,45 @@
+
+
+<h3><%= @convention.name %> associates</h3>
+
+<%= simple_form_for(@associate) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.association :vendor, collection: @convention.vendors %>
+    <%= f.association :convention, selected: @convention %>
+
+    <%= f.input :first_name %>
+    <%= f.input :last_name %>
+  </div>
+
+  <div class="form-actions">
+    <button class="btn btn-primary" type="submit">Save</button>
+  </div>
+<% end %>
+
+
+<hr />
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Vendor</th>
+      <th>First name</th>
+      <th>Last name</th>
+      <th colspan="2"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @associates.each do |associate| %>
+      <tr>
+        <td><%= associate.vendor.name %></td>
+        <td><%= associate.first_name %></td>
+        <td><%= associate.last_name %></td>
+        <td><%= link_to 'Edit', edit_associate_path(associate) %></td>
+        <td><%= link_to 'Destroy', associate, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

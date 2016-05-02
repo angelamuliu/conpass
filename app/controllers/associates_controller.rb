@@ -28,7 +28,11 @@ class AssociatesController < ApplicationController
 
     respond_to do |format|
       if @associate.save
-        format.html { redirect_to @associate, notice: 'Associate was successfully created.' }
+        # format.html { redirect_to @associate, notice: 'Associate was successfully created.' }
+        
+        # TODO: Right now associates are only ever created on the convention/:id/associate (associates_convention) route
+        # In future may have to change redirect...
+        format.html { redirect_to associates_convention_path(@associate.convention) }
         format.json { render :show, status: :created, location: @associate }
       else
         format.html { render :new }
@@ -69,6 +73,6 @@ class AssociatesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def associate_params
-      params.require(:associate).permit(:vendor_id, :first_name, :last_name)
+      params.require(:associate).permit(:vendor_id, :convention_id, :first_name, :last_name)
     end
 end

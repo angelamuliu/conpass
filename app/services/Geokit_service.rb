@@ -11,7 +11,7 @@ class Geokit_service
     # Given a 1 line string address, attempts to call our Geocoding APIs, and
     # returns the hash result
     def geocode_address(address)
-        byebug
+        # byebug
         # The multigeocoder will try out all of our geocoding API keys until one works
         geocoded_address = Geokit::Geocoders::MultiGeocoder.geocode(address)
         if (geocoded_address.success)

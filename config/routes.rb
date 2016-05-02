@@ -33,6 +33,7 @@ Rails.application.routes.draw do
 
   resources :conventions do
     get 'quickview', :on => :member, as: :quickview # For map makers, offers administrative glance at convention
+    get 'associates', :on => :member # Viewing associates connected to convention
     post 'vendor_search', :on => :member, as: :vendorSearch # Vendor search on show
     get 'search', :on => :collection, as: :search # Searching conventions on home
   end

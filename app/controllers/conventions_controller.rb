@@ -1,5 +1,5 @@
 class ConventionsController < ApplicationController
-  before_action :set_convention, only: [:show, :edit, :update, :destroy]
+  before_action :set_convention, only: [:show, :edit, :update, :destroy, :associates]
 
   # GET /conventions
   # GET /conventions.json
@@ -22,6 +22,12 @@ class ConventionsController < ApplicationController
   def quickview
     @convention = Convention.find(params[:id])
     @maps = @convention.maps.chronological.alphabetical
+  end
+
+  # GET /conventions/1/associates
+  def associates
+    @associates = @convention.associates
+    @associate = Associate.new
   end
 
   def toggle_active
@@ -125,7 +131,8 @@ class ConventionsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def convention_params
       params.require(:convention).permit(:name, :start_date, :end_date, :logo, :banner, :remove_logo, :remove_banner, :description, :type_id,
-                                         location_attributes: [:id, :address_1, :address_2, :city, :state, :zip, :latitude, :longitude])
+                                         location_attributes: [:id, :address_1, :address_2, :city, :state, :zip, :latitude, :longitude],
+                                         associate_attributes: [:first_name, :last_name, :vendor_id, :convention_id])
     end
 
     def convert_dates
