@@ -110,6 +110,10 @@ class ConventionsController < ApplicationController
   end
 
   def search
+
+    # REMOVE LATER WHEN WORKING
+    redirect_to home_path
+
     # byebug
     # params["search"]["user_location"]
     # params["search"]["search_distance"]

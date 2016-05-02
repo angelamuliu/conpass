@@ -1,21 +1,32 @@
 
 <%# Extra filtering funcionality on vendor listing due to likely larger number %>
 <div class="row sub_header_nav">
-    <%= link_to home_path do %>
-        <i class="fa fa-star"></i> Vendors
-    <% end %>
-    <div class="actions">
-        <a href="javascript:;" id="filter_vendors"><i class="fa fa-filter"></i> Filter</a>
-        <a href="javascript:;" id="order_vendors">ABC</a>
+    <div class="col-sm-12 col-md-6 col-md-offset-1" id="core_info">
+
+        <%# TODO: Replace with actual favorited vendors functionality %>
+        <%#= link_to home_path do %>
+            <!-- <i class="fa fa-star"></i> Vendors -->
+        <%# end %>
+
+        <div class="convention_vendor_actions">
+            <a href="javascript:;" id="filter_vendors"><i class="fa fa-filter"></i> Filter by tag</a>
+
+            <%# TODO: Implement toggling of associate viewing %>
+            <!-- <a href="javascript:;" id="filter_vendors"><i class="fa fa-user"></i> Toggle authors</a> -->
+            <!-- <a href="javascript:;" id="order_vendors">ABC</a> -->
+
+            <br />
+            <%# Search %>
+            <%= form_for(convention, remote: true, url: vendorSearch_convention_path, method: :post) do |f| %>
+                <%= text_field_tag("search", nil, placeholder: "Paper or author") %>
+                <%# TODO: On clicking to a different filter, change a hidden input here that will pass that to our search method so that the sort is maintained %>
+                <%= submit_tag "Search", :onclick => "searching_vendors();", :class => "btn greenbtn" %>
+            <% end %>
+
+        </div>
     </div>
 </div>
 
-<%# Search %>
-<%= form_for(convention, remote: true, url: vendorSearch_convention_path, method: :post) do |f| %>
-    <%= text_field_tag("search", nil, placeholder: "Search by paper name or author") %>
-    <%# TODO: On clicking to a different filter, change a hidden input here that will pass that to our search method so that the sort is maintained %>
-    <%= submit_tag "Search", :onclick => "searching_vendors();" %>
-<% end %>
 
 
 <%# Filter modal %>
